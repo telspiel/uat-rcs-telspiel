@@ -1,0 +1,91 @@
+<app-page-header [title]="'View Group Management'" [backLink]="['/phonebook']"></app-page-header>
+
+  <div class="bots-section">     
+      <nz-card nzTitle="View Group Management">
+
+        <nz-card style="margin-bottom: 2rem;">
+            <form action=""  nz-row [nzGutter]="16"  [formGroup]="groupForm">
+
+              
+   
+
+
+    
+<div  nz-col [nzSpan]="5" class="filter-item" >
+    <label for="bots" class="ant-form-item-label">Contact Number <span style="color: red;"> * </span></label>
+    <input id="Description" nz-input   placeholder="Contact Number" formControlName="contactNumber"/>
+  </div>
+
+  <div  nz-col [nzSpan]="5" class="filter-item" >
+    <label for="bots" class="ant-form-item-label">Contact Name <span style="color: red;"> * </span></label>
+    <input id="Description" nz-input   placeholder="contact Name" formControlName="contactName"/>
+  </div>
+
+  <div  nz-col [nzSpan]="5" class="filter-item" >
+    <label for="bots" class="ant-form-item-label">Group Name <span style="color: red;"> * </span></label>
+    <input id="Description" nz-input   placeholder="contact Name" formControlName="groupName"/>
+  </div>
+
+  <div style="margin-top: 22px; ">
+    <button nz-button nzType="primary" (click)="onSumbit()">Search</button>
+    
+  </div>
+
+            
+            </form>      
+        </nz-card>
+        
+     <nz-table
+  #templateTable
+  [nzFrontPagination]="true"
+  [nzPageSize]="10"
+  [nzPageIndex]="1"
+  nzTableLayout="fixed"
+  [nzBordered]="true"
+  [nzSize]="'middle'"
+  [nzData]="groups"
+  [nzScroll]="{ x: '100%' }"
+>
+  <thead>
+    <tr>
+      <th>Group Name</th>
+      <th>Contact Number</th>
+      <th>Contact Name</th>
+      <th>Actions</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let group of templateTable.data">
+      <td>{{ group.groupName }}</td>
+      <td>{{ group.contactNumber }}</td>
+      <td>{{ group.contactName || '-' }}</td>
+      <td>
+      <a
+  nz-popconfirm
+  [nzPopconfirmTitle]="'Are you sure you want to delete the Number?'"
+  nzPopconfirmPlacement="bottom"
+  (nzOnConfirm)="removeGroup(group.id)"
+  (nzOnCancel)="cancelGroup()"
+>
+  <i nz-icon nzType="delete" nzTheme="outline" style="color: #FF0000;"></i>
+</a>
+
+      </td>
+    </tr>
+  </tbody>
+</nz-table>
+
+          <!-- <a style="margin-top: 8px;" nz-button  nzType="link">+ Add a Template</a> -->
+          <!-- <a [routerLink]="['/add']" >+ Add a Template
+            <button nz-button nzType="link" nzShape="circle" nzTooltipTitle="Edit">
+              <i nz-icon nzType="" nzTheme="outline"></i>
+            </button>
+          </a>            -->
+        
+      </nz-card>
+  
+
+    
+    
+        
+    </div>

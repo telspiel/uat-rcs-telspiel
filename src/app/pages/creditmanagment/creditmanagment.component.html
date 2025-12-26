@@ -1,0 +1,508 @@
+<nz-card nzTitle="Credit Management">
+  <nz-tabset nzType="card" (nzSelectedIndexChange)="onTabChange($event)">
+    <nz-header class="site-page-header" nzTitle="Summary"></nz-header>
+    <nz-tab [nzTitle]="ADD" *ngIf="role !== 'client'">
+      <ng-template #ADD>
+        <span>Add</span>
+      </ng-template>
+
+      <div>
+        <nz-card nzTitle="">
+          <form [formGroup]="creditForm">
+            <!-- <nz-row [nzGutter]="16"> -->
+            <!-- <nz-col [nzSpan]="8" *ngIf="['superadmin'].includes(role)">
+                <nz-form-item>
+                  <nz-form-label
+                    nzFor="user"
+                    [nzSpan]="24"
+                    class="left-align-label"
+                    >Admin</nz-form-label
+                  >
+                  <nz-form-control>
+                    <nz-select
+                      id="User"
+                      nzPlaceHolder="Select a user"
+                      [(ngModel)]="selectedAdmin"
+                      [ngModelOptions]="{ standalone: true }"
+                      (ngModelChange)="onAdminChange($event)"
+                      [(ngModel)]="selectedAdmin"
+                    >
+                      <nz-option
+                        *ngFor="let user of Adminlist"
+                        [nzValue]="user.label"
+                        [nzLabel]="user.label"
+                      ></nz-option>
+                    </nz-select>
+                  </nz-form-control>
+                </nz-form-item>
+              </nz-col> -->
+            <!-- Reseller -->
+            <!-- <nz-col [nzSpan]="8" *ngIf="role === 'admin'">
+                <nz-form-item>
+                  <nz-form-label
+                    nzFor="reseller"
+                    [nzSpan]="24"
+                    class="left-align-label"
+                    >Reseller</nz-form-label
+                  >
+                  <nz-form-control>
+                    <nz-select
+                      id="Reseller"
+                      nzPlaceHolder="Select a user"
+                      [(ngModel)]="selectedReseller"
+                      [ngModelOptions]="{ standalone: true }"
+                      (ngModelChange)="onResellerChange($event)"
+                      [(ngModel)]="selectedReseller"
+                    >
+                      <nz-option
+                        *ngFor="let reseller of ResllerList"
+                        [nzValue]="reseller.label"
+                        [nzLabel]="reseller.label"
+                      ></nz-option>
+                    </nz-select>
+                  </nz-form-control>
+                </nz-form-item>
+              </nz-col> -->
+
+            <!-- Seller -->
+            <!-- <nz-col
+                [nzSpan]="8"
+                *ngIf="role === 'reseller' || role === 'admin'"
+              >
+                <nz-form-item>
+                  <nz-form-label
+                    nzFor="seller"
+                    [nzSpan]="24"
+                    class="left-align-label"
+                    >Seller</nz-form-label
+                  >
+                  <nz-form-control>
+                    <nz-select
+                      id="Seller"
+                      nzPlaceHolder="Select a user"
+                      [(ngModel)]="selectedSeller"
+                      [ngModelOptions]="{ standalone: true }"
+                      (ngModelChange)="onSellerChange($event)"
+                      [(ngModel)]="selectedSeller"
+                    >
+                      <nz-option
+                        *ngFor="let seller of SellerList"
+                        [nzValue]="seller.label"
+                        [nzLabel]="seller.label"
+                      ></nz-option>
+                    </nz-select>
+                  </nz-form-control>
+                </nz-form-item>
+              </nz-col> -->
+
+            <!-- Client -->
+            <!-- <nz-col
+                [nzSpan]="8"
+                *ngIf="
+                  role === 'seller' || role === 'reseller' || role === 'admin'
+                "
+              >
+                <nz-form-item>
+                  <nz-form-label
+                    nzFor="client"
+                    [nzSpan]="24"
+                    class="left-align-label"
+                    >Client</nz-form-label
+                  >
+                  <nz-form-control>
+                    <nz-select
+                      id="Client"
+                      nzPlaceHolder="Select a user"
+                      [(ngModel)]="selectedClient"
+                      [ngModelOptions]="{ standalone: true }"
+                      (ngModelChange)="onClientChange($event)"
+                      [(ngModel)]="selectedClient"
+                    >
+                      <nz-option
+                        *ngFor="let Client of Clientlist"
+                        [nzValue]="Client.label"
+                        [nzLabel]="Client.label"
+                      ></nz-option>
+                    </nz-select>
+                  </nz-form-control>
+                </nz-form-item>
+              </nz-col> -->
+            <!-- </nz-row> -->
+            <app-filter-dropdown
+              [role]="role"
+              (selectionChange)="handleSelection($event)"
+            ></app-filter-dropdown>
+            <!-- <nz-divider></nz-divider> -->
+
+            <nz-row [nzGutter]="16">
+              <nz-col [nzSpan]="8">
+                <nz-form-item>
+                  <nz-form-label
+                    nzFor="creditType"
+                    [nzSpan]="24"
+                    class="left-align-label"
+                    >Credit Type</nz-form-label
+                  >
+                  <nz-form-control>
+                    <!-- <nz-select nzPlaceHolder="Select Credit Type"  [(ngModel)]="creditTypes" > -->
+                    <nz-select
+                      nzPlaceHolder="Select Credit Type"
+                      formControlName="creditType"
+                    >
+                      <!-- <nz-option *ngFor="let type of creditTypes" [nzValue]="type.value" [nzLabel]="type.label"></nz-option> -->
+                      <nz-option nzValue="TEXT_CREDIT" nzLabel="Text Credit"
+                        >Text Credit</nz-option
+                      >
+                      <nz-option nzValue="RICH_CREDIT" nzLabel="Rich Credit"
+                        >Rich Credit</nz-option
+                      >
+                    </nz-select>
+                  </nz-form-control>
+                </nz-form-item>
+              </nz-col>
+
+              <!-- Your Available Credit -->
+              <nz-col [nzSpan]="8">
+                <nz-form-item>
+                  <nz-form-label
+                    nzFor="customerCredit"
+                    [nzSpan]="24"
+                    class="left-align-label"
+                    >Your Available Credit</nz-form-label
+                  >
+                  <nz-form-control>
+                    <input
+                      nz-input
+                      formControlName="customerCredit"
+                      placeholder="Your Available Credit"
+                    />
+                  </nz-form-control>
+                </nz-form-item>
+              </nz-col>
+
+              <nz-col [nzSpan]="8">
+                <nz-form-item>
+                  <nz-form-label
+                    nzFor="yourCredit"
+                    [nzSpan]="24"
+                    class="left-align-label"
+                    >Customer Available Credit</nz-form-label
+                  >
+                  <nz-form-control>
+                    <input
+                      nz-input
+                      formControlName="yourCredit"
+                      placeholder="Customer Available Credit"
+                    />
+                  </nz-form-control>
+                </nz-form-item>
+              </nz-col>
+
+              <nz-col [nzSpan]="8">
+                <nz-form-item>
+                  <nz-form-label
+                    nzFor="addCredit"
+                    [nzSpan]="24"
+                    class="left-align-label"
+                    >Add Credit</nz-form-label
+                  >
+                  <nz-form-control>
+                    <input
+                      nz-input
+                      formControlName="addCredits"
+                      placeholder="Add Credit"
+                    />
+                  </nz-form-control>
+                </nz-form-item>
+              </nz-col>
+              <nz-col [nzSpan]="16">
+                <nz-form-item>
+                  <nz-form-label
+                    nzFor="remark"
+                    [nzSpan]="24"
+                    class="left-align-label"
+                    >Remark</nz-form-label
+                  >
+                  <nz-form-control>
+                    <textarea
+                      nz-input
+                      formControlName="remark"
+                      rows="3"
+                      placeholder="Enter remarks"
+                    ></textarea>
+                  </nz-form-control>
+                </nz-form-item>
+              </nz-col>
+            </nz-row>
+
+            <nz-row class="button-container">
+              <nz-col [nzSpan]="24" class="button-group">
+                <button nz-button nzType="primary" (click)="addCredit()">
+                  Add Credit
+                </button>
+                <button
+                  nz-button
+                  nzType="default"
+                  nzDanger
+                  (click)="resetForm()"
+                >
+                  Reset
+                </button>
+              </nz-col>
+            </nz-row>
+          </form>
+        </nz-card>
+      </div>
+    </nz-tab>
+
+    <nz-tab [nzTitle]="History">
+      <ng-template #History>
+        <span>History</span>
+      </ng-template>
+
+      <div>
+        <nz-card nzTitle="">
+          <form [formGroup]="credithistory">
+            <nz-row [nzGutter]="16">
+              <nz-col [nzSpan]="6" class="filter-item">
+                <nz-form-item style="margin-bottom: 0">
+                  <nz-form-label class="left-align-label"
+                    >Date Range</nz-form-label
+                  >
+                  <nz-form-control>
+                    <nz-range-picker
+                      nzRangePicker
+                      style="width: 100%"
+                      [(ngModel)]="date"
+                      [nzDisabledDate]="disableFutureDates"
+                      [ngModelOptions]="{ standalone: true }"
+                      (ngModelChange)="onChange('date')"
+                      (ngModelChange)="onChangeDate()"
+                    ></nz-range-picker>
+                  </nz-form-control>
+                </nz-form-item>
+              </nz-col>
+
+              <!-- Superadmin View -->
+              <!-- <nz-col
+                *ngIf="role === 'superadmin'"
+                [nzSpan]="5"
+                class="filter-item"
+              >
+                <nz-form-item style="margin-bottom: 0">
+                  <nz-form-label [nzSpan]="24" class="left-align-label"
+                    >Admin</nz-form-label
+                  >
+                  <nz-form-control>
+                    <nz-select
+                      nzAllowClear
+                      nzShowSearch
+                      nzPlaceHolder="Select Admin"
+                      [(ngModel)]="Admin"
+                      [ngModelOptions]="{ standalone: true }"
+                      (ngModelChange)="onChange('admin')"
+                      style="width: 100%"
+                    >
+                      <nz-option
+                        *ngFor="let admin of Adminlist"
+                        [nzValue]="admin.label"
+                        [nzLabel]="admin.label"
+                      ></nz-option>
+                    </nz-select>
+                  </nz-form-control>
+                </nz-form-item>
+              </nz-col> -->
+
+              <!-- Admin View -->
+              <!-- <nz-col *ngIf="role === 'admin'" [nzSpan]="5" class="filter-item">
+                <nz-form-item style="margin-bottom: 0">
+                  <nz-form-label [nzSpan]="24" class="left-align-label"
+                    >Reseller</nz-form-label
+                  >
+                  <nz-form-control>
+                    <nz-select
+                      nzAllowClear
+                      nzShowSearch
+                      nzPlaceHolder="Select Seller"
+                      [(ngModel)]="Reseller"
+                      [ngModelOptions]="{ standalone: true }"
+                      (ngModelChange)="onChange('reseller')"
+                      style="width: 100%"
+                    >
+                      <nz-option
+                        *ngFor="let reseller of ResllerList"
+                        [nzValue]="reseller.label"
+                        [nzLabel]="reseller.label"
+                      ></nz-option>
+                    </nz-select>
+                  </nz-form-control>
+                </nz-form-item>
+              </nz-col> -->
+
+              <!-- Reseller or Admin View -->
+              <!-- <nz-col
+                *ngIf="role === 'reseller' || role === 'admin'"
+                [nzSpan]="5"
+                class="filter-item"
+              >
+                <nz-form-item style="margin-bottom: 0">
+                  <nz-form-label [nzSpan]="24" class="left-align-label"
+                    >Seller</nz-form-label
+                  >
+                  <nz-form-control>
+                    <nz-select
+                      nzAllowClear
+                      nzShowSearch
+                      nzPlaceHolder="Select Reseller"
+                      [(ngModel)]="Seller"
+                      [ngModelOptions]="{ standalone: true }"
+                      (ngModelChange)="onChange('seller')"
+                      style="width: 100%"
+                    >
+                      <nz-option
+                        *ngFor="let seller of SellerList"
+                        [nzValue]="seller.label"
+                        [nzLabel]="seller.label"
+                      ></nz-option>
+                    </nz-select>
+                  </nz-form-control>
+                </nz-form-item>
+              </nz-col> -->
+
+              <!-- Seller, Reseller or Admin View -->
+              <!-- <nz-col
+                *ngIf="
+                  role === 'seller' || role === 'reseller' || role === 'admin'
+                "
+                [nzSpan]="5"
+                class="filter-item"
+              >
+                <nz-form-item style="margin-bottom: 0">
+                  <nz-form-label [nzSpan]="24" class="left-align-label"
+                    >Client</nz-form-label
+                  >
+                  <nz-form-control>
+                    <nz-select
+                      nzAllowClear
+                      nzShowSearch
+                      nzPlaceHolder="Select Clients"
+                      [(ngModel)]="Client"
+                      [ngModelOptions]="{ standalone: true }"
+                      (ngModelChange)="onChange('client')"
+                      style="width: 100%"
+                    >
+                      <nz-option
+                        *ngFor="let Client of Clientlist"
+                        [nzValue]="Client.label"
+                        [nzLabel]="Client.label"
+                      ></nz-option>
+                    </nz-select>
+                  </nz-form-control>
+                </nz-form-item>
+              </nz-col> -->
+
+              <nz-col [nzXs]="24" [nzSm]="24" [nzMd]="12" [nzLg]="14" *ngIf="role!=='client'">
+                <app-filter-dropdown
+                  [role]="role"
+                  [span]="8"
+                  (selectionChange)="handleSelection($event)"
+                  [requierd]="false"
+                ></app-filter-dropdown>
+              </nz-col>
+
+              <nz-col [nzSpan]="4" class="filter-item">
+                <div
+                  style="
+                    display: flex;
+                    gap: 5px;
+                    flex-wrap: wrap;
+                    margin-top: 30px;
+                  "
+                >
+                  <button nz-button nzType="primary" (click)="search()">
+                    Search
+                  </button>
+                </div>
+              </nz-col>
+            </nz-row>
+
+            <nz-row class="historytable" [nzGutter]="16">
+              <nz-col [nzSpan]="24">
+                <nz-table
+                  [nzFrontPagination]="false"
+                  style="
+                    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+                    border-radius: 8px;
+                  "
+                  #basicTable
+                  [nzBordered]="true"
+                  [nzData]="userHistory"
+                  [nzSize]="'middle'"
+                  [nzPageSize]="pageSize"
+                  [nzPageIndex]="pageIndex"
+                  [nzTotal]="totalRecords"
+                >
+                  <thead>
+                    <tr>
+                      <th>Created Date</th>
+                      <!-- <th>Updated By</th> -->
+                      <th>Allocated Credit</th>
+                      <!-- <th>Available Credit</th> -->
+                      <th>Comments</th>
+                      <th>Remarks</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr *ngFor="let record of userHistory">
+                      <td>
+                        {{ record.createdDate | date : "dd-MM-yyyy HH:mm:ss" }}
+                      </td>
+                      <!-- <td>{{ record.updatedBy }}</td> -->
+                      <td>
+                        {{
+                          record.textCreditDataDetails?.allocatedCredit ||
+                            record.richCreditDataDetails?.allocatedCredit
+                        }}
+                      </td>
+
+                      <!-- <td>
+                        <nz-tag nzColor="success">
+                          {{
+                            record.textCreditDataDetails?.availableCredit ||
+                              record.richCreditDataDetails?.availableCredit
+                          }}
+                        </nz-tag>
+                      </td> -->
+
+                      <td>
+                        {{
+                          (
+                            record.textCreditDataDetails?.comments ||
+                            record.richCreditDataDetails?.comments
+                          )?.includes(record.updatedBy)
+                            ? (
+                                record.textCreditDataDetails?.comments ||
+                                record.richCreditDataDetails?.comments
+                              ).split("by")[0]
+                            : record.textCreditDataDetails?.comments ||
+                              record.richCreditDataDetails?.comments
+                        }}
+                      </td>
+
+                      <td>
+                        {{
+                          record.textCreditDataDetails?.remarks ||
+                            record.richCreditDataDetails?.remarks
+                        }}
+                      </td>
+                    </tr>
+                  </tbody>
+                </nz-table>
+              </nz-col>
+            </nz-row>
+          </form>
+        </nz-card>
+      </div>
+    </nz-tab>
+  </nz-tabset>
+</nz-card>

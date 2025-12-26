@@ -1,0 +1,36 @@
+<nz-card [nzBordered]="true" nzType="inner" [nzSize]="'small'" nzTitle="Header" [nzExtra]="extraTemplate">
+    <ng-container *ngIf="showEmojiPopup">
+        <emoji-mart title="Pick your emoji…" [showPreview]="false" class="emoji-popup"
+            [isNative]="false" (emojiClick)="addEmoji($event)"></emoji-mart>
+    </ng-container>
+
+    <input nz-input *ngIf="headerTypeSelected === headerTypeData.Text" #input placeholder="Type your template header text here..."
+        nzBorderless nzMaxTagCount="60" (click)="cursorTracker(input);" (keyup)="cursorTracker(input);"
+        [(ngModel)]="messageBody" [ngModelOptions]="{standalone: true}" (select)="onTextHighlight($event)" />
+
+    <svg *ngIf="headerTypeSelected != headerTypeData.Text" width="357" height="93" viewBox="0 0 357 93" fill="none"
+        xmlns="http://www.w3.org/2000/svg">
+        <path d="M1 97.5L102.261 31.6607L171.443 76.6054M135.5 104L245.75 18L356 104" stroke="#D3DCE6" stroke-width="2">
+        </path>
+        <circle cx="61.5" cy="9.5" r="8.5" stroke="#D3DCE6" stroke-width="2"></circle>
+    </svg>
+
+</nz-card>
+
+<ng-template #extraTemplate>
+    <nz-space [nzSize]="'small'">
+
+        <nz-select *nzSpaceItem [(ngModel)]="headerTypeSelected" (ngModelChange)="typeSelected($event)">
+            <nz-option [nzValue]="headerTypeData.Text" nzLabel="TEXT"></nz-option>
+            <nz-option [nzValue]="headerTypeData.Image" nzLabel="IMAGE"></nz-option>
+            <nz-option [nzValue]="headerTypeData.Document" nzLabel="DOCUMENT"></nz-option>
+            <nz-option [nzValue]="headerTypeData.Video" nzLabel="VIDEO"></nz-option>
+        </nz-select>
+
+        <ng-container *ngIf="headerTypeSelected === headerTypeData.Text">
+            <button *nzSpaceItem nz-button [nzSize]="'default'" (click)="showEmojiPopup=!showEmojiPopup">
+                <span nz-icon nzType="smile" nzTheme="twotone"></span>
+            </button>
+        </ng-container>
+    </nz-space>
+</ng-template>

@@ -1,0 +1,75 @@
+
+
+<nz-card nzTitle="Domain Manager">
+
+<form nz-row [nzGutter]="16" nzAlign="bottom" [formGroup]="domainForm"> 
+
+   
+<div  nz-col [nzSpan]="5" class="filter-item">
+    <label for="bots" class="ant-form-item-label">Title <span style="color: red;"> * </span> </label>
+    <input id="Title" nz-input placeholder="Title" formControlName="tittle" (ngModelChange)="domainForm.controls['tittle'].setValue($event.trim())"/>
+
+   
+  </div>
+
+    
+<div  nz-col [nzSpan]="10" class="filter-item" >
+    <label for="bots" class="ant-form-item-label">Description <span style="color: red;"> * </span> <span style="color: gray ;font-size: smaller;">(To reduce message length enter the domain name without http/https.)</span> </label>
+    <input id="Description" nz-input   placeholder="Domain Name" formControlName="descripton" (ngModelChange)="domainForm.controls['descripton'].setValue($event.trim())"/>
+
+   
+
+   
+  </div>
+
+  <div style=" display: flex; justify-content: flex-end;  align-items: center;">
+    <button nz-button nzType="primary" (click)="onSumbit()">Sumbit</button>
+    
+  </div>
+
+  </form>
+
+
+  
+  <div style="margin-top: 10px;">
+   
+
+    <nz-table
+    #templateTable
+    [nzBordered]="true"
+    [nzData]="listOfData"
+    [nzSize]="'middle'"
+    [nzScroll]="{ x: '100%' }"
+  >
+    <thead>
+      <tr>
+        <!-- <th nzWidth="25%">Title</th> -->
+        <th nzWidth="25%">Domain Name </th>
+        <th nzWidth="25%">Created Date </th>
+        <th nzWidth="25%">Is Approved</th>
+       
+      
+      </tr>
+    </thead>
+    <tbody>
+      <tr  *ngFor="let data of reportList">
+        <!-- <td>{{ data.Title }}</td> -->
+      
+        <td> {{ data.domainName }}</td>
+       
+        <td>{{ data.createdDate | date:'dd-MM-yyyy HH:mm:ss' }}</td>
+
+        <td>{{data.isApproved }}</td>
+        
+
+      </tr>
+    </tbody>
+  </nz-table>
+  
+  
+
+  </div>
+
+
+
+  </nz-card>

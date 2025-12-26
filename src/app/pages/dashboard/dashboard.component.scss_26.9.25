@@ -1,0 +1,230 @@
+.dashboard-stats {
+  padding-top: 30px;
+  padding-bottom: 30px;
+}
+
+.dashboard-card {
+  ::ng-deep .ant-card-body {
+    padding: 8px;
+  }
+}
+::ng-deep .ant-tabs-tab{
+  justify-content: center;
+  width: 50%;
+}
+::ng-deep .ant-tabs > .ant-tabs-nav .ant-tabs-nav-list{
+  width:100%
+}
+.card-container ::ng-deep p {
+  margin: 0;
+}
+
+.card-container ::ng-deep>.ant-tabs-card .ant-tabs-content {
+  margin-top: -16px;
+}
+
+.card-container ::ng-deep>.ant-tabs-card .ant-tabs-content>.ant-tabs-tabpane {
+  background: #fff;
+  padding: 16px;
+}
+
+.card-container ::ng-deep>.ant-tabs-card>.ant-tabs-nav::before {
+  display: none;
+}
+
+.card-container ::ng-deep>.ant-tabs-card .ant-tabs-tab {
+  border-color: transparent;
+  background: transparent;
+}
+
+/* Always apply border and background */
+.card-container ::ng-deep > .ant-tabs-card .ant-tabs-tab-active {
+  border-color: #fff;
+  background: #fff;
+}
+
+/* Only apply width:100% when account-manager class is present */
+.card-container.account-manager ::ng-deep > .ant-tabs-card .ant-tabs-tab-active {
+  width: 100%;
+}
+
+
+.nz-card {
+  border: 1px solid #ccc; /* Default border */
+  border-radius: 4px; /* Optional: rounded corners */
+  transition: border-color 0.3s ease; /* Smooth transition effect */
+}
+
+.nz-card:hover {
+  border-color: #007bff; /* Highlight color on hover */
+}
+.billing-dashboard {
+  padding: 20px;
+  background: #f8f9fa; /* Subtle background color for the whole dashboard */
+}
+
+/* Labels for dropdowns and inputs */
+.ant-form-item-label {
+  font-weight: bold;
+  color: #333;
+}
+
+/* Add a 3D effect to the cards in the summary section */
+.dashboard-stats nz-card {
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  background: linear-gradient(145deg, #ffffff, #e6e6e6); /* Light gradient background */
+  box-shadow: 6px 6px 12px #d1d1d1, -6px -6px 12px #ffffff; /* 3D shadow */
+  border-radius: 10px; /* Smooth corners */
+}
+
+.dashboard-stats nz-card:hover {
+  transform: translateY(-5px); /* Slight pop-out effect on hover */
+  box-shadow: 8px 8px 16px #d1d1d1, -8px -8px 16px #ffffff; /* Stronger shadow on hover */
+}
+
+/* Inside the cards */
+.dashboard-stats .stat-value {
+  font-size: 26px;
+  font-weight: bold;
+  margin-bottom: 8px;
+  text-shadow: 1px 1px 2px #ccc; /* Subtle text shadow for depth */
+}
+
+.dashboard-stats .stat-detail {
+  font-size: 13px;
+  color: #666;
+}
+
+
+
+
+
+.filter-container {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+.filter-item{
+  margin-top: 5px;
+}
+.row {
+  display: flex;
+  gap: 20px;
+  flex-wrap: wrap;
+}
+.time-picker-container {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  
+}
+.col {
+  flex: 1;
+  min-width: 180px;
+}
+
+.search-container {
+  margin-top: 15px;
+  text-align: right;
+}
+/* Button styling for the search and download report buttons */
+// button[nz-button] {
+//   //background: linear-gradient(145deg, #ffffff, #e6e6e6);
+//   box-shadow: 6px 6px 12px #d1d1d1, -6px -6px 12px #ffffff;
+//   border: none;
+//   border-radius: 8px;
+//   transition: all 0.3s ease;
+//   font-weight: bold;
+// }
+
+// button[nz-button]:hover {
+//   transform: translateY(-2px); /* Raised effect on hover */
+//   box-shadow: 8px 8px 16px #d1d1d1, -8px -8px 16px #ffffff;
+// }
+
+// button[nz-button]:active {
+//   transform: translateY(2px); /* Pressed effect */
+//   box-shadow: inset 4px 4px 8px #d1d1d1, inset -4px -4px 8px #ffffff;
+// }
+
+/* 3D effect for dropdowns */
+nz-select {
+  background: linear-gradient(145deg, #ffffff, #e6e6e6);
+  box-shadow: inset 6px 6px 12px #d1d1d1, inset -6px -6px 12px #ffffff;
+  border-radius: 8px;
+}
+
+/* Table styling for a 3D effect */
+nz-table {
+  background: #ffffff;
+  box-shadow: 6px 6px 12px #d1d1d1, -6px -6px 12px #ffffff;
+  border-radius: 12px;
+  overflow: hidden;
+}
+
+nz-table th {
+  background: #f8f8f8;
+  color: #333;
+  font-weight: bold;
+}
+
+nz-table td {
+  background: #ffffff;
+  color: #555;
+}
+
+/* Empty state styling */
+.empty-state {
+  text-align: center;
+  color: gray;
+}
+
+.empty-state i {
+  font-size: 24px;
+  margin-bottom: 8px;
+  text-shadow: 1px 1px 2px #ccc;
+}
+.search-section button[nz-button] {
+  background-color: #007bff; /* Primary blue color */
+  color: white; /* White text for contrast */
+  border: none; /* Remove border */
+  border-radius: 4px; /* Slightly rounded corners */
+  padding: 8px 16px; /* Button padding */
+  font-weight: bold; /* Bold text */
+  transition: background-color 0.3s ease; /* Smooth hover transition */
+}
+
+.search-section button[nz-button]:hover {
+  background-color: #0056b3; /* Darker blue on hover */
+}
+
+.search-section button[nz-button]:active {
+  background-color: #003f7f; /* Even darker blue when pressed */
+}
+
+
+.stat-value {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 20px;
+  font-weight: 500;
+  padding: 4px 8px;
+}
+
+.filter-item .ant-form-item-label {
+  font-weight: 500;
+  margin-bottom: 4px;
+}
+
+.dashboard-search-btn {
+  background-color: #373435;
+  color: #ffcc29;
+  border: #373435;
+}
+
+//New styling
+.ant-row {
+  display: flex;
+  justify-content: center;
+}

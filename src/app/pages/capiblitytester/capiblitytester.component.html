@@ -1,0 +1,105 @@
+<!-- <nz-page-header class="site-page-header" nzTitle="Bulk Capability Test" style="margin-bottom: 0;"></nz-page-header> -->
+<nz-card style=" height:100%; margin-top: 20px;">
+
+  <nz-form-item nz-col [nzSpan]="5">
+    <nz-form-control nzErrorTip="*required" >
+        <nz-form-label nzLabelAlign="left" nzFor="botIds">Select Bot
+            <span style="color: red;"> * </span></nz-form-label>
+        <nz-select nzShowSearch nzAllowClear nzPlaceHolder="Select Bot" [(ngModel)]="botId">
+            <nz-option *ngFor="let bot of botss" nzLabel="{{ bot.botName }}" [nzValue]="bot.botId">
+            </nz-option>
+        </nz-select>
+    </nz-form-control>
+</nz-form-item>
+
+    <nz-form-label nzFor="" nzSpan="1-24" nzRequired>
+        Uplaod a File
+    </nz-form-label>
+    <span *ngIf="botId===null" style="color: red;">*Please Select The Bot</span>
+    <p style="font-size: 0.7rem; color: #adadad; text-align: justify; padding-right: 10px;">
+        Upload a file with the list of mobile numbers and The numbers should be prefixed with country code. (Eg. 91 98 76
+        543210 for India - Country Code ). The recipient numbers should be under the column named Phone No This should
+        be the first column.<b> File should have min 500 numbers.</b></p>
+
+        <div class="div" nz-row [nzGutter]="32">
+
+        <nz-upload [(nzFileList)]="fileList" [nzBeforeUpload]="beforeUpload" nz-col nzSpan="3" [nzAccept]="'.csv,.xlsx'" [nzMultiple]="false"
+        [nzLimit]="1" [nzDisabled]="botId===null? true : false">
+            <button nz-button>
+              <span nz-icon nzType="upload" ></span>
+              Select File
+            </button>
+          </nz-upload>
+          
+          <button
+          nz-col nzSpan="3"
+            nz-button
+            nzType="primary"
+            [nzLoading]="uploading"
+            (click)="handleUpload()"
+            [disabled]="fileList.length === 0"
+          >
+            {{ uploading ? 'Uploading' : 'Start Upload' }}
+          </button>
+         </div> 
+    <!-- <nz-upload 
+        (nzChange)="handleChange($event)"
+        [nzAccept]="'.csv'"
+        nzMultiple="false"
+        nzShowButton="true"
+        >
+        <button nz-button nzType="primary">
+            <span nz-icon nzType="upload"></span>
+            Upload File (.csv)
+        </button>
+    </nz-upload> -->
+
+    <div class="" style="margin-top: 20px; " >
+      <h3>Uploaded Files</h3>
+    <nz-form-label nzFor="" nzSpan="1-24" nzRequired>Select Date</nz-form-label>
+    <div class="" style="display: flex; gap: 10px;" >
+    <nz-range-picker  [(ngModel)]="date" [ngModelOptions]="{standalone: true}" ></nz-range-picker>
+    <button nz-button nzType="primary"  (click)="handleSubmit()">Submit</button>
+    </div>
+  </div>
+
+  <nz-table style="margin-top: 5%;" #sortTable [nzData]="listOfData" nzSize="middle"  >
+    <thead>
+        <tr>
+            <!-- <th [nzSortFn]="true"  >User Name</th> -->
+            <th [nzSortFn]="true"  >Date</th>
+            <th   >Uploaded File</th>
+            <th >Status</th>
+            <th >Download / RCS Enabled</th>
+            <!-- <th [nzSortFn]="true" [nzWidth]="'16%'">Operator Template Id</th> -->
+        </tr>
+    </thead>
+    <tbody >
+      <ng-container *ngFor="let dt of sortTable.data">
+        <tr>
+            <!-- <td>{{dt.userName}}</td> -->
+            <td>{{dt.createdDate | date:'dd-MM-yyyy HH:mm:ss'}}</td>
+            <td><a [href]="dt.rcsUploadedFileAccessUrl" download nz-button nzType="link">
+                {{dt.fileName.split('/')[4]}}<span nz-icon nzType="download" nzTheme="outline"></span>
+            </a></td>
+            <td>
+              <nz-tag [nzColor]="dt.status === 'C' ? 'green' :dt.status === 'N'? 'yellow':'red'">
+                <span nz-icon [nzType]="dt.status === 'C' ? 'check-circle' : dt.status === 'N'? 'clock-circle':'close-circle' "></span>
+                {{ dt.status === 'C' ? 'Complete' : dt.status === 'N' ? 'Pending' : 'Rejected' }}
+              </nz-tag>
+            </td>
+            
+            <td nzEllipsis>
+                <a [href]="dt.rcsEnabledFileAccessUrl" nz-button nzType="link" *ngIf="dt.rcsEnabledFileAccessUrl!=null">
+                {{dt.rcsEnabledFileName}}<span nz-icon nzType="download" nzTheme="outline"></span>
+                 </a>
+            </td>
+        </tr>
+        
+        
+    
+  </ng-container>
+  </tbody>
+</nz-table>
+
+</nz-card>

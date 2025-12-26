@@ -1,0 +1,84 @@
+<div class="rcs-page-container" style="padding: 20px; margin-top: 20px;">
+
+  <!-- Page Header -->
+  <div *ngIf="role==='admin'">
+  <div class="header-section" >
+    <h2>Hey,</h2>
+    <p>
+      Hey <b>{{ loggedInUserName }}</b>, You now have the opportunity to submit a bot for sending RCS messages effortlessly! Enhance your communication with rich, interactive messaging and take your customer engagement to the next level.
+      <br>
+      <span>Get started today and experience the future of messaging! ✨"</span>
+    
+    </p>
+    <button  nz-button nzType="primary" (click)="clearBotAndNavigate()" nzShape="round">Create New RCS Bot</button>
+  </div>
+</div>
+
+  <!-- Search Bots -->
+  <div class="search-section" style="margin: 20px 0;">
+    <nz-input-group nzSize="large" nzPrefixIcon="search">
+      <input type="text" nz-input placeholder="Keyword search" [formControl]="searchControl"/>
+    </nz-input-group>
+  </div>
+
+  <!-- RCS Bots Table -->
+  <div class="bots-section">
+    <nz-card [nzBordered]="false" [nzBodyStyle]="{ padding: '0' }">
+      <div class="table-header" style="background-color: #f0f4ff; padding: 15px; border-radius: 8px 8px 0 0;">
+        <h3>My RCS Bots</h3>
+      </div>
+      <nz-table
+      #basicTable
+      [nzBordered]="true"
+      [nzData]="filteredData"
+      [nzShowPagination]="false"
+      [nzScroll]="{ x: '1000px' }"
+      [nzSize]="'middle'"
+    >
+      <thead> 
+        <tr>
+          <th *ngIf="role==='admin'|| role ==='reseller'" nzWidth="15%">User Name</th>
+          <th nzWidth="15%">Bot Name</th>
+          <th nzWidth="10%">Bot Type</th>
+          <th nzWidth="15%">Brand</th>
+          <th nzWidth="20%">Status</th>
+          <th *ngIf="role !== 'client' && role !== 'seller' && role !== 'reseller'" nzWidth="15%" >Operator Name</th>
+          <th *ngIf="role==='admin' || role==='seller' || role==='reseller' || role==='client'" nzWidth="10%">Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let bot of filteredData">
+          <td *ngIf="role==='admin'|| role ==='reseller'"></td>
+          <td>{{ bot.botName }}</td>
+          <td>{{ bot.botType }}</td>
+          <td>{{ bot.brandName }}</td>
+          <td nzEllipsis>
+            <nz-tag [nzColor]="(status === 'Creation Rejected' || status === 'rejected') ? 'red' : status === 'Pending Verification' ? 'yellow' : 'green'" *ngFor="let status of bot.status">
+              {{ status }}
+            </nz-tag>
+          </td>
+          <td *ngIf="role !== 'client' && role !== 'seller' && role !== 'reseller'">{{ bot.operatorNames }}</td>
+            <td *ngIf="role==='admin' || role==='seller' || role ==='reseller' || role ==='client' " >
+              <a [routerLink]="'/viewbot'" (click)="editBot(bot)">
+                <button nz-button nzType="link" nzShape="circle" nzTooltipTitle="View">
+                  <i nz-icon nzType="eye" nzTheme="outline"></i>
+                </button>
+              </a>
+              <a *ngIf="role==='admin'" [routerLink]="['/updatebot']" (click)="editBot(bot)">
+                  <button nz-button nzType="link" nzShape="circle" nzTooltipTitle="Edit">
+                    <i nz-icon nzType="edit" nzTheme="outline"></i>
+                  </button>
+                </a>
+              <!-- <a *ngIf="role==='admin' || role==='seller' || role==='reseller'" [routerLink]="['/configbot',bot.botId]" (click)="editBot(bot)">
+                <button nz-button nzType="link" nzShape="circle" nzTooltipTitle="Delete">
+                  <i nz-icon nzType="custom:roket" nzTheme="outline"></i>
+                </button>
+              </a>                   -->
+            </td>
+          </tr>
+        </tbody>
+      </nz-table>
+    </nz-card>
+    
+  </div>
+</div>

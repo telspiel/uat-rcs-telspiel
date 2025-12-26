@@ -1,0 +1,112 @@
+:host {
+  display: block;
+  width: 100%;
+}
+
+nz-card {
+    margin: 20px;
+  }
+  
+  nz-progress {
+    margin-top: 10px;
+  }
+  
+  h2 {
+    margin-top: 10px;
+  }
+  .yellow-btn {
+    background-color: #facc15 !important; /* Yellow */
+    color: black !important;
+    border: none !important;
+  }
+  .response-box {
+    border: 1px solid #ddd;
+    padding: 16px;
+    border-radius: 8px;
+    text-align: center;
+    font-size: 24px;
+    font-weight: bold;
+  }
+  
+  .interaction-list {
+    list-style: none;
+    padding: 0;
+  }
+  
+  .interaction-list li {
+    display: flex;
+    justify-content: space-between;
+    padding: 4px 0;
+  }
+  
+  .interaction-list a {
+    color: #007bff;
+    text-decoration: none;
+  }
+  
+  .interaction-list .count {
+    font-weight: bold;
+  }
+  
+  .circle {
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 24px;
+    font-weight: bold;
+    margin: 0 auto;
+  }
+  
+  .light-blue {
+    background-color: #cce5ff;
+    color: #007bff;
+  }
+  
+  .dark-blue {
+    background-color: #007bff;
+    color: white;
+  }
+  .equal-height {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+  }
+  .circle-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+  }
+  
+  .circle {
+    width: 220px;
+    height: 220px;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 24px;
+    font-weight: bold;
+  }
+  
+  .light-blue {
+    background-color: #dbeafe; /* Light Blue */
+    color: #2563eb;
+  }
+  
+  .dark-blue {
+    background-color: #3b82f6; /* Dark Blue */
+    color: white;
+  }
+  
+  
+  p {
+    margin: 0;
+  }
+  .tree{
+    margin-top: 4%;
+  }
+  

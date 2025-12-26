@@ -1,0 +1,24 @@
+<nz-card [nzBordered]="true" nzType="inner" [nzSize]="'small'" nzTitle="Button" [nzExtra]="extraTemplate">
+    <input nz-input placeholder="Start typing your button label here..." [(ngModel)]="btnLabel" nzBorderless
+        nzMaxTagCount="20" (ngModelChange)="emitChanges($event)" />
+    <nz-divider nzPlain></nz-divider>
+    <input nz-input placeholder="Phone Number" [(ngModel)]="phoneLable" *ngIf="selectedValue==='phone'" nzBorderless
+    nzMaxTagCount="20" (ngModelChange)="emitChanges($event)" />
+    <input nz-input placeholder="URL" [(ngModel)]="urlLabel" *ngIf="selectedValue==='url'" nzBorderless
+    nzMaxTagCount="20" (ngModelChange)="emitChanges($event)" />
+
+</nz-card>
+
+<ng-template #extraTemplate>
+    <nz-space [nzSize]="'small'">
+
+        <nz-select *nzSpaceItem ngModel="phone" [(ngModel)]="selectedValue">
+            <nz-option nzValue="url" nzLabel="Url"></nz-option>
+            <nz-option nzValue="phone" nzLabel="Phone Number"></nz-option>
+        </nz-select>
+
+        <button *nzSpaceItem nz-button [nzSize]="'default'" (click)="deleteTriggered()">
+            <span nz-icon nzType="delete" nzTheme="outline"></span>
+        </button>
+    </nz-space>
+</ng-template>

@@ -1,0 +1,50 @@
+<h5 nz-typography style="margin-top: 25px;">View Content Template</h5>
+
+  <form nz-form>
+    <nz-row [nzGutter]="16">
+   
+      <nz-col [nzSpan]="8">
+        <nz-form-item>
+          <nz-form-label nzLabelAlign="left" nzRequired nzFor="EntityID">OperatorTemplateId</nz-form-label>
+          <nz-form-control>
+            <input nz-input id="operatorTemplateId" placeholder="Enter Entity" />
+          </nz-form-control>
+        </nz-form-item>
+      </nz-col>
+
+  
+      <nz-col [nzSpan]="8">
+        <nz-form-item>
+          <nz-form-label nzLabelAlign="left" nzRequired nzFor="TemplateTitle">Template Title</nz-form-label>
+          <nz-form-control>
+            <input nz-input id="templateTitle" placeholder="Enter Title" />
+          </nz-form-control>
+        </nz-form-item>
+      </nz-col>
+      <button nz-button nzType="primary" class="btn-gap" >Submit</button>
+
+
+    </nz-row>
+  </form>
+  <nz-table
+  nzShowSizeChanger
+  [nzTotal]="total"
+  [nzPageSize]="pageSize"
+  [nzPageIndex]="pageIndex"
+>
+  <thead>
+    <tr>
+        <th nzColumnKey="summaryDate" [nzSortFn]="true"></th>
+      <th nzColumnKey="summaryDate" [nzSortFn]="true">Template Title</th>
+      <th nzColumnKey="totalRequested" [nzSortFn]="true">Template Description</th>
+      <th nzColumnKey="totalRejected" [nzSortFn]="true">Sender Id</th>
+      <th nzColumnKey="totalSubmit" [nzSortFn]="true">Sender Status</th>
+      <th nzColumnKey="totalRequested" [nzSortFn]="true">Content Template Type</th>
+      
+    </tr>
+  </thead>
+  <tbody>
+    
+  </tbody>
+</nz-table>
+

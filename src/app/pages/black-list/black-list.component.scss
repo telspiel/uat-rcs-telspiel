@@ -1,0 +1,116 @@
+.container {
+    padding: 20px;
+    background-color: #f9f9f9;
+    border-radius: 8px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  }
+
+  .form-card {
+    background: white;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+    margin-bottom: 20px;
+    transition: transform 0.2s ease-in-out;
+  }
+
+  .form-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  }
+
+  .input-group {
+    margin-bottom: 15px;
+    width: 100%;
+  }
+
+  .input-field {
+    border: 1px solid #d9d9d9;
+    border-radius: 4px;
+    padding: 8px 12px;
+    font-size: 14px;
+    transition: border-color 0.3s ease;
+  }
+
+  .input-field:focus {
+    border-color: #1890ff;
+    outline: none;
+    box-shadow: 0 0 5px rgba(24, 144, 255, 0.3);
+  }
+
+  .button-group {
+    display: flex;
+    gap: 10px;
+    margin-top: 15px;
+  }
+
+  .action-button {
+    padding: 8px 16px;
+    border-radius: 4px;
+    font-weight: 500;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  }
+
+  .action-button:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+  }
+
+  .action-button.secondary {
+    background-color: #fff;
+    border: 1px solid #d9d9d9;
+    color: #333;
+  }
+
+  .action-button.secondary:hover {
+    background-color: #f0f0f0;
+  }
+
+  .action-button.small {
+    padding: 4px 12px;
+    font-size: 12px;
+  }
+
+  .action-button.danger {
+    background-color: #ff4d4f;
+    border-color: #ff4d4f;
+    color: white;
+  }
+
+  .action-button.danger:hover {
+    background-color: #ff7875;
+    border-color: #ff7875;
+  }
+
+  .custom-table {
+    background: white;
+    border-radius: 8px;
+    overflow: hidden;
+  }
+
+  .custom-table th {
+    background-color: #fafafa;
+    font-weight: 600;
+    color: #333;
+  }
+
+  .custom-table td {
+    border-bottom: 1px solid #f0f0f0;
+    padding: 12px;
+  }
+
+  .upload-field {
+    margin: 10px 0;
+  }
+
+  @media (max-width: 768px) {
+    .flex {
+      flex-direction: column;
+      gap: 20px;
+    }
+
+    .form-card {
+      width: 100%;
+    }
+  }

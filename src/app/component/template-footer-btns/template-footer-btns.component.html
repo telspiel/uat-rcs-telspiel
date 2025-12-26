@@ -1,0 +1,33 @@
+<nz-card [nzBordered]="true" nzType="inner" [nzSize]="'small'" nzTitle="Buttons" [nzExtra]="extraTemplate">
+
+    <ng-container *ngIf="footerBtnType === quickReplayBtn">
+        <ng-container *ngFor="let item of quickReplyBtnArray">
+            <app-template-quick-rply-btn *ngIf="!item.isDeleted && item.isCreated" [index]="item"
+                (deleteEvent)="deleteQuickRplyBtn($event)"
+                (dataEvent)="setQuickBtnValue($event)"></app-template-quick-rply-btn>
+        </ng-container>
+    </ng-container>
+
+    <ng-container *ngIf="footerBtnType === ctaBtn">
+      <ng-container *ngFor="let item of ctaBtnArray">
+        <app-template-cta-btn *ngIf="!item.isDeleted && item.isCreated" [index]="item"
+            (deleteEvent)="deleteCTABtn($event)"
+            (dataEvent)="setCtaBtnValue($event)"></app-template-cta-btn>
+      </ng-container>
+    </ng-container>
+</nz-card>
+
+<ng-template #extraTemplate>
+    <nz-space [nzSize]="'small'">
+
+        <nz-select *nzSpaceItem [(ngModel)]="footerBtnType" nzPlaceHolder="Choose Type" [nzDisabled]="setDisabled">
+            <nz-option [nzValue]="ctaBtn" nzLabel="Call to Action"></nz-option>
+            <nz-option [nzValue]="quickReplayBtn" nzLabel="Quick Replay"></nz-option>
+        </nz-select>
+
+        <button *nzSpaceItem nz-button [nzSize]="'default'" nzType="primary" (click)="addFooterBtns()">
+            <span nz-icon nzType="appstore-add" nzTheme="outline"></span>
+            Add Button
+        </button>
+    </nz-space>
+</ng-template>

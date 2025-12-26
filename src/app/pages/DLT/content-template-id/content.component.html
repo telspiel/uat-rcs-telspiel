@@ -1,0 +1,17 @@
+<nz-page-header class="site-page-header" nzTitle="Content Template Management"></nz-page-header>
+
+<nz-card style="width: 100%; margin-top: 1.5rem; ">
+    <ul nz-menu nzMode="horizontal">
+      <li nz-menu-item  nzMatchRouter >
+        <a routerLink=" "   ><span nzType="plus" nzTheme="outline" nz-icon></span> Add </a>
+      </li>
+      <li nz-menu-item nzMatchRouter >
+        <a  [routerLink]="['dltupload']" ><span nz-icon nzType="upload" nzTheme="outline"></span> Upload </a>
+      </li>
+        <li nz-menu-item nzMatchRouter >
+        <a [routerLink]="['dltview']" routerLinkActive="active"  ><span nz-icon nzType="eye" nzTheme="outline"></span> View </a>
+      </li>
+    </ul>
+   
+    <router-outlet/>
+</nz-card>

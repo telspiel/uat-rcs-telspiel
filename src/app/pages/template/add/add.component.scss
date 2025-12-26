@@ -1,0 +1,336 @@
+.form-card {
+    max-width: 1200px;
+    margin: auto;
+    padding: 16px;
+  }
+  .innerContainer{
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+  }
+  .innerContainer::-webkit-scrollbar{
+    display: none;
+  }
+  .template-form {
+    margin-top: 16px;
+  }
+  
+  .char-limit {
+    font-size: 12px;
+    color: #888;
+  }
+  
+  .no-actions {
+    font-style: italic;
+    color: #aaa;
+    margin-bottom: 8px;
+  }
+  
+  .info-text {
+    margin-bottom: 16px;
+    font-size: 14px;
+    font-weight: bold;
+  }
+  .card-image img {
+    width: 70%; /* Makes the image span the width of the card */
+    max-width: 360px; /* Ensures the image doesn’t exceed mobile-friendly dimensions */
+    max-height: 300px; /* Restricts the image height */
+    object-fit: cover; /* Ensures the image maintains aspect ratio and crops excess */
+    display: block; /* Prevents extra spacing below the image */
+    margin: 0 auto; /* Centers the image horizontally */
+    border-radius: 8px; /* Optional: Adds rounded corners to the image */
+  }
+  .card-description-textarea {
+    font-size: 12px; /* Adjust font size of the textarea */
+  }
+  
+  .char-limit {
+    font-size: 10px; /* Decrease font size of the character counter */
+    color: #999; /* Optional: Lighten the font color */
+    display: block;
+    margin-top: 4px;
+  }
+  
+  .card {
+    border: 1px solid #ddd; /* Light border around the card */
+    border-radius: 8px; /* Rounded corners */
+    overflow: hidden; /* Clip overflowing content */
+    width: 100%; /* Full width for responsive design */
+    max-width: 400px; /* Set a maximum width for the card */
+    margin: auto; /* Center the card horizontally */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Subtle shadow for elevation */
+  }
+  
+  .card-header img {
+    width: 100%; /* Image fills the header */
+    height: 30px; /* Maintain aspect ratio */
+    display: block;
+  }
+  
+  .card-content {
+    padding: 16px; /* Add padding for content */
+    text-align: center; /* Center-align text */
+  }
+  
+  .card-title {
+    font-size: 18px; /* Slightly larger for title */
+    font-weight: bold;
+    color: #333; /* Darker color for contrast */
+    margin-bottom: 8px; /* Space below title */
+  }
+  
+  .card-description {
+    font-size: 14px; /* Smaller font for description */
+    color: #999; /* Faded gray color */
+    line-height: 1.4; /* Better line spacing */
+  }
+  .suggestion-item {
+    margin-bottom: 16px;
+    border: 1px solid #f0f0f0;
+    padding: 16px;
+    border-radius: 4px;
+    background-color: #fafafa;
+  }
+  .remove-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .btn-gap {
+    margin-right: 12px; /* Gap between buttons */
+  }
+  
+  .btn-gap:last-child {
+    margin-right: 0; /* No extra space after the last button */
+  }
+  .custom-textarea {
+    width: 100%; /* Set desired width; 100% fits the container */
+    height: 200px; /* Adjust height as per your need */
+    resize: vertical; /* Allow users to resize vertically */
+  }
+
+  .form-container {
+    max-width: 600px;
+    margin: 0 auto;
+  }
+  
+  button[nz-button] {
+    margin-left: 10px;
+    vertical-align: top;
+  }
+  .custom-card-grid {
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+  }
+  
+  .custom-card-grid {
+    width: 30px; /* Width of each card */
+    border: 1px solid #d9d9d9;
+    // margin: 10px;
+    // padding: 20px;
+    cursor: pointer;
+    text-align: center;
+    transition: transform 0.3s, box-shadow 0.3s; /* Added transition for box-shadow */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 10px 10px 0 0; /* Default rounded top-left and top-right corners */
+  }
+  
+  .custom-card-grid:hover {
+    transform: translateY(-10px); /* Moves the item upward */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.4); /* Adds a shadow effect */
+    border-radius: 10px 10px 0 0; /* Keeps the top rounded corners when hovered */
+  }
+  
+  .selected-card {
+    background-color: #e6f7ff;
+    border-color: #91d5ff;
+  }
+  
+  .add-card-btn {
+    margin-top: 20px;
+    text-align: center;
+  }
+  
+  button[nz-button][nzSize="small"] {
+    margin-left: 10px;
+  }
+  
+  .pdf-container {
+    display: flex;
+    align-items: center;
+    background: #f8f8f8;
+    border-radius: 10px;
+    padding: 10px;
+    margin: 10px 0;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  }
+  
+  .pdf-icon img {
+    width: 40px;
+    height: 40px;
+  }
+  
+  .pdf-details {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  
+  .pdf-info {
+    display: flex;
+    flex-direction: column;
+    line-height: 1.4;
+  }
+  
+  .pdf-name {
+    color: #333;
+    font-weight: bold;
+    text-decoration: none;
+    word-wrap: break-word;
+  }
+  
+  .pdf-name:hover {
+    text-decoration: underline;
+  }
+  
+  .pdf-size {
+    color: #999;
+    font-size: 12px;
+  }
+  .card-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px; 
+  }
+  
+  .custom-card-grid {
+    width: 70px; 
+    height: 90px;
+    border: 1px solid #d9d9d9;
+    margin: 10px;
+    padding: 20px;
+    cursor: pointer;
+    text-align: center;
+    transition: transform 0.3s;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  
+  .selected-card {
+    background-color: #e6f7ff;
+    border-color: #91d5ff;
+  }
+  
+  .add-card-btn {
+    margin-top: 20px;
+    text-align: center;
+  }
+  .delete-btn {
+    position: absolute;
+    top: 6px; /* Adjust as needed */
+    right: 10px; /* Adjust as needed */
+    padding: 2px; /* Smaller padding */
+    font-size: 12px; /* Make the 'X' smaller */
+    color: red; /* Red color for the 'X' button */
+    background: none; /* Remove background */
+    border: none; /* Remove border to make it look cleaner */
+    cursor: pointer; /* Change cursor to pointer to indicate it's clickable */
+  }
+  
+  .container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    overflow: hidden;
+    width: 100%;
+    margin: 0 auto;
+  }
+  
+  .card-container {
+    display: flex;
+    gap: 10px;
+    overflow-x: auto;
+    scroll-behavior: smooth;
+    padding: 10px 0;
+  }
+  
+  .custom-card {
+    width: 150px;
+    height: 90px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border: 1px solid #f0f0f0;
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+    background: #fafafa;
+  }
+  
+  .arrow-left,
+  .arrow-right {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    z-index: 2;
+    cursor: pointer;
+  }
+  
+  .arrow-left {
+    left: 16px;
+  }
+  
+  .arrow-right {
+    right: 16px;
+  }
+  .horizontal-card {
+    display: flex;
+    flex-direction: row;
+  }
+  
+  .vertical-card {
+    display: block;
+    flex-direction: column;
+  }
+  
+  .card-header img {
+    object-fit: cover; /* Ensures the image is cropped neatly */
+  }
+  
+  .card-content {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+  
+  .hypnotic {
+    width: 56px;
+    height: 48.496px;
+    display: grid;
+    background: linear-gradient(to bottom left ,#0000 calc(50% - 1.1px),#474bff 0 calc(50% + 1.1px),#0000 0) right/50% 100%,
+           linear-gradient(to bottom right,#0000 calc(50% - 1.1px),#474bff 0 calc(50% + 1.1px),#0000 0) left /50% 100%,
+           linear-gradient(#474bff 0 0) bottom/100% 2.2px;
+    background-repeat: no-repeat;
+    transform-origin: 50% 66%;
+    animation: hypnotic-k788tl 4s infinite linear;
+ }
+ 
+ .hypnotic::before,
+ .hypnotic::after {
+    content: "";
+    grid-area: 1/1;
+    background: inherit;
+    transform-origin: inherit;
+    animation: inherit;
+ }
+ 
+ .hypnotic::after {
+    animation-duration: 2s;
+ }
+ 
+ @keyframes hypnotic-k788tl {
+    100% {
+       transform: rotate(1turn);
+    }
+ }

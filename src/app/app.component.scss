@@ -1,0 +1,42 @@
+::ng-deep .ant-tabs-tab.ant-tabs-tab-active .ant-tabs-tab-btn {
+    color: var(--theme-color) !important;
+  }
+
+::ng-deep .ant-tabs-tab:hover {
+    color: var(--theme-color) !important;
+  }
+
+  ::ng-deep .ant-menu-horizontal:not(.ant-menu-dark) > .ant-menu-item-selected::after{
+    border-bottom: 2px solid var(--theme-color)!important;
+  }
+
+  ::ng-deep .ant-menu-horizontal:not(.ant-menu-dark) > .ant-menu-item:hover::after{
+    border-bottom: 2px solid var(--theme-color)!important;
+  }
+
+  ::ng-deep .ant-tabs-tab-btn:focus, .ant-tabs-tab-remove:focus, .ant-tabs-tab-btn:active, .ant-tabs-tab-remove:active {
+    color: var(--theme-color) !important;
+  }
+
+  ::ng-deep .ant-tabs-ink-bar{
+    background: var(--theme-color) !important;
+  }
+
+::ng-deep .ant-select {
+  width: 100% !important;
+}
+
+::ng-deep .ant-select-selector {
+  width: 100% !important;
+  white-space: nowrap !important;
+  overflow: hidden !important;
+  text-overflow: ellipsis !important;
+}
+
+::ng-deep .ant-select-selection-item {
+  display: block !important;
+  width: 100% !important;
+  white-space: nowrap !important;
+  overflow: hidden !important;
+  text-overflow: ellipsis !important;
+}

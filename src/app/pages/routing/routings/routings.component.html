@@ -1,0 +1,430 @@
+
+
+<nz-card>
+        
+<nz-card>
+      
+    <nz-row [nzGutter]="16">
+        <!-- Reseller -->
+        <nz-col [nzSpan]="6">
+          <nz-form-item>
+            <nz-form-label nzFor="reseller" [nzSpan]="24" class="left-align-label">Select Reseller</nz-form-label>
+            <nz-form-control>
+                <nz-select id="Reseller" nzPlaceHolder="Select a Reseller" 
+             >
+                <nz-option></nz-option>
+              </nz-select>
+            </nz-form-control>
+          </nz-form-item>
+        </nz-col>
+  
+        <!-- Seller -->
+        <nz-col [nzSpan]="6">
+          <nz-form-item>
+            <nz-form-label nzFor="seller" [nzSpan]="24" class="left-align-label">Select Seller</nz-form-label>
+            <nz-form-control>
+                <nz-select id="Seller" nzPlaceHolder="Select a Seller">
+                <nz-option ></nz-option>
+              </nz-select>
+            </nz-form-control>
+          </nz-form-item>
+        </nz-col>
+  
+        <!-- Client -->
+        <nz-col [nzSpan]="6">
+          <nz-form-item>
+            <nz-form-label nzFor="client" [nzSpan]="24" class="left-align-label">Select Client</nz-form-label>
+            <nz-form-control>
+                <nz-select id="Client" nzPlaceHolder="Select a Client" 
+               >
+                <nz-option></nz-option>
+              </nz-select>
+            </nz-form-control>
+          </nz-form-item>
+        </nz-col>
+
+        <nz-col [nzSpan]="6" >
+            <nz-form-item >
+                <button nz-button nzType="primary" style="display: flex; align-items: flex-end; margin-top: 38px;" > Submit</button>
+                <button nz-button nzType="primary" nzDanger style="display: flex; align-items: flex-end; margin-top: 38px; margin-left: 10px;" >Reset</button>
+            </nz-form-item>
+          </nz-col>
+          
+        
+
+
+
+      </nz-row>
+
+
+    </nz-card>
+      
+      
+    <div style="margin-top: 20px;">
+    <nz-row>
+       
+
+    <nz-col [nzSpan]="6" >
+       
+        <a (click)="setPromo()"><i nz-icon nzType="play-circle" nzTheme="outline"  style="margin-right: 5px; font-size: 15px; color: red; "></i>
+            PROMO</a>
+
+    </nz-col>
+
+    <nz-col>
+        <nz-form-item >
+        <button nz-button nzType="primary" style="display: flex; align-items: flex-end; margin-left: 900px" (click)="showModal()" >Add </button>
+        <nz-modal [(nzVisible)]="isVisible" nzTitle="Modal Promo" (nzOnCancel)="handleCancel()" (nzOnOk)="handleOk()">
+            <ng-container *nzModalContent>
+
+                <p>Routing Type :  PROMO</p>
+
+
+                <nz-row style="display: flex; justify-content: space-between; gap: 10px;">
+
+
+                
+                <nz-col [nzSpan]="5">
+                    <nz-form-item>
+                      <nz-form-label nzFor="circle" [nzSpan]="24" class="left-align-label">Circle</nz-form-label>
+                      <nz-form-control>
+                          <nz-select id="circle" nzPlaceHolder="All">
+                          <nz-option ></nz-option>
+                        </nz-select>
+                      </nz-form-control>
+                    </nz-form-item>
+                  </nz-col>
+
+                  <nz-col [nzSpan]="5">
+                    <nz-form-item>
+                      <nz-form-label nzFor="operator" [nzSpan]="24" class="left-align-label">Operator</nz-form-label>
+                      <nz-form-control>
+                          <nz-select id="operator" nzPlaceHolder="All">
+                          <nz-option ></nz-option>
+                        </nz-select>
+                      </nz-form-control>
+                    </nz-form-item>
+                  </nz-col>
+
+                  <nz-col [nzSpan]="5">
+                    <nz-form-item>
+                      <nz-form-label nzFor="sender Id" [nzSpan]="24" class="left-align-label">Sender Id</nz-form-label>
+                      <nz-form-control>
+                          <nz-select id="Sender Id" nzPlaceHolder="All">
+                          <nz-option ></nz-option>
+                        </nz-select>
+                      </nz-form-control>
+                    </nz-form-item>
+                  </nz-col>
+
+
+                  <nz-col [nzSpan]="5">
+                    <nz-form-item>
+                      <nz-form-label nzFor="Group" [nzSpan]="24" class="left-align-label">Group</nz-form-label>
+                      <nz-form-control>
+                          <nz-select id="group" nzPlaceHolder="All">
+                          <nz-option ></nz-option>
+                        </nz-select>
+                      </nz-form-control>
+                    </nz-form-item>
+                  </nz-col>
+
+
+                  </nz-row>
+
+                
+             
+            </ng-container>
+          </nz-modal>
+        <button nz-button  nzType="primary" nzDanger style="display: flex; align-items: flex-end; margin-left: 10px; " >Save</button>
+        </nz-form-item >
+
+        
+    </nz-col>
+
+    <nz-col>
+        <nz-table  #sortTable nzSize="middle" [nzBordered]='true' nzTableLayout="fixed" *ngIf="isPromoclick===true">
+            <thead>
+                <tr>
+                    
+                    <th [nzSortFn]="true" [nzWidth]="'16%'">CIRCLE</th>
+                    <th [nzSortFn]="true" [nzWidth]="'16%'" >OPERATOR</th>
+                    <th [nzSortFn]="true" [nzWidth]="'16%'" >SENDER ID</th>
+                    <th [nzSortFn]="true" [nzWidth]="'15%'">GROUP NAME</th>
+                    <th [nzSortFn]="true" [nzWidth]="'16%'">ACTION</th>
+                    
+                 
+                    
+                </tr>
+            </thead>
+            <tbody >
+             
+                <tr>
+                    <td ></td>
+                   
+                 
+                  
+                </tr>
+             
+           
+          </tbody>
+        </nz-table>
+
+        </nz-col>
+     
+
+
+      
+    </nz-row>
+    
+</div>
+
+
+<div style="margin-top: 20px;">
+    <nz-row>
+       
+
+    <nz-col [nzSpan]="6" >
+       
+        <a (click)="setTrans()" ><i nz-icon nzType="play-circle" nzTheme="outline"  style="margin-right: 5px; font-size: 15px; color: red; "></i>TRANS</a>
+
+    </nz-col>
+
+    <nz-col>
+        <nz-form-item >
+        <button nz-button nzType="primary" style="display: flex; align-items: flex-end; margin-left: 900px" (click)="showModal1()">Add </button>
+
+        <nz-modal [(nzVisible)]="isVisible1" nzTitle="Modal Heading" (nzOnCancel)="handleCancel1()" (nzOnOk)="handleOk1()">
+            <ng-container *nzModalContent>
+
+                <p>Routing Type :  TRANS</p>
+
+
+                <nz-row style="display: flex; justify-content: space-between; gap: 10px;">
+
+
+                
+                <nz-col [nzSpan]="5">
+                    <nz-form-item>
+                      <nz-form-label nzFor="circle" [nzSpan]="24" class="left-align-label">Circle</nz-form-label>
+                      <nz-form-control>
+                          <nz-select id="circle" nzPlaceHolder="All">
+                          <nz-option ></nz-option>
+                        </nz-select>
+                      </nz-form-control>
+                    </nz-form-item>
+                  </nz-col>
+
+                  <nz-col [nzSpan]="5">
+                    <nz-form-item>
+                      <nz-form-label nzFor="operator" [nzSpan]="24" class="left-align-label">Operator</nz-form-label>
+                      <nz-form-control>
+                          <nz-select id="operator" nzPlaceHolder="All">
+                          <nz-option ></nz-option>
+                        </nz-select>
+                      </nz-form-control>
+                    </nz-form-item>
+                  </nz-col>
+
+                  <nz-col [nzSpan]="5">
+                    <nz-form-item>
+                      <nz-form-label nzFor="sender Id" [nzSpan]="24" class="left-align-label">Sender Id</nz-form-label>
+                      <nz-form-control>
+                          <nz-select id="Sender Id" nzPlaceHolder="All">
+                          <nz-option ></nz-option>
+                        </nz-select>
+                      </nz-form-control>
+                    </nz-form-item>
+                  </nz-col>
+
+
+                  <nz-col [nzSpan]="5">
+                    <nz-form-item>
+                      <nz-form-label nzFor="Group" [nzSpan]="24" class="left-align-label">Group</nz-form-label>
+                      <nz-form-control>
+                          <nz-select id="group" nzPlaceHolder="All">
+                          <nz-option ></nz-option>
+                        </nz-select>
+                      </nz-form-control>
+                    </nz-form-item>
+                  </nz-col>
+
+
+                  </nz-row>
+
+                
+             
+            </ng-container>
+          </nz-modal>
+        <button nz-button  nzType="primary" nzDanger style="display: flex; align-items: flex-end; margin-left: 10px; " >Save</button>
+        </nz-form-item >
+
+        
+    </nz-col>
+
+    <nz-col>
+        <nz-table  #sortTable nzSize="middle" [nzBordered]='true' nzTableLayout="fixed"  *ngIf="isTransclick===true">
+            <thead>
+                <tr>
+                    
+                    <th [nzSortFn]="true" [nzWidth]="'16%'">CIRCLE</th>
+                    <th [nzSortFn]="true" [nzWidth]="'16%'" >OPERATOR</th>
+                    <th [nzSortFn]="true" [nzWidth]="'16%'" >SENDER ID</th>
+                    <th [nzSortFn]="true" [nzWidth]="'15%'">GROUP NAME</th>
+                    <th [nzSortFn]="true" [nzWidth]="'16%'">ACTION</th>
+                    
+                 
+                    
+                </tr>
+            </thead>
+            <tbody >
+             
+                <tr>
+                    <td ></td>
+                   
+                 
+                  
+                </tr>
+             
+           
+          </tbody>
+        </nz-table>
+
+        </nz-col>
+     
+
+
+      
+    </nz-row>
+    
+</div> 
+
+
+
+
+<div style="margin-top: 20px;">
+    <nz-row>
+       
+
+    <nz-col [nzSpan]="6" >
+       
+        <a (click)="setOTP()"><i nz-icon nzType="play-circle" nzTheme="outline"  style="margin-right: 5px; font-size: 15px; color: red; "></i>
+            OTP</a>
+
+    </nz-col>
+
+    <nz-col>
+        <nz-form-item >
+        <button nz-button nzType="primary" style="display: flex; align-items: flex-end; margin-left: 900px" (click)="showModal2()" >Add </button>
+        <nz-modal [(nzVisible)]="isVisible2" nzTitle="Modal Promo" (nzOnCancel)="handleCancel2()" (nzOnOk)="handleOk2()">
+            <ng-container *nzModalContent>
+
+                <p>Routing Type :  OTP</p>
+
+
+                <nz-row style="display: flex; justify-content: space-between; gap: 10px;">
+
+
+                
+                <nz-col [nzSpan]="5">
+                    <nz-form-item>
+                      <nz-form-label nzFor="circle" [nzSpan]="24" class="left-align-label">Circle</nz-form-label>
+                      <nz-form-control>
+                          <nz-select id="circle" nzPlaceHolder="All">
+                          <nz-option ></nz-option>
+                        </nz-select>
+                      </nz-form-control>
+                    </nz-form-item>
+                  </nz-col>
+
+                  <nz-col [nzSpan]="5">
+                    <nz-form-item>
+                      <nz-form-label nzFor="operator" [nzSpan]="24" class="left-align-label">Operator</nz-form-label>
+                      <nz-form-control>
+                          <nz-select id="operator" nzPlaceHolder="All">
+                          <nz-option ></nz-option>
+                        </nz-select>
+                      </nz-form-control>
+                    </nz-form-item>
+                  </nz-col>
+
+                  <nz-col [nzSpan]="5">
+                    <nz-form-item>
+                      <nz-form-label nzFor="sender Id" [nzSpan]="24" class="left-align-label">Sender Id</nz-form-label>
+                      <nz-form-control>
+                          <nz-select id="Sender Id" nzPlaceHolder="All">
+                          <nz-option ></nz-option>
+                        </nz-select>
+                      </nz-form-control>
+                    </nz-form-item>
+                  </nz-col>
+
+
+                  <nz-col [nzSpan]="5">
+                    <nz-form-item>
+                      <nz-form-label nzFor="Group" [nzSpan]="24" class="left-align-label">Group</nz-form-label>
+                      <nz-form-control>
+                          <nz-select id="group" nzPlaceHolder="All">
+                          <nz-option ></nz-option>
+                        </nz-select>
+                      </nz-form-control>
+                    </nz-form-item>
+                  </nz-col>
+
+
+                  </nz-row>
+
+                
+             
+            </ng-container>
+          </nz-modal>
+        <button nz-button  nzType="primary" nzDanger style="display: flex; align-items: flex-end; margin-left: 10px; " >Save</button>
+        </nz-form-item >
+
+        
+    </nz-col>
+
+    <nz-col>
+        <nz-table  #sortTable nzSize="middle" [nzBordered]='true' nzTableLayout="fixed" *ngIf="isOtpclick===true">
+            <thead>
+                <tr>
+                    
+                    <th [nzSortFn]="true" [nzWidth]="'16%'">CIRCLE</th>
+                    <th [nzSortFn]="true" [nzWidth]="'16%'" >OPERATOR</th>
+                    <th [nzSortFn]="true" [nzWidth]="'16%'" >SENDER ID</th>
+                    <th [nzSortFn]="true" [nzWidth]="'15%'">GROUP NAME</th>
+                    <th [nzSortFn]="true" [nzWidth]="'16%'">ACTION</th>
+                    
+                 
+                    
+                </tr>
+            </thead>
+            <tbody >
+             
+                <tr>
+                    <td ></td>
+                   
+                 
+                  
+                </tr>
+             
+           
+          </tbody>
+        </nz-table>
+
+        </nz-col>
+     
+
+
+      
+    </nz-row>
+    
+</div>
+
+
+
+
+
+
+
+</nz-card>

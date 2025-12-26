@@ -1,0 +1,207 @@
+<div class="rcs-page-container" style="padding: 20px; margin-top: 20px;">
+    <div class="header-section">
+      <h2>Hey,</h2>
+      <p>
+        Hey <b>{{ loggedInUserName }}</b>, <p>The RCS Chat Bot Flow Builder allows users to create their own Rich Communication Services (RCS) message flows using an interactive flowchart interface. This feature enables seamless drag-and-drop functionality to design customized conversation paths, making it easy to visualize and configure chatbot interactions
+      </p>
+      <button nz-button nzType="primary" [routerLink]="['/drawflow']" nzShape="round">Create Bot</button>
+    </div>
+   
+   
+    <div class="search-section" style="margin: 20px 0;">
+      <nz-input-group nzSize="large" nzPrefixIcon="search">
+        <input type="text" nz-input placeholder="Keyword search" [formControl]="searchControl"/>
+      </nz-input-group>
+    </div>
+  
+    <div class="bots-section">     
+        <nz-card nzTitle="Rich Message Templates">
+  
+          <nz-card style="margin-bottom: 2rem;">
+              <form action="">
+                <nz-form-label  nzFor="type">Select Bot<span style="color: red;"> * </span></nz-form-label>
+                    <p style=" font-size: 10px; color: #999; line-height: 1.4;"></p>
+                    <nz-form-control>
+                      <nz-select [(ngModel)]="botId" id="type"  nzPlaceHolder="Select Bot" style="width: 30%;" (ngModelChange)="getTemplates(botId)" [ngModelOptions]="{standalone: true}">
+                        <nz-option *ngFor="let item of newbot"  nzLabel="{{ item.botName }}" nzValue="{{item.botId}}" ></nz-option>
+                      </nz-select>
+                    </nz-form-control>
+              </form>      
+          </nz-card>
+          
+          <!-- <nz-table
+          #templateTable
+          [nzFrontPagination]="true"
+          [nzTotal]="filteredData.length"
+          [nzPageSize]="10"
+          [nzPageIndex]="1"
+          nzTableLayout="fixed"
+          [nzBordered]="true"
+          [nzSize]="'middle'"
+          [nzData]="filteredData"
+          [nzScroll]="{ x: '100%' }"
+        >
+          <thead>
+            <tr>
+              <th >Template Name/Code</th>
+              <th >Template Message</th>
+              <th >Status</th>
+              <th >Last Updated</th>
+              <th >Actions</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let template of templateTable.data">
+              <td>{{ template.templateTitle }}</td>
+              <td>{{ template.templateText }}</td>
+              <td>
+                <nz-tag 
+                  [nzColor]="template.status.toLowerCase() === 'approved' ? 'success' :template.status.toLowerCase() === 'rejected'? 'error' : 'processing'"
+                >
+                <span nz-icon [nzType]="template.status.toLowerCase() === 'approved' ? 'check-circle':template.status.toLowerCase() === 'rejected'? 'close-circle':'clock-circle' "></span>
+                  {{ template.status }}
+                </nz-tag>
+              </td>
+              <td>{{ template.createadDate }}</td>
+              <td>
+                <a >
+                  <button nz-button nzType="link" nzShape="circle" nz-tooltip nzTooltipTitle="Test Template" (click)="showTestTemplate(template.templateTitle)">
+                    <i nz-icon nzType="send" nzTheme="outline"></i>
+                  </button>
+                </a>
+      
+                <nz-modal [(nzVisible)]="isTestTemplate" [nzTitle]="templatename" (nzOnCancel)="handleClose()" (nzOnOk)="sendTestMessage()">
+                  <ng-container *nzModalContent>
+                    <div class="" nz-row nzAlign="middle">
+                    <div class="" nz-col [nzSpan]="18" >
+                    <nz-form-label nzFor="Select Test Devices" nzSpan="1-24" nzRequired>Select Test Number</nz-form-label>
+                    <nz-select [(ngModel)]="mobileNumber" name="mobileNumber" nzPlaceHolder="" nzAllowClear style="width: 100%;">
+                      
+                      <nz-option
+                        *ngFor="let item of testDevices"
+                        [nzLabel]="item.phoneNumber"
+                        [nzValue]="item.phoneNumber">
+                      </nz-option>
+                    </nz-select>
+                    </div>
+                    <form [formGroup]="form" style="margin-top: 20px;">
+                      <nz-table #paramTable [nzBordered]="true"  [nzData]="customParams">
+                        <thead>
+                        <tr>
+                          <th nzWidth="50%">Parameters</th>
+                          <th nzWidth="16rem">Value</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr *ngFor="let param of customParams">
+                          <td>{{ param | titlecase }}</td>
+                          <td>
+                          <input nz-input type="text" [formControlName]="param" class="form-control" />
+                          </td>
+                        </tr>
+                        </tbody>
+                      </nz-table>
+                    </form>
+                  </div>
+                  </ng-container>
+                </nz-modal>
+                <a [routerLink]="['/viewtemplate']">
+                <button nz-button nzType="link" nzShape="circle" nz-tooltip nzTooltipTitle="View" (click)="getTemplate(template.templateTitle)">
+                  <i nz-icon nzType="eye" nzTheme="outline"></i>
+                </button>
+                </a>
+                <a [routerLink]="['/update']">
+                    <button nz-button nzType="link" nzShape="circle" nz-tooltip nzTooltipTitle="Edit" (click)="getTemplate(template.templateTitle)">
+                      <i nz-icon nzType="edit" nzTheme="outline"></i>
+                    </button>
+                  </a>                  
+              </td>
+            </tr>
+          </tbody>
+        </nz-table> -->
+        
+            <!-- <a [routerLink]="['/add']" >+ Add a Template
+              <button nz-button nzType="link" nzShape="circle" nzTooltipTitle="Edit">
+                <i nz-icon nzType="" nzTheme="outline"></i>
+              </button>
+            </a>            -->
+          
+        </nz-card>
+    
+  
+        <p>
+        </p>
+        <!-- <nz-table
+        #templateTable
+        [nzBordered]="true"
+        [nzSize]="'middle'"
+        [nzData]="brandDataList"
+        [nzScroll]="{ x: '100%' }"
+      >
+        <thead>
+          <tr>
+            <th nzWidth="25%">Brand Name</th>
+            <th nzWidth="40%">Brand Message</th>
+            <th nzWidth="10%">Status</th>
+            <th nzWidth="25%">Last Updated</th>
+            <th *ngIf="role==='admin' || role==='seller' || role ==='reseller'" nzWidth="25%">Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let brand of brandDataList">
+            <td>{{ brand.brandName }}</td>
+            <td>-</td>
+            <td>
+              <span class="status-active">Active</span>
+            </td>
+            <td>-</td>
+            <td *ngIf="role==='admin' || role==='seller' || role ==='reseller'">
+              <a [routerLink]="['/viewbrand']" [queryParams]="{ brandName: brand.brandName }">
+                <button nz-button nzType="link" nzShape="circle" nzTooltipTitle="View">
+                  <i nz-icon nzType="eye" nzTheme="outline"></i>
+                </button>
+              </a>
+              <a [routerLink]="['/updatebrand']" [queryParams]="{ brandName: brand.brandName }">
+                <button nz-button nzType="link" nzShape="circle" nzTooltipTitle="Edit">
+                  <i nz-icon nzType="edit" nzTheme="outline"></i>
+                </button>
+              </a>                            
+            </td>
+          </tr>
+        </tbody>
+      </nz-table> -->
+      
+      
+          <!-- <a style="margin-top: 8px;" nz-button  nzType="link">+</a> -->
+      </div>
+  
+    </div>
+  
+  
+  <!-- <nz-page-header class="site-page-header" nzTitle="Template"></nz-page-header> -->
+  
+  
+  
+  
+  
+  <!-- (nzclick)="" -->
+  <!-- <ul nz-menu nzMode="horizontal">
+    <li nz-menu-item nzMatchRouter>
+      <a [routerLink]="[' ']"  routerLinkActive="active"><span nzType="plus" nzTheme="outline" nz-icon ></span> Add Template </a>
+      
+    </li>
+    <li nz-menu-item nzMatchRouter>
+      <a [routerLink]="['view']"  routerLinkActive="active"><span nzType="eye" nzTheme="outline" nz-icon ></span> View Template</a>
+      
+    </li>
+    <li nz-menu-item nzMatchRouter>
+      <a [routerLink]="['update']"  routerLinkActive="active"><span nzType="edit" nzTheme="outline" nz-icon ></span> Update Template</a>
+      
+    </li>
+  </ul> -->
+  <!-- <router-outlet></router-outlet> -->
+  
+  
+  
+    <!-- Rich Message Templates Table -->
+    

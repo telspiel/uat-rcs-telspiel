@@ -1,0 +1,323 @@
+<div class="rcs-page-container" >
+  <div class="header-section">
+    <h2>Hey,</h2>
+    <p>
+      Hey <b>{{logedinuser}}</b>, by submitting your custom templates for seamless and interactive messaging. Whether it's a rich card, rich card carousel, or text message, elevate your brand's communication with visually engaging and action-driven messages.
+    </p>
+    <button nz-button nzType="primary" [routerLink]="['/add']" nzShape="round">Create New Template</button>
+  </div>
+ 
+ 
+  <div class="search-section" style="margin: 20px 0;">
+    <nz-input-group nzSize="large" nzPrefixIcon="search" nz-col nzSpan="8">
+      <input type="text" nz-input placeholder="Keyword search" [formControl]="searchControl"/>
+    </nz-input-group>
+  </div>
+
+  <div class="bots-section">     
+      <nz-card nzTitle="Message Templates">
+
+        <nz-card style="margin-bottom: 2rem;">
+          <nz-row nzGutter="16" style="margin-bottom: 16px;">
+            <nz-col [nzSpan]="12">
+              <form>
+                <nz-form-label nzFor="type">Select Bot<span style="color: red;"> * </span></nz-form-label>
+                <nz-form-control>
+                  <nz-select [(ngModel)]="botId" id="type" nzPlaceHolder="Select Bot" style="width: 100%;" (ngModelChange)="getTemplates(botId)" [ngModelOptions]="{standalone: true}">
+                    <nz-option *ngFor="let item of newbot" nzLabel="{{ item.botName }}" nzValue="{{item.botId}}"></nz-option>
+                  </nz-select>
+                </nz-form-control>
+              </form>
+            </nz-col>
+            <nz-col [nzSpan]="6">
+              <nz-form-label nzFor="type">Status<span style="color: red;"> * </span></nz-form-label>
+              <nz-form-control>
+                <nz-select style="width: 100%;" [(ngModel)]="selectedFilter" (ngModelChange)="applyFilteractive()" [ngModelOptions]="{standalone: true}">
+                  <nz-option [nzValue]="'Active'" [nzLabel]="'Active'"></nz-option>
+                  <nz-option [nzValue]="'Inactive'" [nzLabel]="'Inactive'"></nz-option>
+                </nz-select>
+              </nz-form-control>
+             
+            </nz-col>
+          </nz-row>
+        </nz-card>
+
+        <nz-table
+        #templateTable
+        [nzFrontPagination]="true"
+        [nzTotal]="filteredData.length"
+        [nzPageSize]="10"
+        [nzPageIndex]="1"
+        nzTableLayout="fixed"
+        [nzBordered]="true"
+        [nzSize]="'middle'"
+        [nzData]="filteredData"
+        [nzScroll]="{ x: '100%' }"
+      >
+        <thead>
+          <tr>
+            <th [nzSortFn]="shortByTemplateName">Template Name/Code</th>
+            <th  >Operator Name</th>
+            <th>Status</th>
+            <th [nzSortFn]="sortByDate">Last Updated</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let template of templateTable.data">
+            <td>{{ template.templateTitle || 'N/A' }}</td>
+            <td >
+              <ng-container *ngIf="template.template?.operatordata?.length > 0; else noOperator">
+              <span *ngFor="let operator of template.template.operatordata; let last = last">
+                {{ operator.operatorName }}<span *ngIf="!last">, </span>
+              </span>
+              </ng-container>
+              <ng-template #noOperator>N/A</ng-template>
+            </td>
+            <td>
+              <ng-container *ngIf="template.template?.operatordata?.length > 0; else noOperator">
+              <span *ngFor="let operator of template.template.operatordata; let last = last">
+                <nz-tag 
+                [nzColor]="operator.templateStatus.toLowerCase() === 'approved' ? 'success' :operator.templateStatus.toLowerCase() === 'rejected'? 'error' : 'processing'"
+              >
+              <span nz-icon [nzType]="operator.templateStatus.toLowerCase() === 'approved' ? 'check-circle':operator.templateStatus.toLowerCase() === 'rejected'? 'close-circle':'clock-circle' "></span>
+                {{ operator.templateStatus }}
+              </nz-tag><span *ngIf="!last">, </span>
+              </span>
+              </ng-container>
+              <ng-template #noOperator>N/A</ng-template>
+            </td>
+            
+            <td>{{ convertDate(template.createadDate) || 'N/A' }}</td>
+            <td>
+              <a>
+                <button
+                  nz-button
+                  nzType="link"
+                  nzShape="circle"
+                  nz-tooltip
+                  nzTooltipTitle="Test Template"
+                  (click)="showTestTemplate(template.templateTitle, template.template.botId); $event.preventDefault()"
+                >
+                  <i nz-icon nzType="send" nzTheme="outline"></i>
+                </button>
+              </a>
+      
+              <nz-modal
+                [(nzVisible)]="isTestTemplate"
+                [nzTitle]="templatename"
+                (nzOnCancel)="handleClose()"
+                (nzOnOk)="sendTestMessage()"
+              >
+                <ng-container *nzModalContent>
+                  <div class="" nz-row nzAlign="middle">
+                    <div class="" nz-col [nzSpan]="18">
+                      <nz-form-label nzFor="Select Test Devices" nzSpan="1-24" nzRequired>Select Test Number</nz-form-label>
+                      <nz-select
+                        [(ngModel)]="mobileNumber"
+                        name="mobileNumber"
+                        nzPlaceHolder=""
+                        nzAllowClear
+                        style="width: 100%"
+                      >
+                        <nz-option
+                          *ngFor="let item of testDevices"
+                          [nzLabel]="item.phoneNumber"
+                          [nzValue]="item.phoneNumber"
+                        ></nz-option>
+                      </nz-select>
+                    </div>
+                    <form [formGroup]="form" style="margin-top: 20px">
+                      <nz-table #paramTable [nzBordered]="true" [nzData]="customParams">
+                        <thead>
+                          <tr>
+                            <th nzWidth="50%">Parameters</th>
+                            <th nzWidth="16rem">Value</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          <tr *ngFor="let param of customParams">
+                            <td>{{ param | titlecase }}</td>
+                            <td>
+                              <input nz-input type="text" [formControlName]="param" class="form-control" />
+                            </td>
+                          </tr>
+                        </tbody>
+                      </nz-table>
+                    </form>
+                  </div>
+                </ng-container>
+              </nz-modal>
+              <a>
+                <button
+                  nz-button
+                  nzType="link"
+                  nzShape="circle"
+                  nz-tooltip
+                  nzTooltipTitle="View"
+                  [routerLink]="['/viewtemplate']"
+                  (click)="getTemplate(template.templateTitle); $event.preventDefault()"
+                >
+                  <i nz-icon nzType="eye" nzTheme="outline"></i>
+                </button>
+              </a>
+                 <a
+                  nz-popconfirm
+                  [nzPopconfirmTitle]="selectedFilter === 'Active' ? 'Are you sure you want to Inactivate the template?' : 'Are you sure you want to Activate the template?'"
+                  nzPopconfirmPlacement="bottom"
+                  (nzOnConfirm)="updatetemplate(template.templateId, selectedFilter === 'Active' ? false : true)"
+                  (nzOnCancel)="cancel()"
+                >
+                  <i style="margin-left: 4%; margin-top: 8px;" nz-icon nzType="edit" nzTheme="outline"></i>
+                </a>
+              
+              <a>
+                <button
+                  nz-button
+                  nzType="link"
+                  nzShape="circle"
+                  nz-tooltip
+                  nzTooltipTitle="Fallback"
+                  (click)="configureTemplate(template.templateTitle); $event.preventDefault()"
+                >
+                  <i nz-icon nzType="setting" nzTheme="outline"></i>
+                </button>
+              </a>
+              <nz-modal
+                [(nzVisible)]="isConfigModalVisible"
+                [nzWidth]="'1000px'"
+                [nzTitle]="'Fallback'"
+                (nzOnCancel)="handleConfigCancel()"
+                (nzOnOk)="handleConfigOk()"
+              >
+              <ng-container *nzModalContent>
+                <form [formGroup]="configForm" nz-form [nzLayout]="'vertical'">
+
+                  <nz-form-item class="new-modal-content">
+                    <nz-form-label [nzRequired]="true" nzFor="fallbackSms" class="modal-content-label">
+                      Do you want automatic fallback to SMS?
+                    </nz-form-label>
+                    <nz-form-control>
+                      <nz-radio-group formControlName="isSmsFallback">
+                        <label nz-radio [nzValue]="'Y'">Yes</label>
+                        <label nz-radio [nzValue]="'N'">No</label>
+                      </nz-radio-group>
+                    </nz-form-control>
+                  </nz-form-item>
+                  
+                  <nz-form-item *ngIf="isFallbackEnabledSms">
+                    <nz-form-label><span style="color: red">*</span> Fallback SMS</nz-form-label>
+                    <nz-form-control>
+                      <textarea nz-input formControlName="fallbackSms" placeholder="Enter fallback SMS content"></textarea>
+                    </nz-form-control>
+                  </nz-form-item>
+                  
+                  <nz-form-item *ngIf="isFallbackEnabledSms">
+                    <nz-form-label><span style="color: red">*</span> SMS API Endpoint</nz-form-label>
+                    <nz-form-control>
+                      <input nz-input formControlName="smsApiEndpoint" placeholder="Enter SMS API Endpoint" />
+                    </nz-form-control>
+                    <p style="font-size: 0.7rem; color: #adadad;">
+                      Use %PHONENO% for the recipient's phone number and %MESSAGETEXT% for
+            your message in the API. Refer to the example URL below: <br />
+
+            https://sms.gmstool.com/pushapi/sendbulkmsg?username=testapi21&dest=%PHONENO%&apikey=a1b2c3d4e5f6g7h8i9j0&signature=POIUYT&msgtype=PM&msgtxt=%MESSAGETEXT%&entityid=1234567&templateid=12345678
+                    </p>
+                  </nz-form-item>
+
+                  <!-- WhatsApp Fallback Toggle -->
+                  <nz-form-item class="new-modal-content">
+                    <nz-form-label [nzRequired]="true" nzFor="whatsapp" class="modal-content-label">
+                      Do you want automatic fallback to WhatsApp?
+                    </nz-form-label>
+                    <nz-form-control>
+                      <nz-radio-group formControlName="isWhatsappFallback">
+                        <label nz-radio [nzValue]="'Y'">Yes</label>
+                        <label nz-radio [nzValue]="'N'">No</label>
+                      </nz-radio-group>
+                    </nz-form-control>
+                  </nz-form-item>
+
+                  <nz-form-item *ngIf="isFallbackEnabledWhatsapp">
+                    <nz-form-label><span style="color: red">*</span> Fallback WhatsApp</nz-form-label>
+                    <nz-form-control>
+                      <textarea
+                        nz-input
+                        rows="4"
+                        formControlName="fallbackWhatsapp"
+                        placeholder="Enter fallback WhatsApp content"
+                      ></textarea>
+                    </nz-form-control>
+                  </nz-form-item>
+                  
+                  <nz-form-item *ngIf="isFallbackEnabledWhatsapp">
+                    <nz-form-label><span style="color: red">*</span> WhatsApp API Endpoint</nz-form-label>
+                    <nz-form-control>
+                      <input
+                        nz-input
+                        formControlName="whatsappApiEndpoint"
+                        placeholder="Enter WhatsApp API Endpoint"
+                      />
+                    </nz-form-control>
+                    <p style="font-size: 0.7rem; color: #adadad; text-align: justify; padding-right: 10px; word-wrap: break-word;">
+                      Use %PHONENO% for the recipient's phone number and %MESSAGETEXT% for your message in the API. Refer to the example URL below: <br>
+
+                        https://sms.gmstool.com/pushapi/sendbulkmsg?username=testapi21&dest=%PHONENO%&apikey=a1b2c3d4e5f6g7h8i9j0&signature=POIUYT&msgtype=PM&msgtxt=%MESSAGETEXT%&entityid=1234567&templateid=12345678
+                    </p>
+                  </nz-form-item>
+                  
+
+                </form>
+              </ng-container>
+            </nz-modal>
+                
+            </td>
+          </tr>
+        </tbody>
+      </nz-table>
+      
+          <!-- <a style="margin-top: 8px;" nz-button  nzType="link">+ Add a Template</a> -->
+          <a [routerLink]="['/add']" >+ Add a Template
+            <button nz-button nzType="link" nzShape="circle" nzTooltipTitle="Edit">
+              <i nz-icon nzType="" nzTheme="outline"></i>
+            </button>
+          </a>           
+        
+      </nz-card>
+  
+
+    
+    
+        
+    </div>
+
+  </div>
+
+
+<!-- <nz-page-header class="site-page-header" nzTitle="Template"></nz-page-header> -->
+
+
+
+
+
+<!-- (nzclick)="" -->
+<!-- <ul nz-menu nzMode="horizontal">
+  <li nz-menu-item nzMatchRouter>
+    <a [routerLink]="[' ']"  routerLinkActive="active"><span nzType="plus" nzTheme="outline" nz-icon ></span> Add Template </a>
+    
+  </li>
+  <li nz-menu-item nzMatchRouter>
+    <a [routerLink]="['view']"  routerLinkActive="active"><span nzType="eye" nzTheme="outline" nz-icon ></span> View Template</a>
+    
+  </li>
+  <li nz-menu-item nzMatchRouter>
+    <a [routerLink]="['update']"  routerLinkActive="active"><span nzType="edit" nzTheme="outline" nz-icon ></span> Update Template</a>
+    
+  </li>
+</ul> -->
+<!-- <router-outlet></router-outlet> -->
+
+
+
+  <!-- Rich Message Templates Table -->
+  

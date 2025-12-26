@@ -1,0 +1,27 @@
+.ant-col{
+    margin-top: 5px;
+  }
+  .btn-gap {
+    margin-right: 12px; /* Gap between buttons */
+  }
+  
+  .btn-gap:last-child {
+    margin-right: 0; /* No extra space after the last button */
+  }
+  .margin-top {
+    margin-top: 20px; /* Adjust the value as per your design */
+  }
+  label{
+    font-weight: 500;
+    font-size: small;
+  }
+
+.mt{
+  margin-top: 1rem;
+}
+.mt2{
+  margin-top: 2rem;
+ }
+ .ant-col{
+  margin: 0;
+ }

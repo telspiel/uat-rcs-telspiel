@@ -1,0 +1,139 @@
+<div class="filters-block">
+    <h5 nz-typography>Filters</h5>
+    <form nz-row [nzGutter]="24">
+        <div nz-col class="gutter-row" [nzSpan]="4">
+            <label for="dateRange" class="ant-form-item-label">
+                Date Range
+              </label>
+            <input nz-input placeholder="Date Range" nzSize="default" />
+        </div>
+
+        <div nz-col class="gutter-row" [nzSpan]="4">
+            <label for="dateRange" class="ant-form-item-label">
+                Countries
+              </label>
+            <input nz-input placeholder="Search Campaign" nzSize="default" />
+        </div>
+
+        <div nz-col class="gutter-row" [nzSpan]="4">
+            <label for="dateRange" class="ant-form-item-label">
+                Carriers
+              </label>
+            <input nz-input placeholder="Message Id" nzSize="default" />
+        </div>
+
+        <div nz-col class="gutter-row" [nzSpan]="4">
+            <label for="dateRange" class="ant-form-item-label">
+                Brand's
+              </label>
+            <nz-select nzShowSearch nzAllowClear nzPlaceHolder="Select Status" style="width: 100%;">
+                <nz-option nzLabel="Sent" nzValue="sent"></nz-option>
+                <nz-option nzLabel="Delivered" nzValue="delivered"></nz-option>
+                <nz-option nzLabel="Read" nzValue="read"></nz-option>
+            </nz-select>
+        </div>
+
+        <div nz-col class="gutter-row" [nzSpan]="4">
+            <label for="dateRange" class="ant-form-item-label">
+                Bot Types
+              </label>
+            <nz-select nzShowSearch nzAllowClear nzPlaceHolder="Select Status" style="width: 100%;">
+                <nz-option nzLabel="Sent" nzValue="sent"></nz-option>
+                <nz-option nzLabel="Delivered" nzValue="delivered"></nz-option>
+                <nz-option nzLabel="Read" nzValue="read"></nz-option>
+            </nz-select>
+        </div>
+
+        <div nz-col class="gutter-row" [nzSpan]="4">
+            <label for="dateRange" class="ant-form-item-label">
+                Bot's
+              </label>
+            <nz-select nzShowSearch nzAllowClear nzPlaceHolder="Select Status" style="width: 100%;">
+                <nz-option nzLabel="Sent" nzValue="sent"></nz-option>
+                <nz-option nzLabel="Delivered" nzValue="delivered"></nz-option>
+                <nz-option nzLabel="Read" nzValue="read"></nz-option>
+            </nz-select>
+        </div>
+
+        <!-- <div nz-col class="gutter-row" [nzSpan]="5">
+            <label for="dateRange" class="ant-form-item-label">
+                List By
+              </label>
+            <nz-select nzShowSearch nzAllowClear nzPlaceHolder="Select Status" style="width: 100%;">
+                <nz-option nzLabel="Sent" nzValue="sent"></nz-option>
+                <nz-option nzLabel="Delivered" nzValue="delivered"></nz-option>
+                <nz-option nzLabel="Read" nzValue="read"></nz-option>
+            </nz-select>
+        </div> -->
+
+        <!-- <div nz-col class="gutter-row" [nzSpan]="5">
+            <button nz-button nzType="primary">
+                <span nz-icon nzType="search"></span>
+                Search
+            </button>
+        </div> -->
+    </form>
+</div>
+
+<br />
+
+<nz-table style="margin-top: 5%;" #sortTable [nzData]="listOfData" nzTableLayout="fixed" nzSize="small">
+    <!-- nzSize="middle" -->
+    <thead>
+        <tr>
+            <th nzWidth="60px"></th>
+            <th [nzWidth]="'18%'"> Recipient</th>
+            <th [nzWidth]="'25%'">Template Name </th>
+            <th [nzWidth]="'10%'"> Status</th>
+            <th [nzWidth]="'25%'">Message Id </th>
+            <th [nzWidth]="'18%'"> Last Updated</th>
+            <th [nzWidth]="'15%'">Action</th>
+        </tr>
+    </thead>
+    <tbody>
+        <ng-container *ngFor="let data of sortTable.data">
+            <tr>
+                <td [nzExpand]="expandSet.has(data.id)" (nzExpandChange)="onExpandChange(data.id, $event)"></td>
+                <td>{{ data.recipient }}</td>
+                <td nzEllipsis>{{data.templateName}}</td>
+
+                <td>
+                    <nz-tag nzColor="processing" *ngIf="data.status === 'read'">
+                        <span nz-icon nzType="check" nzTheme="outline"></span>
+                        <span>{{data.status | titlecase }}</span>
+                    </nz-tag>
+
+                    <nz-tag nzColor="success" *ngIf="data.status === 'delivered'">
+                        <span>{{data.status | titlecase }}</span>
+                    </nz-tag>
+
+                    <nz-tag nzColor="error" *ngIf="data.status === 'failed'">
+                        <span nz-icon nzType="close-circle"></span>
+                        <span>{{data.status | titlecase }}</span>
+                    </nz-tag>
+                </td>
+
+                <td nzEllipsis>{{ data.id }}</td>
+                <td>{{ data.updatedAt | date:'short'}}</td>
+                <td>
+                    <a (click)="previewMessage(data)">Preview</a>
+                </td>
+            </tr>
+
+            <tr [nzExpand]="expandSet.has(data.id)">
+                <div style="padding-left:60px;">
+                    <p *ngIf="data.deliverDate"> <b>Delivered At :</b> {{ data.deliverDate | date:'short' }}</p>
+                    <p *ngIf="data.readDate"> <b>Read At :</b> {{ data.readDate | date:'short' }}</p>
+                </div>
+            </tr>
+        </ng-container>
+    </tbody>
+</nz-table>
+
+
+    <app-preview [visibility]="visibility" 
+    [previewTemplate]="newMessagePreviewTemplate.template"
+    [previewData]="newMessagePreviewTemplate.data"
+    (previewIgnored)="visibility = false;">
+</app-preview>
+    

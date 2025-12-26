@@ -1,0 +1,273 @@
+<!-- <br/> -->
+<div class="card-container">
+   
+    <nz-card nzTitle="Detailed Report" >
+        <!-- <app-message-history-table [listOfData]="messageHistory"></app-message-history-table> -->
+        <!-- <h5 nz-typography>Select Filters</h5> -->
+        <nz-card>
+        <form> 
+          <nz-row [nzGutter]="16" class="filter-row">
+         <div nz-col [nzSpan]="5" class="filter-item">
+          <nz-form-item>
+                <nz-form-label for="dateRange" class="ant-form-item-nz-form-label">Date Range</nz-form-label>
+                <nz-form-control>
+                <nz-range-picker  nzRangePicker style="width: 100%;" [(ngModel)]="date" [ngModelOptions]="{standalone: true}" (ngModelChange)="onChange('date')" (ngModelChange)="onChangeDate()" ></nz-range-picker>
+              </nz-form-control>
+              </nz-form-item>
+              </div>
+              <nz-col [nzSpan]="role==='admin' || role==='accountManager'?15: role==='reseller'?10:5" *ngIf="role!=='client'">
+                <app-filter-dropdown [role]="role" [span]="8" (selectionChange)="handleSelection($event)" [requierd]="false"></app-filter-dropdown>
+              </nz-col>
+              <div nz-col [nzSpan]="5" class="filter-item">
+              <app-bot-dropdown nzAllowClear (dataEvent)="receiveDataBot($event)" (ngModelChange)="onChange('receiveDataBot')"></app-bot-dropdown>
+              </div>
+
+          <div nz-col [nzSpan]="5" class="filter-item">
+            <nz-form-label for="dateRange" class="ant-form-item-nz-form-label"
+              >Mobile Number</nz-form-label
+            >
+            <input
+              nz-input
+              placeholder="mobileNumber"
+              [(ngModel)]="mobileNumber"
+              [ngModelOptions]="{ standalone: true }"
+            />
+          </div>
+
+          <div nz-col [nzSpan]="5" class="filter-item">
+            <nz-form-label class="ant-form-item-nz-form-label"
+              >Campaigns</nz-form-label
+            >
+            <nz-select
+              nzAllowClear
+              [(ngModel)]="selectedCampaign"
+              nzPlaceHolder="All Campaigns"
+              style="width: 100%"
+              [ngModelOptions]="{ standalone: true }"
+              (ngModelChange)="onChange('campaignName')"
+            >
+              <nz-option
+                *ngFor="let data of campList"
+                [nzLabel]="data.campaignName"
+                [nzValue]="data.campaignName"
+              />
+            </nz-select>
+          </div>
+
+          <div nz-col [nzSpan]="4" class="filter-item">
+            <nz-form-label class="ant-form-item-nz-form-label"
+              >Source</nz-form-label
+            >
+            <nz-select
+              nzPlaceHolder="All"
+              style="width: 100%"
+              [(ngModel)]="source"
+              [ngModelOptions]="{ standalone: true }"
+            >
+              <nz-option nzLabel="All" nzValue=""></nz-option>
+              <nz-option nzLabel="API" nzValue="api"></nz-option>
+              <nz-option nzLabel="Web" nzValue="web"></nz-option>
+            </nz-select>
+          </div>
+          <!-- <div *ngIf="role==='superadmin'" nz-col [nzSpan]="5" class="filter-item">
+                <nz-form-label for="countries" class="ant-form-item-nz-form-label">Admin</nz-form-label>
+                <nz-select nzAllowClear nzPlaceHolder="Select Admin" style="width: 100%;" [(ngModel)]="Admin" [ngModelOptions]="{standalone: true}" (ngModelChange)="onChange('admin')" >
+                  <nz-option *ngFor="let admin of Adminlist" [nzValue]="admin.label" [nzLabel]="admin.label" ></nz-option>
+                </nz-select>
+              </div> -->
+          <!-- <div *ngIf="role==='admin'" nz-col [nzSpan]="5" class="filter-item">
+                <nz-form-label for="carriers" class="ant-form-item-nz-form-label">Reseller</nz-form-label>
+                <nz-select nzAllowClear nzPlaceHolder="Select Reseller" style="width: 100%;" [(ngModel)]="Reseller" [ngModelOptions]="{standalone: true}" (ngModelChange)="onChange('reseller')" >
+                  <nz-option *ngFor="let reseller of ResllerList" [nzValue]="reseller.label" [nzLabel]="reseller.label" ></nz-option>
+                </nz-select>
+              </div> -->
+          <!-- <div *ngIf="role === 'reseller' || role === 'admin'" nz-col [nzSpan]="5" class="filter-item">
+                <nz-form-label for="brands" class="ant-form-item-nz-form-label">Seller</nz-form-label>
+                <nz-select nzAllowClear nzPlaceHolder="Select Seller" style="width: 100%;" [(ngModel)]="Seller" [ngModelOptions]="{standalone: true}" (ngModelChange)="onChange('seller')">
+                  <nz-option *ngFor="let seller of SellerList;" [nzValue]="seller.label" [nzLabel]="seller.label"></nz-option>
+                </nz-select>
+              </div> -->
+          <!-- <div *ngIf="role==='seller' || role ==='reseller' || role ==='admin'" nz-col [nzSpan]="5" class="filter-item">
+                <nz-form-label for="bots" class="ant-form-item-nz-form-label">Client</nz-form-label>
+                <nz-select nzAllowClear nzPlaceHolder="Select Clients" style="width: 100%;" [(ngModel)]="Client" [ngModelOptions]="{standalone: true}" (ngModelChange)="onChange('client')">
+                  <nz-option *ngFor="let Client of Clientlist" [nzValue]="Client.label" [nzLabel]="Client.label"></nz-option>
+                </nz-select>
+              </div> -->
+        </nz-row>
+
+        <!-- <div nz-col class="gutter-row" [nzSpan]="5">
+              <nz-form-label for="dateRange" class="ant-form-item-label">
+                  List By
+                </label>
+              <nz-select nzShowSearch nzAllowClear nzPlaceHolder="Select Status" style="width: 100%;">
+                  <nz-option nzLabel="Sent" nzValue="sent"></nz-option>
+                  <nz-option nzLabel="Delivered" nzValue="delivered"></nz-option>
+                  <nz-option nzLabel="Read" nzValue="read"></nz-option>
+              </nz-select>
+          </div> -->
+
+        <!-- <div nz-col class="gutter-row" [nzSpan]="5">
+              <button nz-button nzType="primary">
+                  <span nz-icon nzType="search"></span>
+                  Search
+              </button>
+          </div> -->
+      </form>
+      <div class="search-container">
+        <button nz-button nzType="primary" (click)="getdata()">Search</button>
+        <button nz-button nzType="primary" (click)="downloadReport()">
+          Download Report
+        </button>
+      </div>
+    </nz-card>
+
+    <nz-table
+      style="margin-top: 5%"
+      #sortTable
+      [nzData]="data"
+      nzSize="middle"
+      [nzBordered]="true"
+      nzTableLayout="fixed"
+      [nzPageSize]="5"
+      [nzShowPagination]="true"
+      [nzLoading]="isLoading"
+      [nzFrontPagination]="false"
+      [nzLoadingDelay]="500"
+      [nzPageSize]="pageSize"
+      [nzPageIndex]="pageIndex"
+      [nzTotal]="totalRecords"
+      [nzSize]="'small'"
+      [nzScroll]="{ x: 'max-content' }"
+    >
+      <thead>
+        <tr *ngIf="data">
+          <th [nzSortFn]="sortByMessageId" nzEllipsis [nzWidth]="'250px'">
+            Message Id
+          </th>
+          <th [nzSortFn]="true" nzEllipsis [nzWidth]="'250px'">
+            Conversation Id
+          </th>
+          <th nzEllipsis [nzWidth]="'250px'">Message Source</th>
+          <th [nzSortFn]="sortByBotName" [nzWidth]="'250px'" nzEllipsis>
+            Bot Name
+          </th>
+          <th
+            [nzSortFn]="sortByUserName"
+            [nzWidth]="'250px'"
+            *ngIf="['admin', 'reseller', 'seller'].includes('role')"
+            nzEllipsis
+          >
+            User Name
+          </th>
+          <th nzEllipsis [nzWidth]="'250px'">Campaign Name</th>
+          <th [nzSortFn]="sortByTemplateName" [nzWidth]="'250px'" nzEllipsis>
+            Template Name
+          </th>
+          <th [nzSortFn]="sortByDate" [nzWidth]="'250px'" nzEllipsis>
+            Received Date
+          </th>
+          <th [nzSortFn]="sortByDate" [nzWidth]="'250px'" nzEllipsis>
+            Sent Date
+          </th>
+          <th nzEllipsis [nzWidth]="'250px'">Mobile number</th>
+          <th nzEllipsis [nzWidth]="'250px'">Status</th>
+          <th nzEllipsis [nzWidth]="'250px'">Error code</th>
+          <th nzEllipsis [nzWidth]="'250px'">Error Description</th>
+          <th nzEllipsis [nzWidth]="'250px'">Operator Name</th>
+
+          <!--<th [nzSortFn]="true" [nzWidth]="'16%'">operator Message Id</th>
+                    <th [nzSortFn]="true" [nzWidth]="'16%'">Message Type</th>
+                    <th [nzSortFn]="true" [nzWidth]="'16%'">Message Source</th>
+                    <th [nzSortFn]="true" [nzWidth]="'16%'">Route Id</th>
+                    
+                    
+                    <th [nzSortFn]="true" [nzWidth]="'16%'">Template Id</th> -->
+
+          <!-- <th [nzSortFn]="true" [nzWidth]="'16%'">Operator Template Id</th> -->
+        </tr>
+      </thead>
+      <tbody>
+        <ng-container *ngFor="let dt of sortTable.data">
+          <tr>
+            <!-- <td [nzExpand]="expandSet.has(dt.messageId)" (nzExpandChange)="onExpandChange(dt.messageId, $event)"></td> -->
+            <td>{{ dt.messageId }}</td>
+            <td>{{ dt.conversationId }}</td>
+            <td>{{ dt.messageSource }}</td>
+            <td>{{ dt.botName }}</td>
+            <td *ngIf="['admin', 'reseller', 'seller'].includes('role')">
+              {{ dt.userName }}
+            </td>
+            <td>{{ dt.campaignName }}</td>
+            <td>{{ dt.templateName }}</td>
+            <td nzEllipsis>{{ this.formatDate(dt.createdDate) }}</td>
+            <td nzEllipsis>
+              <ng-container *ngIf="dt.lastDlrTime !== null; else noData">
+                {{ this.formatDate(dt.lastDlrTime) }}
+              </ng-container>
+              <ng-template #noData> N/A</ng-template>
+            </td>
+            <td>{{ dt.mobileNumber }}</td>
+
+            <td>
+              <nz-tag
+                [nzColor]="
+                  dt.sentStatus === 'READ'
+                    ? 'green'
+                    : dt.sentStatus === 'In Queue' ||
+                      dt.sentStatus === 'IN QUEUE'
+                    ? 'yellow'
+                    : dt.sentStatus === 'DELIVERED'
+                    ? 'yellow'
+                    : dt.sentStatus === 'FAILED'
+                    ? 'red'
+                    : ''
+                "
+              >
+                {{ dt.sentStatus }}
+              </nz-tag>
+            </td>
+            <td>
+              {{ dt.errorCode || "N/A" }}
+            </td>
+            <td nzEllipsis length="50">
+              <i
+                style="cursor: pointer"
+                nz-button
+                nz-popover
+                [nzPopoverContent]="dt.errorDesc"
+                nzPopoverPlacement="bottom"
+                [nzPopoverOverlayStyle]="{ width: '250px' }"
+              >
+                {{ dt.errorDesc || "N/A" }}
+              </i>
+            </td>
+
+            <!-- <td>{{dt.operatorMessageId}}</td>
+                    <td>{{dt.messageType}}</td>
+                    <td>{{dt.messageSource}}</td>
+                    <td>{{dt.routeId}}</td>
+                    <td>{{dt.templateId}}</td> -->
+
+            <!-- <td>{{dt.operatorTemplateId}}</td> -->
+            <td>{{ dt.operatorName || "N/A" }}</td>
+          </tr>
+          <!--  -->
+        </ng-container>
+      </tbody>
+    </nz-table>
+    <div style="width: 100%; display: flex; justify-content: flex-end">
+      <button
+        nz-button
+        nzType="default"
+        [disabled]="pageIndex <= 1"
+        (click)="onprevClick()"
+      >
+        <span nz-icon nzType="left" nzTheme="outline"></span>
+      </button>
+      <span style="margin: 0 10px; margin-top: 4px">{{ pageIndex }}</span>
+      <button nz-button nzType="default" (click)="onNextClick()">
+        <span nz-icon nzType="right" nzTheme="outline"></span>
+      </button>
+    </div>
+  </nz-card>
+</div>

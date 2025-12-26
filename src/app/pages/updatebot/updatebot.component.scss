@@ -1,0 +1,124 @@
+:host {
+  --theme-icon-color: #1890ff;
+}
+
+/* Target only icons within this specific component */
+span[nz-icon] {
+  color: var(--theme-icon-color, inherit);
+}
+
+/* Style for the color picker input */
+.color-picker-input {
+  width: 40px;
+  height: 40px;
+  border: none;
+  background: none;
+  cursor: pointer;
+}
+::ng-deep .ant-tabs-tab{
+  justify-content: center;
+  width: 50%;
+}
+::ng-deep .ant-tabs > .ant-tabs-nav .ant-tabs-nav-list{
+  width:99%
+}
+/* Style for the color code input */
+.color-code-input {
+  width: 80px;
+  border-radius: 4px;
+  border: 1px solid #d9d9d9;
+  padding: 4px 8px;
+}
+nz-select {
+    width: 100%;
+  }
+  .note {
+    font-size: 12px;
+    color: #888;
+  }
+  
+  nz-upload {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 224px;
+    height: 224px;
+    border: 1px dashed #d9d9d9;
+    border-radius: 8px;
+  }
+  
+  nz-upload:hover {
+    border-color: #eb5353;
+  }
+  .preview-container {
+    margin-top: 10px;
+  }
+  
+  .image-preview {
+    width: 150px;
+    height: auto;
+    border-radius: 8px;
+    box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.2);
+  }
+  
+  nz-upload div {
+    color: #999;
+  }
+  @media screen and (max-width: 768px) {
+    div {
+      font-size: 12px;  /* Adjust font size for smaller screens */
+    }
+    /* Reduce the space for smaller screens */
+    .icon-container {
+      width: 100%;
+      margin-top: 15px;
+    }
+  }
+  .color-picker-input {
+    width: 50px;
+    height: 50px;
+    border: none;
+    cursor: pointer;
+    border-radius: 5px;
+    padding: 5px;
+  }
+  
+  .color-code-input {
+    width: 100px;
+    padding: 5px;
+    border: 1px solid #d9d9d9;
+    border-radius: 4px;
+    font-size: 14px;
+    text-align: center;
+  }
+
+  .info-tab-container {
+    width: 20%;
+    display: flex;
+    flex-direction: column;
+    background-color: #fff;
+    font-family: Arial, sans-serif;
+    font-size: 12px;
+  }
+  
+.info-secondary{
+  font-size: 10px;
+  color: #888;
+}
+
+  
+  
+  
+  .info-icon {
+  margin-left: 5px;
+  cursor: pointer;
+}
+
+.nzTitle{
+  text-align: center;
+}
+
+// .newbtn{
+//   margin-left: 1200px;
+//   margin-top: -50px;
+// }

@@ -1,0 +1,5 @@
+<nz-form-control [nzSm]="8" [nzXs]="24">
+    <nz-date-picker nzShowTime [nzShowTime]="{ nzFormat: 'HH:mm' }" nzFormat="yyyy-MM-dd HH:mm" ngModel
+        [nzDisabledDate]="disabledDate" [nzDisabledTime]="disabledRangeTime"
+        (nzOnOk)="onOk($event)"></nz-date-picker>
+</nz-form-control>

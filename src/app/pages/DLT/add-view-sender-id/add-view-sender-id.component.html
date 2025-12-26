@@ -1,0 +1,77 @@
+<nz-page-header class="site-page-header" nzTitle="Add/View Sender ID"></nz-page-header>
+<div class="" nz-flex nzJustify="flex-end" style="float: right; margin-right: 20px;">
+  <nz-breadcrumb [nzAutoGenerate]="true" nzSeparator=">">
+    <nz-breadcrumb-item>
+      <a [routerLink]="['']"> <span nz-icon nzType="appstore" nzTheme="outline"></span></a>
+    </nz-breadcrumb-item>
+    <nz-breadcrumb-item>
+      <a> <span nz-icon nzType="team" nzTheme="outline"></span></a>
+    </nz-breadcrumb-item>
+  </nz-breadcrumb>
+</div>
+<nz-card style="width: 100%; margin-top: 1.5rem; ">
+    <nz-space nzDirection="vertical" [nzSize]="53" style="width: 100%;">
+    <form *nzSpaceItem nz-form nzLayout="inline" style="margin-top: 1.5rem;" [formGroup]="addViewSenderId" >
+    <nz-form-item>
+        <nz-form-label nzFor="senderId type" nzRequired>SenderId Type</nz-form-label>
+        <nz-form-control >
+            <nz-radio-group formControlName="senderIdType" [(ngModel)]="senderIdType" nzButtonStyle="solid">
+                <label nz-radio-button nzValue="promotional">Promotional</label>
+                <label nz-radio-button nzValue="others">Others</label>
+              </nz-radio-group>
+        </nz-form-control>
+    </nz-form-item>
+
+      <nz-form-item >
+        <nz-form-label nzFor="newExisting SenderId"  nzRequired>New/Existing Entity ID</nz-form-label>
+        <nz-form-control nzErrorTip="*required" [nzValidateStatus]="getStatus('entityId')!"  >
+          <nz-select  nzShowSearch nzAllowClear nzPlaceHolder="Select a SenderId" [(ngModel)]="entityId" formControlName="entityId">
+            
+          </nz-select>
+        </nz-form-control>
+
+        </nz-form-item>
+        <nz-form-item>
+            <nz-form-label nzFor="newExisting SenderId"  nzRequired>Header ID</nz-form-label>
+            <nz-form-control  >
+                <input nz-input placeholder="HeaderId" formControlName="headerId" />
+            </nz-form-control>
+    
+            </nz-form-item>
+            <nz-form-item>
+                <nz-form-label nzFor="newExisting SenderId"  nzRequired>SenderId</nz-form-label>
+                <nz-form-control nzErrorTip="*required" [nzValidateStatus]="getStatus('senderId')!" >
+                    <input nz-input placeholder="senderId" formControlName="senderId"/>
+                </nz-form-control>
+        
+            </nz-form-item>
+            
+            <nz-form-item >
+                <button  nz-button nzType="primary"  (click)="onSubmit()">Submit</button>
+            </nz-form-item>
+    </form>
+
+
+    <nz-table
+    *nzSpaceItem
+  nzShowSizeChanger
+  [nzTotal]="total"
+  [nzPageSize]="pageSize"
+  [nzPageIndex]="pageIndex"
+>
+  <thead>
+    <tr>
+      <th nzColumnKey="senderId" [nzSortFn]="true">Sender ID</th>
+      <th nzColumnKey="active">Active</th>
+      <th nzColumnKey="default" [nzSortFn]="true">Default</th>
+      <th nzColumnKey="entityId" [nzSortFn]="true">Entity ID</th>
+      <th nzColumnKey="headerId" [nzSortFn]="true">Header ID</th>
+      <th nzColumnKey="senderIdType" [nzSortFn]="true">Sender ID Type</th>
+    </tr>
+  </thead>
+  <tbody>
+    
+  </tbody>
+</nz-table>
+</nz-space>
+</nz-card>

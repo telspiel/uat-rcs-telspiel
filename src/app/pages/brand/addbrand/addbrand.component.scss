@@ -1,0 +1,93 @@
+// .brand-details-container {
+//     max-width: 1200px;
+//     margin: 0 auto;
+//     padding: 20px;
+//     background: #ffffff;
+//     border: 1px solid #d9d9d9;
+//     border-radius: 8px;
+//   }
+//   label {
+//     font-weight: bold;
+//     display: block;
+//     margin-bottom: 8px;
+//   }
+.margin-top {
+  margin-top: 10px; /* Adjust the value as per your design */
+}
+
+.btn-gap {
+  margin-right: 12px; /* Gap between buttons */
+}
+
+.btn-gap:last-child {
+  margin-right: 0; /* No extra space after the last button */
+}
+.nz-col{
+  margin-top: 80px;
+}
+/* Brand Form Styles */
+.brand-form-card {
+margin: 24px;
+box-shadow: 0 2px 8px rgba(0, 0, 0, 0.09);
+}
+
+.brand-form {
+padding: 24px;
+}
+
+.form-section {
+margin-bottom: 24px;
+}
+
+// nz-form-label {
+// font-weight: 500;
+// }
+
+.phone-select {
+width: 70px;
+}
+
+.action-buttons {
+margin-top: 48px;
+padding-top: 24px;
+border-top: 1px solid #f0f0f0;
+}
+
+.action-button {
+margin-left: 8px;
+}
+
+nz-divider {
+margin: 24px 0;
+font-weight: bold;  /* Makes the text bold */
+color: black;       /* Ensures the text is black */
+}
+
+
+/* Responsive adjustments */
+.action-buttons-container {
+margin-top: 48px;
+padding-top: 24px;
+border-top: 1px solid #f0f0f0;
+}
+
+.centered-buttons {
+display: flex;
+justify-content: center;
+gap: 8px;
+}
+
+.action-button {
+min-width: 100px;
+}
+
+.uploadbtn{
+margin-left: 200px;
+// margin-bottom: 20px;
+margin-top: -45px;
+}
+.uploadbtn{
+  margin-left: 200px;
+  // margin-bottom: 20px;
+  margin-top: -45px;
+}

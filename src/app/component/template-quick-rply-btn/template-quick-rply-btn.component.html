@@ -1,0 +1,9 @@
+<nz-card [nzBordered]="true" nzType="inner" [nzSize]="'small'" nzTitle="Button" [nzExtra]="extraTemplate">
+    <input nz-input placeholder="Start typing your button label here..." [(ngModel)]="btnLabel" (ngModelChange)="emitChanges($event)" nzBorderless nzMaxTagCount="20"/>
+</nz-card>
+
+<ng-template #extraTemplate>
+    <button nz-button [nzSize]="'default'" (click)="deleteTriggered()">
+        <span nz-icon nzType="delete" nzTheme="outline"></span>
+    </button>
+</ng-template>

@@ -1,0 +1,205 @@
+<!-- <app-page-header [title]="'Account Manager'" [backLink]="['/account-manager']"></app-page-header> -->
+
+
+
+      <div>
+        <nz-card nzTitle="">
+          <form [formGroup]="accountForm">
+
+            <nz-row [nzGutter]="16">
+              <nz-col [nzSpan]="8">
+                <nz-form-item>
+                  <nz-form-label
+                    nzFor="userType"
+                    [nzSpan]="24"
+                    class="left-align-label"
+                    >User Type</nz-form-label
+                  >
+                  <nz-form-control
+                   [nzValidateStatus]="getStatus('userType')!">
+                    <nz-select
+                      nzPlaceHolder="Select User Type"
+                      formControlName="userType"
+                    >
+            
+                      <nz-option nzValue="accountManager" nzLabel="Account Manager"
+                        >Account Manager</nz-option
+                      >
+                    </nz-select>
+                  </nz-form-control>
+                </nz-form-item>
+              </nz-col>
+
+             
+              <nz-col [nzSpan]="8">
+                <nz-form-item>
+                  <nz-form-label
+                    nzFor="Username"
+                    [nzSpan]="24"
+                    class="left-align-label"
+                    >Username</nz-form-label
+                  >
+                  <nz-form-control
+                       [nzErrorTip]="
+                        accountForm.get('UserName')?.hasError('pattern')
+                ? '*UserName cannot have space'
+                : userNameExists === true
+                ? '*UserName already exists'
+                : '*UserName Required'
+            "
+            [nzValidateStatus]="getStatus('username')!">
+                    <input
+                      nz-input
+                      formControlName="username"
+                      placeholder="Username"
+                      autocomplete="disabled"
+                      (blur)="checkavailability()"
+                      
+                    />
+                  </nz-form-control>
+                </nz-form-item>
+              </nz-col>
+
+
+                   <nz-col [nzSpan]="8">
+                <nz-form-item>
+                  <nz-form-label
+                    nzFor="email"
+                    [nzSpan]="24"
+                    class="left-align-label"
+                    >Email</nz-form-label
+                  >
+                  <nz-form-control
+                    nz-col
+                    [nzErrorTip]="
+                    emailExists ? '*Email already exists' : '*Email Required'
+                    "
+                     [nzValidateStatus]="getStatus('email')!">
+                    <input
+                      nz-input
+                      formControlName="email"
+                      placeholder="Email"
+                      (blur)="checkavailability()"
+                    />
+                  </nz-form-control>
+                </nz-form-item>
+              </nz-col>
+
+
+
+              <nz-col [nzSpan]="8">
+                <nz-form-item >
+                  <nz-form-label
+                    nzFor="password"
+                    [nzSpan]="24"
+                    class="left-align-label"
+                    >Password</nz-form-label
+                  >
+                  <nz-form-control
+                   [nzValidateStatus]="getStatus('password')!">
+                    <input
+                      nz-input
+                      formControlName="password"
+                      placeholder="Password"
+                    />
+                  </nz-form-control>
+                </nz-form-item>
+              </nz-col>
+
+
+
+              <nz-col [nzSpan]="8">
+                <nz-form-item>
+                  <nz-form-label
+                    nzFor="email"
+                    [nzSpan]="24"
+                    class="left-align-label"
+                    >Mobile</nz-form-label
+                  >
+                  <nz-form-control
+                    [nzValidateStatus]="getStatus('mobile')!">
+                    <input
+                      nz-input [maxlength]="12"
+                      formControlName="mobile"
+                      placeholder="Mobile"
+                    />
+                  </nz-form-control>
+                </nz-form-item>
+              </nz-col>
+
+
+                    <nz-col [nzSpan]="8">
+                <nz-form-item>
+                  <nz-form-label
+                    nzFor="email"
+                    [nzSpan]="24"
+                    class="left-align-label"
+                    >Expire Date</nz-form-label
+                  >
+                  <nz-form-control
+                   [nzValidateStatus]="getStatus('expiry')!">
+                      <nz-date-picker
+                      formControlName="expiry"
+                      style="width: 100%"
+                      [nzDisabledDate]="disabledDate"
+                      [nzShowToday]="false"
+                        style="width: 100%"
+            ></nz-date-picker>
+                  </nz-form-control>
+                </nz-form-item>
+              </nz-col>
+
+
+
+                   <nz-col [nzSpan]="8">
+                <nz-form-item>
+                  <nz-form-label
+                    nzFor="userType"
+                    [nzSpan]="24"
+                    class="left-align-label"
+                    >Status</nz-form-label
+                  >
+                  <nz-form-control
+                   [nzValidateStatus]="getStatus('status')!">
+                    <nz-select
+                      nzPlaceHolder="Select Status"
+                      formControlName="status"
+                    >
+            
+                      <nz-option nzValue="active" nzLabel="Active"
+                        >Active</nz-option
+                      >
+                      <nz-option nzValue="inactive" nzLabel="Inactive"
+                        >Inactive</nz-option
+                      >
+                    </nz-select>
+                  </nz-form-control>
+                </nz-form-item>
+              </nz-col>
+
+            
+            
+            </nz-row>
+
+
+
+
+
+            <nz-row class="button-container">
+              <nz-col [nzSpan]="24" class="button-group">
+                <button nz-button nzType="primary" (click)="addAccount()">
+                  Sumbit
+                </button>
+                <button
+                  nz-button
+                  nzType="default"
+                  nzDanger
+                  (click)="resetForm()"
+                >
+                  Reset
+                </button>
+              </nz-col>
+            </nz-row>
+          </form>
+        </nz-card>
+      </div>

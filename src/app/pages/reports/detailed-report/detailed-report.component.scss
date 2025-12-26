@@ -1,0 +1,16 @@
+label{
+    font-weight: bold;
+}
+.search-container {
+    margin-top: 15px;
+    text-align: right;
+  }
+  .search-container {
+  display: flex;
+  gap: 10px; /* Adds space between items */
+}
+
+.action-button {
+  /* Optional: use only if you want spacing from just one side */
+  margin-right: 10px;
+}

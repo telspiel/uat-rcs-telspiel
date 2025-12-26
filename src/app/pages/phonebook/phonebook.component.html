@@ -1,0 +1,159 @@
+<div class="rcs-page-container" >
+  <div class="header-section">
+    <h2>Hey,</h2>
+    <p>
+      Hey <b>{{logedinuser}}</b>, by creating New Group 
+    </p>
+    <button nz-button nzType="primary" [routerLink]="['/addphonebook']" nzShape="round">Create New Group</button>
+  </div>
+ 
+ 
+  <div class="search-section" style="margin: 20px 0;">
+    <nz-input-group nzSize="large" nzPrefixIcon="search" nz-col nzSpan="8">
+      <input type="text" nz-input placeholder="Keyword search" [formControl]="searchControl"/>
+    </nz-input-group>
+  </div>
+
+  <div class="bots-section">     
+      <nz-card nzTitle="Group Management">
+
+        <nz-card style="margin-bottom: 2rem;">
+            <form action=""  nz-row [nzGutter]="16"  [formGroup]="groupForm">
+
+              
+   
+<div  nz-col [nzSpan]="5" class="filter-item">
+    <label for="bots" class="ant-form-item-label">Group Name <span style="color: red;"> * </span> </label>
+    <input id="Title" nz-input placeholder="Enter Group Name" formControlName="addgroupName"/>
+
+   
+  </div>
+
+    
+<div  nz-col [nzSpan]="5" class="filter-item" >
+    <label for="bots" class="ant-form-item-label">Description <span style="color: red;"> * </span></label>
+    <input id="Description" nz-input   placeholder="Descripton" formControlName="Descripton"/>
+
+   
+
+   
+  </div>
+
+  <div style="margin-top: 22px; ">
+    <button nz-button nzType="primary" (click)="onSumbit()">Submit</button>
+    
+  </div>
+
+            
+            </form>      
+        </nz-card>
+        
+      <nz-table
+        #templateTable
+        [nzFrontPagination]="true"
+        [nzTotal]="filteredData.length"
+        [nzPageSize]="10"
+        [nzPageIndex]="1"
+        nzTableLayout="fixed"
+        [nzBordered]="true"
+        [nzSize]="'middle'"
+        [nzData]="groups"
+        [nzScroll]="{ x: '100%' }"
+      >
+        <thead>
+          <tr>
+            <th [nzSortFn]="shortByTemplateName">Group Name</th>
+            <th>Total Numbers</th>
+            <th>Description</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let group of templateTable.data">
+            <td>{{  group.groupName }}</td>
+            <td>
+             {{group.numbersInGroupCount}}
+            </td>
+            <td>{{group.groupDescription}}
+            </td>
+            <td>
+      
+             
+              <a style="margin-right: 2px;">
+<button
+  nz-button
+  [routerLink]="['/viewphonebook']"
+  [queryParams]="{ groupId: group.groupId }"
+  nzType="link"
+  nzShape="circle"
+  nz-tooltip
+  nzTooltipTitle="edit"
+>
+  <i nz-icon nzType="edit" nzTheme="outline"></i>
+</button>
+
+              </a>
+
+              <a
+                nz-popconfirm
+                [nzPopconfirmTitle]="'Are you sure to want the delete the group?'"
+                nzPopconfirmPlacement="bottom"
+                (nzOnConfirm)="removeGroup(group.groupName)"
+                (nzOnCancel)="cancelGroup()"
+              >
+
+
+            <i nz-icon nzType="delete" nzTheme="outline" style="color: #FF0000;"></i>
+
+
+
+              </a>
+            </td>
+          </tr>
+        </tbody>
+      </nz-table>
+      
+          <!-- <a style="margin-top: 8px;" nz-button  nzType="link">+ Add a Template</a> -->
+          <!-- <a [routerLink]="['/add']" >+ Add a Template
+            <button nz-button nzType="link" nzShape="circle" nzTooltipTitle="Edit">
+              <i nz-icon nzType="" nzTheme="outline"></i>
+            </button>
+          </a>            -->
+        
+      </nz-card>
+  
+
+    
+    
+        
+    </div>
+
+  </div>
+
+
+<!-- <nz-page-header class="site-page-header" nzTitle="Template"></nz-page-header> -->
+
+
+
+
+
+<!-- (nzclick)="" -->
+<!-- <ul nz-menu nzMode="horizontal">
+  <li nz-menu-item nzMatchRouter>
+    <a [routerLink]="[' ']"  routerLinkActive="active"><span nzType="plus" nzTheme="outline" nz-icon ></span> Add Template </a>
+    
+  </li>
+  <li nz-menu-item nzMatchRouter>
+    <a [routerLink]="['view']"  routerLinkActive="active"><span nzType="eye" nzTheme="outline" nz-icon ></span> View Template</a>
+    
+  </li>
+  <li nz-menu-item nzMatchRouter>
+    <a [routerLink]="['update']"  routerLinkActive="active"><span nzType="edit" nzTheme="outline" nz-icon ></span> Update Template</a>
+    
+  </li>
+</ul> -->
+<!-- <router-outlet></router-outlet> -->
+
+
+
+  <!-- Rich Message Templates Table -->

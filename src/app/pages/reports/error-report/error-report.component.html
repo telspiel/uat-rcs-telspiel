@@ -1,0 +1,90 @@
+<!-- <p>Error Summary Report</p>
+
+<head>
+    <link href="error-report.component.scss" rel="stylesheet">
+</head>
+<form nz-form >
+
+<nz-row >
+
+    <div nz-col [nzSpan]="6">
+        <label>From</label>
+        <br>
+        <nz-date-picker class="wide" [(ngModel)]="date" (ngModelChange)="change($event)"></nz-date-picker>
+    </div>    
+    <div nz-col [nzSpan]="6">
+            <label>To</label>
+            <br>
+            <nz-date-picker class="wide"   [(ngModel)]="date" (ngModelChange)="change($event)"></nz-date-picker>
+
+            <button class="btn"  nz-button nzType="primary">Search </button>
+            <button class="btn" nz-button nzType="primary">Downlaod</button>
+          
+            
+            
+    </div>
+
+    
+</nz-row>
+</form>
+        
+   
+
+
+
+
+ -->
+ <nz-page-header class="site-page-header" nzTitle="Error Summary Report"></nz-page-header>
+ <div class="" nz-flex nzJustify="flex-end" style="float: right; margin-right: 20px;">
+   <nz-breadcrumb [nzAutoGenerate]="true" nzSeparator=">"  >
+     <nz-breadcrumb-item>
+       <a [routerLink]="['']"> <span nz-icon nzType="appstore" nzTheme="outline"></span></a>
+     </nz-breadcrumb-item>
+     <nz-breadcrumb-item>
+       <a [routerLink]="[' ']"> <span nz-icon nzType="user-add" nzTheme="outline"></span></a>
+     </nz-breadcrumb-item>
+   </nz-breadcrumb>
+ </div>
+ 
+
+<nz-card style="width: 100%; margin-top: 1.5rem; ">  
+    <h5 nz-typography>Filters</h5>
+     <form action="" nz-row nzGutter="32 " nzAlign="bottom">
+        <nz-form-item nz-col [nzSpan]="6" class="ml">
+            
+            <nz-form-control>
+                <label for="Expiry">Expiry Date*</label>
+                <nz-range-picker ></nz-range-picker>
+            </nz-form-control>
+        </nz-form-item>
+
+        <nz-form-item nz-col [nzSpan]="6" class="mt" >
+            <button nz-button nzType="primary" class="btn-gap">Submit</button>
+            <button nz-button nzType="default" type="button" class="btn-gap">Download</button>
+        </nz-form-item>
+    
+     </form>
+  
+    <nz-table
+    nzShowSizeChanger
+    [nzTotal]="total"
+    [nzPageSize]="pageSize"
+    [nzPageIndex]="pageIndex"
+  >
+    <thead>
+      <tr>
+        <th nzColumnKey="summaryDate" [nzSortFn]="true">Date</th>
+        <th nzColumnKey="totalRequested" [nzSortFn]="true">User Name</th>
+        <th nzColumnKey="totalRejected" [nzSortFn]="true">Sender Id</th>
+        <th nzColumnKey="totalSubmit" [nzSortFn]="true">Smsc Name</th>
+        <th nzColumnKey="totalRequested" [nzSortFn]="true">Error Code</th>
+        <th nzColumnKey="totalFailed" [nzSortFn]="true">Error Description</th>
+        <th nzColumnKey="totalAwaited" [nzSortFn]="true">Failed</th>
+      </tr>
+    </thead>
+    <tbody>
+      
+    </tbody>
+  </nz-table>
+    <!-- <router-outlet/> -->
+  </nz-card>

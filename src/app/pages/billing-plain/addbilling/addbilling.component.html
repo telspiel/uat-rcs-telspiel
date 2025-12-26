@@ -1,0 +1,89 @@
+<!-- <nz-page-header class="site-page-header" nzTitle="User Billing Plan"></nz-page-header> -->
+
+
+
+
+<app-page-header [title]="'User Billing Plan'" [backLink]="['/billingPlain']"></app-page-header>
+<nz-card>
+    <form nz-form [formGroup]="AddBilling">
+      <nz-row [nzGutter]="16">
+        <nz-col [nzSpan]="8">
+          <nz-form-item>
+            <nz-form-label nzFor="reseller" [nzSpan]="24" class="left-align-label">Plan Name</nz-form-label>
+            <nz-form-control nz-col nzSpan="16" nzHasFeedback nzErrorTip="Plan Name">
+              <input id="plainName" nz-input placeholder="Plan Name" formControlName="planName" />
+            </nz-form-control>
+          </nz-form-item>
+        </nz-col>
+      </nz-row>
+
+      <nz-row>
+        <nz-col [nzSpan]="8">
+          <nz-form-item>
+            <nz-form-label nzFor="seller" [nzSpan]="24" class="left-align-label">Rich Card Template</nz-form-label>
+          </nz-form-item>
+        </nz-col>
+        <nz-col [nzSpan]="8">
+          <nz-form-item>
+            <nz-form-control nz-col nzSpan="16" nzHasFeedback nzErrorTip="Template">
+              <input id="price" nz-input placeholder="Enter Price" formControlName="richTemplate"/>
+            </nz-form-control>
+          </nz-form-item>
+        </nz-col>
+      </nz-row>
+
+      <nz-row>
+        <nz-col [nzSpan]="8">
+          <nz-form-item>
+            <nz-form-label nzFor="seller" [nzSpan]="24" class="left-align-label">Carousel Template</nz-form-label>
+          </nz-form-item>
+        </nz-col>
+        <nz-col [nzSpan]="8">
+          <nz-form-item>
+            <nz-form-control nz-col nzSpan="16" nzHasFeedback nzErrorTip="Select Price" >
+              <input id="price" nz-input placeholder="Enter Price" formControlName="carouselTemplate">
+            </nz-form-control>
+          </nz-form-item>
+        </nz-col>
+      </nz-row>
+
+      <nz-row>
+        <nz-col [nzSpan]="8">
+          <nz-form-item>
+            <nz-form-label nzFor="seller" [nzSpan]="24" class="left-align-label">Text Template</nz-form-label>
+          </nz-form-item>
+        </nz-col>
+        <nz-col [nzSpan]="8">
+          <nz-form-item>
+            <nz-form-control nz-col nzSpan="16" nzHasFeedback nzErrorTip="Select Price">
+              <input id="price" nz-input placeholder="Enter Price" formControlName="textTemplate"/>
+            </nz-form-control>
+          </nz-form-item>
+        </nz-col>
+      </nz-row>
+
+      <nz-row>
+        <nz-col [nzSpan]="8">
+          <nz-form-item>
+            <nz-form-label nzFor="seller" [nzSpan]="24" class="left-align-label">Text With PDF Template</nz-form-label>
+            <nz-form-control nz-col nzSpan="16" nzHasFeedback nzErrorTip="Select Template"></nz-form-control>
+          </nz-form-item>
+        </nz-col>
+        <nz-col [nzSpan]="8">
+          <nz-form-item>
+            <nz-form-control nz-col nzSpan="16" nzHasFeedback nzErrorTip="Select Template">
+              <input id="price" nz-input placeholder="Enter Price" formControlName="textWithPdfTemplate"/>
+            </nz-form-control>
+          </nz-form-item>
+        </nz-col>
+      </nz-row>
+
+      <nz-row class="button-container">
+        <nz-col [nzSpan]="24" class="button-group">
+          <button nz-button nzType="primary" (click)="submit()">Add Plan</button>
+          <button nz-button nzType="default" nzDanger>Cancel</button>
+        </nz-col>
+      </nz-row>
+    </form>
+
+</nz-card>

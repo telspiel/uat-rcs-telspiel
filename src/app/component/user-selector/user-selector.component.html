@@ -1,0 +1,17 @@
+<nz-form-control>
+    <label [for]="label">Select {{ label }}*</label>
+    <nz-select
+      [id]="label"
+      nzPlaceHolder="Select a user"
+      [(ngModel)]="selectedValue"
+      [ngModelOptions]="{ standalone: true }"
+      (ngModelChange)="onSelectionChange($event)"
+    >
+      <nz-option
+        *ngFor="let option of options"
+        [nzValue]="option.label"
+        [nzLabel]="option.label"
+      ></nz-option>
+    </nz-select>
+  </nz-form-control>
+  

@@ -1,0 +1,411 @@
+
+
+<app-page-header [title]="this.validateForm.get('botName')?.value" [backLink]="['/createbot']"></app-page-header>
+
+<nz-card style="width: 100%;">
+  <form nz-form [nzLayout]="'vertical'" [formGroup]="validateForm">
+    <nz-row nzGutter="24">
+
+      <!-- Form Column (Scrollable) -->
+      <nz-col [nzSpan]="12" style="height: 100vh; overflow-y: auto; padding-right: 10px;">
+
+        <!-- Form Fields Here -->
+
+
+        <div nz-row [nzGutter]="24" class="brand-details-container">
+          <!-- First Column -->
+          <div nz-col [nzSpan]="12">
+            <nz-form-item>
+              <nz-form-label nzRequired nzFor="phone">Bot Name</nz-form-label>
+
+              <nz-form-control>
+                <input nz-input id="botName" formControlName="botName" id="botName" style="width: 100%;"
+                  placeholder="bot Name" maxlength="21" />
+              </nz-form-control>
+              <ng-template #botNameError>
+                <div *ngIf="form.controls['botName'].hasError('maxlength')">
+                  Bot name cannot exceed 21 characters.
+                </div>
+              </ng-template>
+            </nz-form-item>
+          </div>
+
+          <!-- Second Column -->
+          <div nz-col [nzSpan]="12">
+            <nz-form-item>
+              <nz-form-label nzRequired nzFor="brand_name">Brand Name</nz-form-label>
+              <nz-form-control>
+                <input nz-input id="brandName" formControlName="brandName" style="width: 100%;"
+                  placeholder="brandName" />
+              </nz-form-control>
+            </nz-form-item>
+          </div>
+        </div>
+        <nz-form-item>
+          <nz-form-label [nzSm]="7" [nzXs]="24" nzRequired nzFor="region">
+            Region
+          </nz-form-label>
+          <nz-form-control [nzSm]="17" [nzXs]="24" nzErrorTip="Please select a region">
+            <nz-radio-group nzName="radiogroup" formControlName="region" [(ngModel)]="region">
+              <label nz-radio nzValue="India">
+                India <i nz-icon style="color: #ff0909;" nzType="info-circle" class="info-icon" nz-tooltip
+                  nzTooltipTitle="The bot will be sending traffic only to India. It will not be live in other countries."></i>
+              </label>
+              <!-- <label nz-radio nzValue="US">
+                Rest of World <i nz-icon style="color: #ff0909;" nzType="info-circle" class="info-icon" nz-tooltip
+                  nzTooltipTitle="The bot will be sending traffic only outside India. It will not be live in India."></i>
+              </label> -->
+            </nz-radio-group>
+          </nz-form-control>
+        </nz-form-item>
+
+
+        <nz-form-item>
+          <nz-form-label [nzSm]="7" [nzXs]="24" nzRequired nzFor="messageType">Bot Message Type</nz-form-label>
+          <nz-form-control [nzSm]="17" [nzXs]="24" nzErrorTip="message type">
+            <nz-radio-group nzName="radiogroup" formControlName="messageType">
+              <label nz-radio nzValue="promotational" >Promotional</label>
+              <!-- <label nz-radio nzValue="otp" >OTP</label> -->
+              <!-- <label nz-radio nzValue="multi">Multi-Use</label> -->
+              <label nz-radio nzValue="Transactional">Transactional</label>
+            </nz-radio-group>
+          </nz-form-control>
+        </nz-form-item>
+        <nz-form-item>
+          <nz-form-label [nzSm]="7" [nzXs]="24" nzRequired nzFor="to">Bot Billing category</nz-form-label>
+          <nz-form-control [nzSm]="17" [nzXs]="24" nzErrorTip="Mobile number required!" >
+            <nz-select size="medium" nzMode="tags" nzPlaceHolder="Please select" formControlName="billingCategory">
+              <nz-option nzValue="Conversational" nzLabel="Conversational"></nz-option>
+              <nz-option nzValue="nonconversational" nzLabel="Non Conversational"></nz-option>
+            </nz-select>
+          </nz-form-control>
+        </nz-form-item>
+
+        <nz-form-item>
+          <nz-form-label [nzSm]="7" [nzXs]="12" nzRequired>Bot Logo</nz-form-label>
+          <p>Provide a logo for your bot that will be displayed in connection with the bot's name</p>
+          <nz-form-control [nzSm]="10" [nzXs]="12" nzErrorTip="Bot Logo!">
+            <input type="file" formControlName="botlogo" (change)="onFileSelected($event)" accept=".jpg, .jpeg, .png" />
+            <div *ngIf="imageUrl" class="preview-container">
+              <p>Image Preview:</p>
+              <img [src]="imageUrl" alt="Bot Logo Preview" class="image-preview" />
+            </div>
+          </nz-form-control>
+        </nz-form-item>
+
+
+        <nz-form-item>
+          <nz-form-label [nzSm]="7" [nzXs]="12" nzRequired>Banner Image</nz-form-label>
+          <p>Provide a brand Image for your bot to be displayed in the bot 'info & options' screen</p>
+          <nz-form-control [nzSm]="10" [nzXs]="12" nzErrorTip="Banner Image required!">
+            <input formControlName="bannerimage" type="file" (change)="onFileSelectedBackground($event)"
+              accept=".jpg, .jpeg, .png" />
+            <div *ngIf="backgroundUrl" class="preview-container">
+              <p>Banner Preview:</p>
+              <img [src]="backgroundUrl" alt="Banner Preview" class="image-preview" />
+            </div>
+          </nz-form-control>
+        </nz-form-item>
+        <nz-form-item>
+          <nz-form-label [nzSm]="7" [nzXs]="24" nzRequired nzFor="to">Short Description</nz-form-label>
+          <nz-form-control [nzSm]="17" [nzXs]="24" nzErrorTip="Short Description required!">
+            <textarea nz-input formControlName="botSummary" placeholder="Controlled autosize" maxlength="89"
+              placeholder="Autosize height with minimum and maximum number of lines"
+              [nzAutosize]="{ minRows: 3, maxRows: 5 }"></textarea>
+          </nz-form-control>
+        </nz-form-item>
+
+        <nz-form-item>
+          <nz-form-label [nzSm]="7" [nzXs]="24" nzFor="color">Select Color</nz-form-label>
+          <nz-form-control [nzSm]="17" [nzXs]="24">
+            <div style="display: flex; align-items: center; gap: 10px;">
+              <!-- Color Picker -->
+              <input type="color" id="color" formControlName="color" [(ngModel)]="selectedColor"
+                class="color-picker-input" (input)="updateColorCode($event)" />
+              <!-- Color Code Input -->
+              <input formControlName="color" type="text" class="color-code-input" [value]="selectedColor" readonly />
+            </div>
+            <!-- Accessibility Message -->
+            <p style="font-size: 12px; color: gray; margin-top: 5px;">
+              Specify a color for your agent with a minimum 4.5:1 contrast ratio relative to white. 
+              <a href="https://webaim.org/resources/contrastchecker/" target="_blank" style="color: #007bff; text-decoration: none;">Learn more</a>
+            </p>
+          </nz-form-control>
+        </nz-form-item>
+
+
+
+
+        <div nz-row [nzGutter]="24" class="brand-details-container">
+          <!-- First Column -->
+          <div nz-col [nzSpan]="12">
+            <nz-form-item>
+              <nz-form-label nzRequired nzFor="phone">Primary Phone Number</nz-form-label>
+              <nz-form-control>
+                <input nz-input formControlName="primaryphone" id="phonenumber" [value]="selectedCountryCode"
+                  style="width: 100%;" placeholder="Phone Number" />
+              </nz-form-control>
+            </nz-form-item>
+          </div>
+
+          <!-- Second Column -->
+          <div nz-col [nzSpan]="12">
+            <nz-form-item>
+              <nz-form-label nzRequired nzFor="phone">Label for primary phone number</nz-form-label>
+              <nz-form-control>
+                <input nz-input id="phonenumber-label" formControlName="labelphone" [value]="selectedCountryCode"
+                  style="width: 100%;" placeholder="Label for Phone Number" />
+              </nz-form-control>
+            </nz-form-item>
+          </div>
+        </div>
+
+        <div nz-row [nzGutter]="24" class="brand-details-container">
+          <div nz-col [nzSpan]="12">
+            <nz-form-item>
+              <nz-form-label nzRequired nzFor="phone">Primary email id</nz-form-label>
+              <nz-form-control>
+                <input nz-input placeholder="Primary Email Id" formControlName="primaryemail" />
+              </nz-form-control>
+            </nz-form-item>
+          </div>
+          <div nz-col [nzSpan]="12">
+            <nz-form-item>
+              <nz-form-label nzRequired nzFor="phone">Label for primary email id</nz-form-label>
+              <nz-form-control>
+                <input nz-input formControlName="emailLabel" style="width: 100%;"
+                  placeholder="Label for primary email id" />
+              </nz-form-control>
+            </nz-form-item>
+          </div>
+        </div>
+        <div nz-row [nzGutter]="24" class="brand-details-container">
+          <div nz-col [nzSpan]="12">
+            <nz-form-item>
+              <nz-form-label nzRequired nzFor="phone">Primary website</nz-form-label>
+              <nz-form-control>
+                <input nz-input formControlName="primarywebsite" placeholder="Primary website" />
+              </nz-form-control>
+            </nz-form-item>
+          </div>
+
+          <!-- Second Column -->
+          <div nz-col [nzSpan]="12">
+            <nz-form-item>
+              <nz-form-label nzRequired nzFor="phone">Label for primary website</nz-form-label>
+              <nz-form-control>
+                <input nz-input formControlName="labelwebsite" placeholder="Label for primary website" />
+              </nz-form-control>
+            </nz-form-item>
+          </div>
+        </div>
+
+        <div nz-row [nzGutter]="24" class="brand-details-container">
+          <!-- First Column -->
+          <div nz-col [nzSpan]="12">
+            <nz-form-item>
+              <nz-form-label nzRequired nzFor="phone">Terms of Use URL</nz-form-label>
+              <nz-form-control>
+                <input nz-input formControlName="Url" placeholder="Terms of Use URL" />
+              </nz-form-control>
+            </nz-form-item>
+          </div>
+
+          <!-- Second Column -->
+          <div nz-col [nzSpan]="12">
+            <nz-form-item>
+              <nz-form-label nzRequired nzFor="phone">Privacy Policy URL</nz-form-label>
+              <nz-form-control>
+                <input nz-input placeholder="Privacy Policy URL" formControlName="privacypolicyurl" />
+              </nz-form-control>
+            </nz-form-item>
+          </div>
+        </div>
+
+        <div nz-row [nzGutter]="24" class="brand-details-container">
+          <!-- First Column -->
+          <!-- <div nz-col [nzSpan]="12">
+                      <nz-form-item>
+                        <nz-form-label nzRequired nzFor="phone">RCS API</nz-form-label>
+                        <nz-form-control>
+                            <nz-select [(ngModel)]="selectedApi"  [nzPlaceHolder]="'Select API'" style="width: 100%;">
+                                <nz-option nzValue="Google API" nzLabel="Google API"></nz-option>
+                                <nz-option nzValue="GSMA API" nzLabel="GSMA API"></nz-option>
+                              </nz-select>
+                              
+                        </nz-form-control>
+                      </nz-form-item>
+                    </div> -->
+
+          <!-- Second Column -->
+          <!-- <div nz-col [nzSpan]="12">
+            <nz-form-item>
+              <nz-form-label nzRequired nzFor="phone">Chatbot Webhook</nz-form-label>
+              <nz-form-control>
+                <input nz-input formControlName="chatbotwebhook" placeholder="Chatbot Webhook" />
+              </nz-form-control>
+            </nz-form-item>
+          </div> -->
+        </div>
+        <nz-form-item>
+          <nz-form-label [nzSm]="7" [nzXs]="24" nzRequired nzFor="language">Languages Supported</nz-form-label>
+          <nz-form-control [nzSm]="17" [nzXs]="24" nzErrorTip="Languages Supported!" >
+            <input nz-input id="language" formControlName="language" />
+          </nz-form-control>
+        </nz-form-item>
+
+
+        <div nz-row nzGutter="24" *ngIf="selectedTemplateData">
+          <div nz-col nzSm="24">
+            <app-template-preview-custom [previewInput]="selectedTemplateData" (body)="updatedMsgBody($event)">
+            </app-template-preview-custom>
+            <br />
+          </div>
+        </div>
+
+    
+
+      </nz-col>
+
+      <nz-card nz-col [nzSpan]="12" style="
+      position: sticky;
+      top: 0;
+      height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;">
+      
+      <app-bot-previwe [botName]="validateForm.get('botName')?.value"
+      [botSummary]="validateForm.get('botSummary')?.value" [imageUrl]="imageUrl" [backgroundUrl]="backgroundUrl"
+      [validateForm]="validateForm"
+      ></app-bot-previwe>
+
+
+
+
+    
+  
+    </nz-card>
+
+
+
+
+    </nz-row>
+
+           <div  *ngIf="role !== 'client' && role !== 'reseller' && role !== 'seller'">
+      <nz-card style="margin-top: 20px; margin-bottom: 20px;" nzTitle="Operator & Routing">
+        <form [formGroup]="operatorForm">
+
+          <!-- Select Operator -->
+          <nz-form-item>
+            <nz-form-label [nzSm]="7" [nzXs]="24" nzRequired nzFor="operators">Select Operator</nz-form-label>
+            <nz-form-control [nzSm]="12" [nzXs]="18"  nzErrorTip="Please select an operator">
+              <nz-select formControlName="selectedOperators" nzMode="multiple"  style="width: 100%;"
+                         (ngModelChange)="onOperatorChange($event)" nzPlaceHolder="select operator">
+                <nz-option *ngFor="let op of operators" [nzValue]="op.name" [nzLabel]="op.label"></nz-option>
+              </nz-select>
+            </nz-form-control>
+          </nz-form-item>
+
+          <!-- Dynamic Form Array for Operators -->
+          <div formArrayName="operatorData">
+            <div *ngFor="let operator of operatorData.controls; let i = index" [formGroupName]="i">
+
+             <nz-card [nzTitle]="operator.get('operatorName')?.value">
+                <div nz-row [nzGutter]="6" style="display: flex; flex-wrap: wrap; align-items: center; gap:10px">
+                  <nz-form-item nz-col [nzSpan]="5"
+                    *ngIf="(operator.get('operatorName')?.value)">
+
+                    <nz-form-control  >
+                      <nz-radio-group formControlName="isNewBot">
+                        <label nz-radio [nzValue]="true">New Bot</label>
+                        <label nz-radio [nzValue]="false">Existing Bot</label>
+                      </nz-radio-group>
+                    </nz-form-control>
+                  </nz-form-item>
+                  <nz-form-item nz-col [nzSpan]="3">
+                    <nz-form-label nzFor="operatorBotId">Traffic Volume</nz-form-label>
+                     <nz-form-control>
+                      <nz-select formControlName="traficVolume" nzPlaceHolder="Select Traffic Volume" style="width: 100%;" [ngModel]="100">
+                        <nz-option *ngFor="let volume of [10, 20, 30, 40, 50, 60, 70, 80, 90, 100]" [nzValue]="volume" [nzLabel]="volume + '%'"></nz-option>
+                      </nz-select>
+                    </nz-form-control>
+                  </nz-form-item>
+
+                         
+                   <nz-form-item nz-col [nzSpan]="5"
+                     *ngIf="['VODAFONE', 'Vi'].includes(operator.get('operatorName')?.value)">
+                    <nz-form-label nzFor="operatorTemplateSecret">Template Secret</nz-form-label>
+                    <nz-form-control [nzErrorTip]="templateIdErrorTpl">
+                      <input nz-input formControlName="operatorTemplateSecret"  placeholder="Enter Template Secret" />
+                    </nz-form-control>
+                  </nz-form-item>
+
+                    <ng-template #templateIdErrorTpl let-control>
+  <ng-container *ngIf="control.hasError('required')">Template Secret is required</ng-container>
+  <ng-container *ngIf="control.hasError('noSpaces')">Spaces are not allowed</ng-container>
+</ng-template>
+
+                     <nz-form-item nz-col [nzSpan]="5"
+                    *ngIf="['VODAFONE', 'Vi'].includes(operator.get('operatorName')?.value)">
+                    <nz-form-label nzFor="operatorTemplateClientId">Client Id</nz-form-label>
+                    <nz-form-control [nzErrorTip]="templateIdErrorTpl">
+                      <input nz-input formControlName="operatorTemplateClientId"  placeholder="Enter Client Id" />
+                    </nz-form-control>
+                  </nz-form-item>
+
+                  <ng-template #templateIdErrorTpl let-control>
+                   <ng-container *ngIf="control.hasError('required')">Template Id is required</ng-container>
+                 <ng-container *ngIf="control.hasError('noSpaces')">Spaces are not allowed</ng-container>
+                  </ng-template>
+
+
+
+                  <nz-form-item nz-col [nzSpan]="5"
+                    *ngIf="operator.get('operatorName')">
+                    <nz-form-label nzFor="botId">Bot Id</nz-form-label>
+                    <nz-form-control [nzErrorTip]="botIdErrorTpl">
+                      <input nz-input formControlName="operatorBotId"  placeholder="Enter Bot ID" />
+                    </nz-form-control>
+                  </nz-form-item>
+                  <ng-template #botIdErrorTpl let-control>
+  <ng-container *ngIf="control.hasError('required')">Bot ID is required</ng-container>
+  <ng-container *ngIf="control.hasError('noSpaces')">Spaces are not allowed</ng-container>
+</ng-template>
+
+                  <nz-form-item nz-col [nzSpan]="5"
+                    *ngIf="operator.get('operatorName')">
+                    <nz-form-label nzFor="botSecret">Bot Secret</nz-form-label>
+                    <nz-form-control [nzErrorTip]="botSecretErrorTpl"> 
+                      <input nz-input formControlName="operatorBotSecret" placeholder="Enter Bot Secret" />
+                    </nz-form-control>
+                  </nz-form-item>
+
+                  <ng-template #botSecretErrorTpl let-control>
+  <ng-container *ngIf="control.hasError('required')">Bot Secret is required</ng-container>
+  <ng-container *ngIf="control.hasError('noSpaces')">Spaces are not allowed</ng-container>
+</ng-template>
+
+                  <nz-form-item nz-col [nzSpan]="4"
+                    *ngIf="operator.get('operatorName')">
+                    <nz-form-label nzFor="botStatus">Bot Status</nz-form-label>
+                    <nz-form-control>
+                      <nz-select formControlName="operatorBotStatus" style="width: 100%;">
+                        <nz-option nzValue="LAUNCHED" nzLabel="LAUNCHED"></nz-option>
+                        <nz-option nzValue="PENDING" nzLabel="PENDING"></nz-option>
+                      </nz-select>
+                    </nz-form-control>
+                  </nz-form-item>
+                </div>
+
+              </nz-card>
+
+            </div>
+          </div>
+
+        </form>
+      </nz-card>
+    </div>
+
+  </form>
+</nz-card>

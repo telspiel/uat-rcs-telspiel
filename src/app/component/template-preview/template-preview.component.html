@@ -1,0 +1,98 @@
+
+    <div
+      class="whatsapp-preview-block"
+      style="width: 300px; height: 600px; position: relative; overflow: hidden; background: url('assets/images/mobile-frame.png') no-repeat center; background-size: cover; display: flex; justify-content: center; align-items: center;"
+    >
+      <div
+        class="innerContainer"
+        style="width: 85%; height: 90%; position: absolute; top: 5%; left: 50%; transform: translateX(-50%); background: white; border-radius: 25px; overflow: hidden; overflow-y: auto; display: flex; flex-direction: column;  align-self: center;">
+        <!-- Header -->
+        <div
+        *ngIf="imageUrl && selectedBotId12"
+          class="header-card"
+          style="position: sticky; top: 0; width: 100%; left: 0; padding: 20px 15px; box-sizing: border-box; z-index: 2; background-color: rgba(255, 255, 255, 0.7); border-radius: 30px 30px 0px 0px; box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1); display: flex; justify-content: space-between; align-items: center;"
+        >
+          <div style="display: flex; align-items: center; gap: 5px;" *ngIf="selectedBotId12">
+            <span nz-icon nzType="arrow-left" nzTheme="outline" style="font-size: 12px; color: #333;"></span>
+            <img
+              *ngIf="imageUrl && selectedBotId12"
+              [src]="imageUrl"
+              alt="VTS Logo"
+              style="height: 20px; width: 20px; border-radius: 50%; object-fit: cover;"
+            />
+            <span style="font-size: 12px; font-weight: bold; color: #333;">{{ selectedBot?.botName|| validateForm.get('botName')?.value }}</span>
+          </div>
+  
+          <div style="display: flex; align-items: center; gap: 5px;" *ngIf="selectedBotId12">
+            <span nz-icon nzType="custom:vrified" nzTheme="outline" style="font-size: 20px; color: #333;"></span>
+            <span nz-icon nzType="ellipsis" nzTheme="outline" style="font-size: 20px; transform: rotate(90deg); color: #333;"></span>
+          </div>
+        </div>
+  
+        <!-- Bot Logo Summary -->
+        <div
+          class="botLogo-summary"
+          style="position: absolute; top: 18%; left: 50%; transform: translateX(-50%); display: flex; flex-direction: column; align-items: center; text-align: center; width: 100%;"
+        >
+          <div style="position: relative; width: 70px; height: 70px; overflow: hidden; display: flex; align-items: center; justify-content: center;">
+            <img
+              *ngIf="imageUrl && selectedBotId12"
+              [src]="imageUrl"
+              style="width: 80%; height: 80%; border-radius: 50%; position: absolute; z-index: 1;"
+            />
+            <div
+              *ngIf="imageUrl && selectedBotId12"
+              style="position: absolute; width: 100%; height: 100%; background: url('assets/images/verification.png') no-repeat center / contain; z-index: 2;"
+            ></div>
+          </div>
+  
+          <h5 style="margin-top: 8px; color: #5b5a5a;">
+            {{ validateForm.get('botSummary')?.value }}
+          </h5>
+        </div>
+  
+        <!-- Message Blocks -->
+         <div class="" *ngIf="selectedBotId12 && imageUrl">
+          <app-rich-card
+        *ngIf="templateForm.get('type')?.value === 'rich_card' "
+          [templateForm]="templateForm"
+          [selectedTemplate]="selectedTemplate"
+          [fileUrl]="templateForm.get('standAloneFileName')?.value || ''"
+          [imageHeight]="200"
+          [cardTitle]="previewData?.cardtittel || templateForm.get('cardTitle')?.value || 'Card Title'"
+          [cardDescription]="previewData?.cardDec||templateForm.get('cardDescription')?.value || 'Card Description'"
+          [orientation]="orientation"
+          [alignment]="alignment"
+        ></app-rich-card>
+
+        
+  
+        <app-message-text
+        *ngIf="templateForm.get('type')?.value === 'TextMessage' ||''"
+          [templateForm]="templateForm"
+          [selectedTemplate]="selectedTemplate"
+          [messageContent]="messageContent"
+        ></app-message-text>
+  
+        <app-coursel
+        *ngIf="templateForm.get('type')?.value === 'carousel'"
+          [templateForm]="templateForm"
+          [selectedTemplate]="selectedTemplate"
+          [carouselList]="previewData?.carouselList || carouselList "
+          [alignment]="alignment"
+          (carouselRefOutput)="handleCarouselRef($event)"
+        ></app-coursel>
+
+        <app-message-text-with-pdf
+        *ngIf="templateForm.get('type')?.value === 'text_message_with_pdf' || templateForm.get('type')?.value === 'TextMessagewithpdf'"
+          [templateForm]="templateForm"
+          [messageBody]="previewData?.messageContent || messageBody || templateForm.get('messagecontent')?.value || ''"
+          [uploadedFileName]="uploadedFileName"
+          >
+        </app-message-text-with-pdf>
+         </div>
+        
+      </div>
+    </div>
+
+  

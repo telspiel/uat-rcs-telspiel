@@ -1,0 +1,583 @@
+<!-- 
+<form class="my" nz-row [nzGutter]="16"  nzAlign="middle" nzJustify="space-around" style="margin-bottom: 2rem; margin-top: 2rem; ">
+
+
+    <div nz-col [nzSpan]="6" *ngIf="['superadmin'].includes(role)">
+        
+        <nz-form-control >
+            <label for="Admin"> Select Admin*</label>
+            <nz-select id="Reseller" nzPlaceHolder="Select a user" [(ngModel)]="Admin" [ngModelOptions]="{standalone: true}" (ngModelChange)="getUserData(Admin,'admin')">
+                    <nz-option *ngFor="let admin of Adminlist" [nzValue]="admin.label" [nzLabel]="admin.label" ></nz-option>
+                    
+            </nz-select>
+        </nz-form-control>
+    </div>
+    <div nz-col [nzSpan]="6" *ngIf="role==='admin'">
+        
+        <nz-form-control >
+            <label for="Reseller"> Select Reseller*</label>
+            <nz-select id="Reseller" nzPlaceHolder="Select a user" [(ngModel)]="Reseller" [ngModelOptions]="{standalone: true}" (ngModelChange)="getUserData(Reseller,'reseller')">
+                    <nz-option *ngFor="let reseller of ResllerList" [nzValue]="reseller.label" [nzLabel]="reseller.label" ></nz-option>
+                    
+            </nz-select>
+        </nz-form-control>
+    </div>
+    <div nz-col [nzSpan]="6" *ngIf="role === 'reseller' || role === 'admin'">
+        
+        <nz-form-control >
+            <label for="Seller"> Select Seller*</label>
+            <nz-select id="Seller" nzPlaceHolder="Select a user" [(ngModel)]="Seller" [ngModelOptions]="{standalone: true}" (ngModelChange)="getUserData(Seller,'Seller')">
+                
+                    <nz-option *ngFor="let seller of SellerList;" [nzValue]="seller.label" [nzLabel]="seller.label"></nz-option>
+                  
+            </nz-select>
+        </nz-form-control>
+    </div>
+    <div nz-col [nzSpan]="6" *ngIf="role==='seller' || role ==='reseller' || role ==='admin'">
+        
+        <nz-form-control >
+            <label for="Client"> Select Client*</label>
+            <nz-select id="Client"  nzPlaceHolder="Select a user" [(ngModel)]="client" [ngModelOptions]="{standalone: true}" (ngModelChange)="getUserData(client,'client')">
+                
+                    <nz-option *ngFor="let Client of Clientlist" [nzValue]="Client.label" [nzLabel]="Client.label"></nz-option>
+                  
+            </nz-select>
+        </nz-form-control>
+    </div>
+</form> -->
+
+
+<div style="margin-bottom: 2rem; margin-top: 2rem;" >
+  
+<app-filter-dropdown [role]="role" (selectionChange)="handleSelection($event)"></app-filter-dropdown>
+</div>
+
+<div class="" *ngIf=" isView=='true' && client!='' || Reseller!='' || Seller!= '' || Admin!=''">
+    <form nz-form   [formGroup]="viewForm" *ngIf="isView=='true'" >
+        <h5 class="font-weight:900">User Details</h5>
+        <div style="border-top: 2px solid rgb(225, 225, 225);">
+            <div class="" nz-row nzAlign="middle" [nzGutter]="8"  style="margin-top: 2rem;">
+            <div class="" nz-col [nzSpan]="12" >
+               <nz-form-item>
+                <nz-form-label nz-col [nzSpan]="6" nzLabelAlign="left" for="user type" > Select User Type<span style="color: red;">*</span></nz-form-label>
+                <nz-form-control nz-col nzSpan="16" nzErrorTip="Select user type" >
+                    
+                     <nz-select
+  id="usertype"
+  formControlName="usertype"
+  nzPlaceHolder="Select a user type"
+  [nzDisabled]="true"
+>
+  <nz-option nzValue="client" nzLabel="Client"></nz-option>
+  <nz-option nzValue="seller" nzLabel="Seller"></nz-option>
+  <nz-option nzValue="reseller" nzLabel="Reseller"></nz-option>
+</nz-select>
+                </nz-form-control>
+                </nz-form-item> 
+            </div>
+            <!-- <div nz-col [nzSpan]="12">
+                <nz-form-item >
+                <nz-form-label nz-col [nzSpan]="6" nzLabelAlign="left"  for="Add traffic type">User Account type<span style="color: red;">*</span></nz-form-label>
+                <nz-form-control nz-col nzSpan="16" nzErrorTip="Select User Account type">
+                    
+                    <nz-select id="traffictype" formControlName="traffictype" nzPlaceHolder="Select User Account type" [nzDisabled]="true">
+                        <nz-option nzValue="Transation" nzLabel="Transation"></nz-option>
+                        <nz-option nzValue="Promo" nzLabel="Promo"></nz-option>
+                        <nz-option nzValue="Service" nzLabel="Service"></nz-option>
+                    </nz-select>
+                </nz-form-control>
+                </nz-form-item>
+            </div> -->
+            <div class="" nz-col [nzSpan]="12">
+                <nz-form-item>
+                <nz-form-label  for="UserName" nz-col [nzSpan]="6" nzLabelAlign="left">UserName <span style="color: red;">*</span></nz-form-label>
+                <nz-form-control nz-col nzSpan="16" [nzErrorTip]="'UserName Required'"   >
+                    <input id="UserName" nz-input formControlName="UserName" placeholder="UserName" autocomplete="off" [disabled]="true"/>
+                </nz-form-control>
+                </nz-form-item>
+            </div>
+
+
+             <div class="" nz-col [nzSpan]="12">
+                <nz-form-item>
+                <nz-form-label  for="UserName" nz-col [nzSpan]="6" nzLabelAlign="left">Account Manager<span style="color: red;">*</span></nz-form-label>
+                <nz-form-control nz-col nzSpan="16" [nzErrorTip]="'accountManager Required'"   >
+                    <input id="accountManager" nz-input formControlName="accountManager" placeholder="Account Manager" autocomplete="off" [disabled]="true"/>
+                </nz-form-control>
+                </nz-form-item>
+            </div>
+            
+        
+            <div nz-col [nzSpan]="12">
+                <nz-form-item >
+                  <nz-form-label nz-col [nzSpan]="6" nzLabelAlign="left" for="Email">Email<span style="color: red;">*</span></nz-form-label>
+                <nz-form-control nz-col nzSpan="16"  nzErrorTip="Email Required" >
+                    
+                    <input id="email" nz-input [disabled]="true" formControlName="email" placeholder="Email"/>
+                </nz-form-control>
+                </nz-form-item>
+                
+            </div>
+            <div nz-col [nzSpan]="12">
+                <nz-form-item >
+                <nz-form-label nz-col [nzSpan]="6" nzLabelAlign="left" for="Mobile No.">Mobile No.<span style="color: red;">*</span></nz-form-label>
+                
+                <nz-form-control nz-col nzSpan="16"  nzErrorTip="Mobile Required">
+                    <input id="mobile" nz-input [disabled]="true" formControlName="mobile" placeholder="Mobile No."/>
+                </nz-form-control>
+                </nz-form-item>
+            </div>
+            <div nz-col [nzSpan]="12">
+                <nz-form-item  >
+                <nz-form-label nz-col [nzSpan]="6" nzLabelAlign="left" for="Password">Password<span style="color: red;">*</span></nz-form-label>
+                <nz-form-control nz-col nzSpan="16" nzErrorTip="Password Required" >
+                    <input id="Password" nz-input [disabled]="true" formControlName="Password" placeholder="Password" autocomplete="off"  />
+                </nz-form-control>
+                </nz-form-item>
+            </div>
+             <div nz-col [nzSpan]="12">
+        <nz-form-item>
+          <nz-form-label [nzSm]="6" nzLabelAlign="left" nzFor="color"
+            >Theme Color<span style="color: red">*</span></nz-form-label
+          >
+          <nz-form-control [nzSm]="17" [nzXs]="24">
+            <div style="display: flex; align-items: center; gap: 10px">
+              <input
+                type="color"
+                id="color"
+                formControlName="themeColor"
+               
+              />
+              <input
+                formControlName="themeColor"
+                type="text"
+                class="color-code-input"
+                [value]="selectedColor"
+                readonly
+              />
+            </div>
+          </nz-form-control>
+        </nz-form-item>
+      </div>
+        </div>
+        <!-- <div nz-row [nzGutter]="8" class="" >
+            <div nz-col [nzSpan]="6" class="mt">
+                
+                <nz-form-control>
+                    <label for="TM1_Id.">TM1_Id*</label>
+                    <input id="TM1_Id" nz-input readonly formControlName="TM1_Id" placeholder="TM1_Id"    />
+                </nz-form-control>
+            </div>
+            <div nz-col [nzSpan]="6" class="mt">
+                
+                <nz-form-control>
+                    <label for="TM2_Id">TM2_Id*</label>
+                    <input id="TM2_Id" nz-input readonly formControlName="TM2_Id" placeholder="TM2_Id"    />
+                </nz-form-control>
+            </div>
+            <div nz-col [nzSpan]="6" class="mt">
+                
+                <nz-form-control>
+                    <label for="TDID">TDID*</label>
+                    <input id="TDID" nz-input readonly formControlName="TDID" placeholder="TDID"   />
+                </nz-form-control>
+            </div>
+        </div> -->
+        
+        <!-- <div nz-row [nzGutter]="8" class="" >
+    
+            <div nz-col [nzSpan]="6" class="mt">
+                
+                <nz-form-control nzErrorTip="SMPP CharSet">
+                    <label for="SMPP CharSet">SMPP CharSet*</label>
+                    <nz-select id="SMPP CharSet" formControlName="SMPPCharSet" nzPlaceHolder="Choose SMPP CharSet"   >
+    
+                    </nz-select>
+                </nz-form-control>
+            </div>
+    
+            <div nz-col [nzSpan]="6" class="mt">
+                
+                <nz-form-control >
+                    <label for="White List Ip">White List Ip*</label>
+                    <input id="WhiteListIp" formControlName="WhiteListIp" PlaceHolder="Choose White List Ip"    nz-input readonly>
+    
+                     </nz-form-control>
+            </div>
+    
+            <div nz-col [nzSpan]="6" class="mt">
+            
+                <nz-form-control >
+                    <label for="TX">Tx*</label>
+                    <nz-select id="TX" formControlName="TX" nzPlaceHolder="Choose Tx"   >
+    
+                    </nz-select>
+                </nz-form-control>
+            </div>
+            
+            
+            <div nz-col [nzSpan]="6" class="mt">
+                
+                <nz-form-control >
+                    <label for="RX">Rx*</label>
+                    <nz-select id="RX" formControlName="RX" nzPlaceHolder="RX"   >
+    
+                    </nz-select>
+                </nz-form-control>
+            </div>
+            <div nz-col [nzSpan]="6" class="mt">
+                
+                <nz-form-control>
+                    <label for="TRX">TRx*</label>
+                    <nz-select id="TRX" formControlName="TRX" nzPlaceHolder="TRX"   >
+    
+                    </nz-select>
+                </nz-form-control>
+            </div>
+        </div> -->
+    
+        <!-- <div class="" class="mt">
+            <div class="" nz-row nzGutter="24" nzJustify="start" nzAlign="middle" style=" margin-top: 50px; padding:5px;">
+                <label for="" style="font-size: small; font-weight: 900; padding: 5px;  margin-right: 17.2rem;"> Credit history*
+                </label>
+                <nz-form-control>
+                    <nz-radio-group formControlName="CreditHistory" [(ngModel)]="CreditHistory">
+                        <label nz-radio nzValue="true">Yes</label>
+                        <label nz-radio nzValue="false">No</label>
+                    </nz-radio-group>
+                </nz-form-control>
+            </div>
+            <div class="" nz-row nzGutter="24" nzJustify="start" nzAlign="middle" style="  padding:5px;">
+                <label for="" style="font-size: small; font-weight: 900; padding: 5px; margin-right: 12.7rem;"> Mobile Number Masking* </label>
+                <nz-form-control>
+                    <nz-radio-group formControlName="MobileNumberMasking" [(ngModel)]="MobileNumberMasking" >
+                        <label nz-radio nzValue="Yes">Yes</label>
+                        <label nz-radio nzValue="No">No</label>
+                    </nz-radio-group>
+                </nz-form-control>
+                <label for="Masking Count" *ngIf="MobileNumberMasking==='Yes'">Masking Count*</label>
+                <div class="" nz-col [nzSpan]="6">
+                    <nz-form-control nzErrorTip="Masking Count" *ngIf="MobileNumberMasking==='Yes'">
+                        <nz-select id="Masking Count" formControlName="MaskingCount" nzPlaceHolder="Masking Count"
+                            style="width: 15rem; ">
+            
+                        </nz-select>
+            
+                    </nz-form-control>
+                </div>
+            </div>
+            
+            <div class="" nz-row nzGutter="24" nzJustify="center" nzAlign="middle" style=" padding:5px;">
+                <label for="" style="font-size: small; font-weight: 900; padding: 5px; margin-right: 18.6rem;"> DLR Retry*
+                </label>
+                <nz-form-control>
+                    <nz-radio-group formControlName="dlrRetry" [(ngModel)]="DLRRetry">
+                        <label nz-radio nzValue="Yes">Yes</label>
+                        <label nz-radio nzValue="No">No</label>
+                    </nz-radio-group>
+                </nz-form-control>
+                <label for="retryCount" *ngIf="DLRRetry==='Yes'">Max DLR Retry Count*</label>
+                <div class="" nz-col [nzSpan]="6" *ngIf="DLRRetry==='Yes'">
+                <nz-form-control nzErrorTip="retryCount">
+                    <nz-select id="retryCount" formControlName="retryCount" nzPlaceHolder="retryCount" style="width: 15rem;">
+        
+                    </nz-select>
+                </nz-form-control>
+            </div>
+            </div>
+        </div> -->
+    </div>
+        <h5 class="font-weight:900">Billing Details</h5>
+        <div  style="border-top: 2px solid rgb(225, 225, 225);">
+            <div class="" style="margin-top: 2rem;" nz-row nzAlign="middle" [nzGutter]="8">
+            <!-- <div class="" nz-col [nzSpan]="12"  >
+                <nz-form-item >
+                    <nz-form-label nz-col [nzSpan]="6" nzLabelAlign="left" for="User Account Type" >DLR Medium Type<span style="color: red;">*</span></nz-form-label>
+                  <nz-form-control nz-col nzSpan="16" nzErrorTip="Select Dlr Medium Type">
+                    <nz-select id="useraccounttype" formControlName="useraccounttype" nzPlaceHolder="Select Dlr Medium Type" [(ngModel)]="useraccounttype" [nzDisabled]="true">
+                        <nz-option nzValue="WEB" nzLabel="Web"></nz-option>
+                        <nz-option nzValue="WEB+API" nzLabel="Web+Api"></nz-option>
+                        <nz-option nzValue="API" nzLabel="Api"></nz-option>
+                        <nz-option nzValue="SMPP" nzLabel="SMPP"></nz-option>
+                    </nz-select>
+                </nz-form-control>
+                </nz-form-item>
+                
+    
+            </div> -->
+    
+             <div nz-col [nzSpan]="12">
+  <nz-form-item>
+    <nz-form-label [nzSpan]="6" nzLabelAlign="left" for="Billing-Type">
+      Billing Method <span style="color: red;">*</span>
+    </nz-form-label>
+    <nz-form-control [nzSpan]="16" nzErrorTip="Select Billing Method">
+      <nz-radio-group id="fallbackSms" formControlName="billingMethod" [nzDisabled]="true">
+        <label nz-radio [nzValue]="true">Wallet</label>
+        <label nz-radio [nzValue]="false">Credit</label>
+      </nz-radio-group>
+    </nz-form-control>
+  </nz-form-item>
+</div>
+
+    
+       <div nz-col [nzSpan]="12" *ngIf="viewForm.get('billingMethod')?.value === false">
+                <nz-form-item >
+                <nz-form-label nz-col [nzSpan]="6" nzLabelAlign="left"  for="Billing-Type" >Billing Type<span style="color: red;">*</span></nz-form-label>
+                  <nz-form-control nz-col nzSpan="16"  nzErrorTip="Select Billing Type">
+                    <nz-select id="billingtype" formControlName="billingtype" nzPlaceHolder="Select Billing Type" [nzDisabled]="true">
+                        <nz-option nzValue="Prepaid" nzLabel="Prepaid"></nz-option>
+                        <nz-option nzValue="Postpaid" nzLabel="Postpaid"></nz-option>
+                    </nz-select>
+                </nz-form-control>
+                </nz-form-item>
+            </div>
+            <div nz-col [nzSpan]="12">
+    
+                <nz-form-item >
+                <nz-form-label nz-col [nzSpan]="6" nzLabelAlign="left" for="Billing-Cycle">Billing Cycle<span style="color: red;">*</span></nz-form-label>
+                <nz-form-control nz-col nzSpan="16" >
+                    <nz-select id="billngcycle" formControlName="billngcycle" nzPlaceHolder="Select Billing Cycle" [nzDisabled]="true">
+                        <nz-option nzValue="monthly" nzLabel="monthly"></nz-option>
+                    </nz-select>
+                </nz-form-control>
+                </nz-form-item>
+            </div>
+    
+            <!-- <div nz-col [nzSpan]="6">
+                
+                <nz-form-control nzErrorTip="Select Sender Id Type">
+                    <nz-form-label for="Sender Id Type">Sender Id Type<span style="color: red;">*</span>
+                    </nz-form-label>
+                    <nz-select id="senderidtype" formControlName="senderidtype" nzPlaceHolder="Select Sender Id Type">
+                        <nz-option nzValue="Static" nzLabel="Static"></nz-option>
+                        <nz-option nzValue="Daynamic" nzLabel="Daynamic"></nz-option>
+                    </nz-select>
+                </nz-form-control>
+            </div> -->
+            
+            
+            <div nz-col [nzSpan]="12" >
+                <nz-form-item >
+                    <nz-form-label nz-col [nzSpan]="6" nzLabelAlign="left" for="Priority">Priority<span style="color: red;">*</span>
+                    </nz-form-label>
+                  <nz-form-control nz-col nzSpan="16" nzErrorTip="Select Priority">
+                    
+                    <nz-select id="priority" formControlName="priority" nzPlaceHolder="Select Priority" [nzDisabled]="true">
+                        <nz-option nzValue="High" nzLabel="High"></nz-option>
+                        <nz-option nzValue="Medium" nzLabel="Medium"></nz-option>
+                        <nz-option nzValue="Low" nzLabel="Low"></nz-option>
+                    </nz-select>
+                </nz-form-control>
+                </nz-form-item>
+                
+                
+            </div>
+            <!-- <div nz-col [nzSpan]="6">
+                
+                <nz-form-control nzErrorTip="Select Authentication OTP">
+                    <nz-form-label for="Authentication">Authentication OTP Required<span style="color: red;">*</span>
+                    </nz-form-label>
+                    <nz-select id="Auth" formControlName="Auth" nzPlaceHolder="Authentication OTP Required?">
+                        <nz-option nzValue="False" nzLabel="No"></nz-option>
+                        <nz-option nzValue="True" nzLabel="Yes"></nz-option>
+                    </nz-select>
+                </nz-form-control>
+            </div> -->
+            <div nz-col [nzSpan]="12">
+                <nz-form-item >
+                <nz-form-label nz-col [nzSpan]="6" nzLabelAlign="left" for="Expiry">Expiry Date<span style="color: red;">*</span>
+                    </nz-form-label>
+                
+                  <nz-form-control nz-col nzSpan="16">
+                    
+                    <nz-date-picker formControlName="Expiry" style="width: 100%;"  [nzShowToday]="false" [nzDisabled]="true"></nz-date-picker>
+                </nz-form-control>
+                </nz-form-item>
+                
+            </div>
+            
+           
+            <div nz-col [nzSpan]="12">
+                    <nz-form-item >
+                      <nz-form-label nz-col [nzSpan]="6" nzLabelAlign="left"  for="Status">Status<span style="color: red;">*</span>
+                    </nz-form-label>
+                    <nz-form-control nz-col nzSpan="16" nzErrorTip="Select Status">
+                    
+                    <nz-select id="Status" formControlName="Status" nzPlaceHolder="Select Status" [nzDisabled]="true">
+                        <nz-option nzValue="active" nzLabel="Active"></nz-option>
+                        <nz-option nzValue="inactive" nzLabel="InActive"></nz-option>
+    
+                    </nz-select>
+                </nz-form-control>
+                    </nz-form-item>
+                    
+            </div>
+
+               <!-- <div nz-col [nzSpan]="12">
+            
+                <nz-form-item >
+                  <nz-form-label [nzSpan]="6" nzLabelAlign="left"  for="isAddOperatorViewAllowed">Operator Allowed<span style="color: red;"></span>
+                </nz-form-label>
+                <nz-form-control [nzSpan]="16" nzErrorTip="Select Operator Allowed">
+                
+               <nz-select id="isAddOperatorViewAllowed" formControlName="isAddOperatorViewAllowed" nzPlaceHolder="Select Operator Allowed" style="width: 100%;" [nzDisabled]="true">
+<nz-option [nzValue]="true" nzLabel="true"></nz-option>
+<nz-option [nzValue]="false" nzLabel="false"></nz-option>
+
+</nz-select>
+
+            </nz-form-control>
+                </nz-form-item>
+                
+        </div> -->
+        </div>
+    </div>
+
+
+         <h5 style="margin-top: 2rem; font-weight: 900;"></h5>
+                <div nz-row nzAlign="middle" [nzGutter]="8" style="border-top: 2px solid rgb(225, 225, 225); ">
+        <div class="" nz-row nzAlign="middle" [nzGutter]="8" style="margin-top: 2rem; width: 100%;" >
+
+        <div nz-col [nzSpan]="12" *ngIf="viewForm.get('billingtype')?.value === 'Prepaid' && viewForm.get('billingMethod')?.value === false" >
+            <nz-form-item >
+            <nz-form-label [nzSpan]="8" nzLabelAlign="left"  for="creditRefund" >Credit Refund<span style="color: red;">*</span></nz-form-label>
+              <nz-form-control  [nzSpan]="16" nzErrorTip="Select credit Refund">
+                <nz-radio-group id="creditRefund" formControlName="creditRefund">
+                     <label nz-radio [nzValue]="false">No</label>
+                    <label nz-radio [nzValue]="true">Yes</label>
+                </nz-radio-group>
+            </nz-form-control>
+            </nz-form-item>
+        </div>
+
+        <div nz-col [nzSpan]="12">
+            <nz-form-item >
+            <nz-form-label [nzSpan]="8" nzLabelAlign="left"  for="messageExpiry" >Message Expiry<span style="color: red;">*</span></nz-form-label>
+              <nz-form-control  [nzSpan]="16" nzErrorTip="Select Message Expiry">
+                <nz-radio-group id="messageExpiry" formControlName="messageExpiry">
+                     <label nz-radio [nzValue]="false">No</label>
+                    <label nz-radio [nzValue]="true">Yes</label>
+                </nz-radio-group>
+            </nz-form-control>
+            </nz-form-item>
+        </div>
+          <!-- <div nz-col [nzSpan]="12">
+        <nz-form-item>
+          <nz-form-label [nzSpan]="8" nzLabelAlign="left" for="is2FARequid"
+            >Two Factor Auth<span style="color: red">*</span></nz-form-label
+          >
+          <nz-form-control [nzSpan]="16" nzErrorTip="Select Two Factor Auth ">
+            <nz-radio-group id="is2FARequid" formControlName="is2FARequid">
+              <label nz-radio [nzValue]="'No'">No</label>
+              <label nz-radio [nzValue]="'Yes'">Yes</label>
+            </nz-radio-group>
+          </nz-form-control>
+        </nz-form-item>
+      </div> -->
+         <div nz-col [nzSpan]="12">
+            <nz-form-item >
+            <nz-form-label [nzSpan]="6" nzLabelAlign="left"  for="campaignFrequency" >Frequency<span style="color: red;">*</span></nz-form-label>
+              <nz-form-control  [nzSpan]="16" nzErrorTip="Select Campaign Frequency">
+                <nz-radio-group id="campaignFrequency" formControlName="campaignFrequency">
+                     <label nz-radio [nzValue]="EndOfCampaignDate">End Of Campaign Date</label>
+                     <label nz-radio [nzValue]="'24HrFromCampTime'">24-Hr From Campaign Time</label>
+                </nz-radio-group>
+            </nz-form-control>
+            </nz-form-item>
+        </div>
+       
+        
+       
+  
+
+
+<!-- DLR---------------------------------------------------------------------------->
+
+
+        <div nz-col [nzSpan]="24" >
+            <nz-form-item >
+            <nz-form-label [nzSpan]="4" nzLabelAlign="left"  for="dlrHandover" >Dlr Handover<span style="color: red;">*</span></nz-form-label>
+              <nz-form-control  [nzSpan]="15" nzErrorTip="Select credit Refund">
+                <nz-radio-group id="dlrHandover" formControlName="dlrHandover">
+                     <label nz-radio [nzValue]="false">No</label>
+                    <label nz-radio [nzValue]="true">Yes</label>
+                </nz-radio-group>
+            </nz-form-control>
+            </nz-form-item>
+        </div>
+
+
+        <div nz-col [nzSpan]="24">
+        <nz-form-item>
+          <nz-form-label [nzSpan]="4" nzLabelAlign="left" for="isBlackListAllowed"
+            >Number Blacklist Allowed<span style="color: red">*</span></nz-form-label
+          >
+          <nz-form-control [nzSpan]="15" nzErrorTip="Select credit Refund">
+            <nz-radio-group id="isBlackListAllowed" formControlName="isBlackListAllowed">
+              <label nz-radio nzValue="No">No</label>
+              <label nz-radio nzValue="Yes">Yes</label>
+            </nz-radio-group>
+          </nz-form-control>
+        </nz-form-item>
+      </div>
+
+       <div nz-col [nzSpan]="12" *ngIf="viewForm.get('dlrHandover')?.value === true" >
+  <nz-form-item>
+    <nz-form-label [nzSpan]="8" nzLabelAlign="left" for="dlrCallbackApiMethod">
+      Dlr Callback Api Method <span style="color: red;">*</span>
+    </nz-form-label>
+    <nz-form-control [nzSpan]="7" nzErrorTip="Please select API method">
+      <nz-select formControlName="dlrCallbackApiMethod" id="dlrCallbackApiMethod" nzPlaceHolder="Select method">
+        <nz-option nzValue="GET" nzLabel="GET"></nz-option>
+        <nz-option nzValue="POST" nzLabel="POST"></nz-option>
+      </nz-select>
+    </nz-form-control>
+  </nz-form-item>
+</div>
+
+         <div nz-col [nzSpan]="12" *ngIf="viewForm.get('dlrHandover')?.value === true ">
+            <nz-form-item >
+            <nz-form-label [nzSpan]="6" nzLabelAlign="left"  for="campaignFrequency" >Dlr Callback Url<span style="color: red;">*</span></nz-form-label>
+              <nz-form-control  [nzSpan]="14" nzErrorTip="Select Campaign Frequency">
+               <nz-input-group >
+      <input type="text" nz-input formControlName="dlrCallbackUrl"  placeholder="Dlr Callback Url" />
+    </nz-input-group>
+            </nz-form-control>
+            </nz-form-item>
+        </div>
+
+        <div nz-col [nzSpan]="12" *ngIf="viewForm.get('dlrHandover')?.value === true && viewForm.get('dlrCallbackApiMethod')?.value === 'POST'">
+            <nz-form-item >
+            <nz-form-label [nzSpan]="8" nzLabelAlign="left"  for="dlrRequestBodyType" >Dlr Request Body<span style="color: red;">*</span></nz-form-label>
+              <nz-form-control  [nzSpan]="16" nzErrorTip="Select Campaign Frequency">
+                <nz-radio-group id="dlrRequestBodyType" formControlName="dlrRequestBodyType">
+                     <label nz-radio [nzValue]="'Default'">Default</label>
+                     <label nz-radio [nzValue]="'Custom'">Custom</label>
+                </nz-radio-group>
+            </nz-form-control>
+            </nz-form-item>
+        </div>
+       
+        
+         <nz-form-control
+  [nzSpan]="10"
+  *ngIf="viewForm.get('dlrHandover')?.value === true && viewForm.get('dlrCallbackApiMethod')?.value === 'POST'"
+>
+  <textarea
+    style="margin-top: 2px;"
+    formControlName="dlrRequestBody"
+    nz-input
+    placeholder="dlrRequestBody"
+    [readonly]="viewForm.get('dlrRequestBodyType')?.value === 'Default'"
+  ></textarea>
+</nz-form-control>
+
+     
+       
+
+  </div>
+</div>
+
+    </form>
+</div>

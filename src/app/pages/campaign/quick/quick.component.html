@@ -1,0 +1,198 @@
+<!-- app.component.html -->
+<nz-page-header class="site-page-header" [nzTitle]="pageTitle">
+    <div style="display: flex; justify-content: space-between; width: 100%; align-items: center;">
+      <span></span>
+      <button *ngIf="role === 'client'" nz-button nzType="primary">+ Add New Campaign</button>
+    </div>
+  </nz-page-header>
+  
+  <nz-card>
+    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px;">
+      <h3 style="margin: 0;">{{ pageTitle }}</h3>
+      <button style="border-radius: 20px;" *ngIf="role === 'client'"  routerLink="/dynamic-campaign" nz-button nzType="primary">+ Add New Campaign</button>
+    </div>
+<nz-card>
+  <nz-row [nzGutter]="16" style="align-items: center; flex-wrap: wrap;">
+    
+  <!-- Date Range -->
+  <nz-col [nzSpan]="5" class="filter-item">
+    <nz-form-item style="margin-bottom: 0;">
+      <nz-form-label>Date Range</nz-form-label>
+      <nz-form-control>
+        <nz-range-picker [(ngModel)]="dateRange" (ngModelChange)="onDateChange($event)" style="width: 100%;"></nz-range-picker>
+      </nz-form-control>
+    </nz-form-item>
+  </nz-col>
+  
+  <nz-col [nzSpan]="role==='superadmin'?18:role==='admin'  || role==='accountManager'  ?15: role==='reseller'?10:5" *ngIf="role !== 'client'">
+    <app-filter-dropdown [role]="role" (selectionChange)="handleSelection($event)" [span]="5" [requierd]="false"></app-filter-dropdown>
+  </nz-col>
+   <nz-col [nzSpan]="5" class="filter-item">
+    <nz-form-item style="margin-bottom: 0;">
+      <nz-form-control>
+        <nz-form-label>Status</nz-form-label>
+                <nz-select style="width: 100%;" [(ngModel)]="campaignRunningStatus" (ngModelChange)="applyFilteractive()" [ngModelOptions]="{standalone: true}">
+                  <nz-option [nzValue]="'COMPLETE'" [nzLabel]="'Complete'"></nz-option>
+                  <nz-option [nzValue]="'PENDING'" [nzLabel]="'Pending'"></nz-option>
+                    <nz-option [nzValue]="'RUNNING'" [nzLabel]="'Running'"></nz-option>
+                </nz-select>
+              </nz-form-control>
+    </nz-form-item>
+  </nz-col>
+  <!-- Superadmin View -->
+  <!-- <nz-col *ngIf="role==='superadmin'" [nzSpan]="5" class="filter-item">
+    <nz-form-item style="margin-bottom: 0;">
+      <nz-form-label>Admin</nz-form-label>
+      <nz-form-control>
+        <nz-select nzAllowClear nzPlaceHolder="Select Admin" [(ngModel)]="Admin" [ngModelOptions]="{standalone: true}" (ngModelChange)="onChange('admin')" style="width: 100%;">
+          <nz-option *ngFor="let admin of Adminlist" [nzValue]="admin.label" [nzLabel]="admin.label"></nz-option>
+        </nz-select>
+      </nz-form-control>
+    </nz-form-item>
+  </nz-col> -->
+
+  <!-- Admin View -->
+  <!-- <nz-col *ngIf="role==='admin'" [nzSpan]="5" class="filter-item">
+    <nz-form-item style="margin-bottom: 0;">
+      <nz-form-label>Reseller</nz-form-label>
+      <nz-form-control>
+        <nz-select nzAllowClear nzPlaceHolder="Select Seller" [(ngModel)]="Reseller" [ngModelOptions]="{standalone: true}" (ngModelChange)="onChange('reseller')" style="width: 100%;">
+          <nz-option *ngFor="let reseller of ResllerList" [nzValue]="reseller.label" [nzLabel]="reseller.label"></nz-option>
+        </nz-select>
+      </nz-form-control>
+    </nz-form-item>
+  </nz-col> -->
+
+  <!-- Reseller or Admin View -->
+  <!-- <nz-col *ngIf="role === 'reseller' || role === 'admin'" [nzSpan]="5" class="filter-item">
+    <nz-form-item style="margin-bottom: 0;">
+      <nz-form-label>Seller</nz-form-label>
+      <nz-form-control>
+        <nz-select nzAllowClear nzPlaceHolder="Select Reseller" [(ngModel)]="Seller" [ngModelOptions]="{standalone: true}" (ngModelChange)="onChange('seller')" style="width: 100%;">
+          <nz-option *ngFor="let seller of SellerList" [nzValue]="seller.label" [nzLabel]="seller.label"></nz-option>
+        </nz-select>
+      </nz-form-control>
+    </nz-form-item>
+  </nz-col> -->
+
+  <!-- Seller, Reseller or Admin View -->
+  <!-- <nz-col *ngIf="role==='seller' || role==='reseller' || role==='admin'" [nzSpan]="5" class="filter-item">
+    <nz-form-item style="margin-bottom: 0;">
+      <nz-form-label>Client</nz-form-label>
+      <nz-form-control>
+        <nz-select nzAllowClear nzPlaceHolder="Select Clients" [(ngModel)]="Client" [ngModelOptions]="{standalone: true}" (ngModelChange)="onChange('client')" style="width: 100%;">
+          <nz-option *ngFor="let Client of Clientlist" [nzValue]="Client.label" [nzLabel]="Client.label"></nz-option>
+        </nz-select>
+      </nz-form-control>
+    </nz-form-item>
+  </nz-col> -->
+
+
+
+
+  <!-- Search Bar -->
+
+
+
+
+
+
+
+<nz-col [nzSpan]="5" class="filter-item" style="margin-top: 30px;">
+  <div style="display: flex; gap: 5px; flex-wrap: wrap;">
+    <button nz-button nzType="primary" (click)="search()">Search</button>
+    <button nz-button nzType="primary" (click)="downloadallreport()">Download</button>
+  </div>
+</nz-col>
+</nz-row> 
+</nz-card>   
+  <nz-col [nzSpan]="8" style="margin-top: 20px; margin-bottom: 20px;">
+    <nz-form-item style="margin-bottom: 0;">
+      <!-- <nz-form-label>Campaign</nz-form-label> -->
+      <nz-form-control>
+        <nz-input-group [nzSuffix]="searchIcon">
+          <input type="text" nzSize="large" nz-input placeholder="Enter campaign name" [(ngModel)]="searchValue" (input)="searchTable()" style="width: 100%;" />
+        </nz-input-group>
+      </nz-form-control>
+    </nz-form-item>
+  </nz-col>  
+<nz-table [nzFrontPagination]="false"
+  style="box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1); border-radius: 8px;"
+  #basicTable 
+  [nzBordered]="true" 
+  [nzData]="filteredData" 
+  [nzSize]="'middle'" 
+  [nzPageSize]="pageSize"
+  [nzPageIndex]="pageIndex"
+  [nzTotal]="totalRecords"
+>
+  <thead>
+    <tr>
+       <th nzWidth="10%" nzSort [nzSortFn]="sortByuserName">User Name</th>
+      <th nzWidth="10%" nzSort [nzSortFn]="sortByCampaignName">Campaign Name</th>
+      <th nzWidth="16%" nzSort [nzSortFn]="sortByRunTime">Campaign Run Time & Date</th>
+      <th nzWidth="15%" nzSort [nzSortFn]="sortByBotName">Bot Name</th>
+      <th nzWidth="15%" nzSort [nzSortFn]="sortByTemplateCode">Template Name</th>
+      <th nzWidth="15%" nzSort [nzSortFn]="sortByUploadedNumbers">Uploaded Numbers</th>
+      <th nzWidth="5%">Status</th>
+      <th nzWidth="30%">Action</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let data of basicTable.data">
+      <td>{{data.userName}}</td>
+      <td>
+        <a [routerLink]="['/campreport', data.campaignName]" >{{ data.campaignName }}</a>
+      </td>
+      <td>{{ data.runTime | date:'dd-MM-yyyy HH:mm:ss'}}</td>
+      <td>{{ data.botName }}</td>
+      <td>{{ data.templateCode }}</td>
+      <td>{{ data.uploadedNumbers }}</td>
+      <td>
+        <nz-tag [nzColor]="data.campaignRunningStatus === 'COMPLETE' ? 'green' : 'default'">{{ data.campaignRunningStatus }}</nz-tag>
+      </td>
+      <!-- <td>{{ data.targetAudience }}</td> -->
+      <td >
+        <a [routerLink]="['/campreport', data.campaignName]" >
+          View Report
+        </a>
+        <a (click)="downloadReport(data.campaignName,data.runTime)">
+           
+          <i nz-icon nzType="download" nzTheme="outline" nz-tooltip nzTooltipTitle="Download Report" *ngIf="!isLoading || loadingCampaignName !== data.campaignName"></i>
+          <i nz-icon nzType="loading" nzTheme="outline" *ngIf="isLoading && loadingCampaignName === data.campaignName"></i> 
+        </a>
+<a
+  style="margin-left: 10%;"
+  *ngIf="data.campaignRunningStatus === 'PENDING' 
+         && data.campaignType === 'SCHEDULED' 
+         && isMoreThanFiveMinutesFromNow(data.campaignDate)"
+  nz-popconfirm
+  [nzPopconfirmTitle]="'Are you sure you want to delete the campaign?'"
+  nzPopconfirmPlacement="bottom"
+  (nzOnConfirm)="updatetemplate(data.campaignName)"
+  (nzOnCancel)="cancel()">
+  <i nz-icon nzType="delete" nzTheme="outline" style="color: red"></i>
+</a>
+
+      </td>                                     
+    </tr>
+   
+  </tbody>
+
+</nz-table>
+  <div style="width: 100%; display: flex; justify-content: flex-end; margin-top: 1%;">
+  <button nz-button nzType="default" [disabled]="pageIndex <= 1" (click)="onPrevClick()">
+    <span nz-icon nzType="left" nzTheme="outline"></span>
+  </button>
+  <span style=" margin-left: 7px; margin-top: 4px;">{{ pageIndex }}</span>
+  <button nz-button nzType="default" (click)="onNextClick()">
+    <span nz-icon nzType="right" nzTheme="outline"></span>
+  </button>
+</div>
+
+  </nz-card>
+  
+  <ng-template #searchIcon>
+    <i nz-icon nzType="search"></i>
+  </ng-template>
+  

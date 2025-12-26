@@ -1,0 +1,184 @@
+<ng-container>
+<!-- <div class="page">
+
+
+  <div class="left">
+    <div class="logo">
+      <h1>Ved Tech Labs</h1>
+    </div>
+    <div class="content">
+      <h2 *ngIf="!isLogin">Thank you for your interest in,</h2>
+      <h1 *ngIf="!isLogin" style="text-align: start;" class="highlighted">Ved Tech Solution</h1>
+      <h1 *ngIf="isLogin" >Welcome Back,</h1>
+      <h5 *ngIf="isLogin">LogIn to get access to Ved Tech Solution RCS to send and receive RCS messages to/from users.</h5>
+      <h5 *ngIf="!isLogin">Using Ved Tech Solution RCS, get access to send and receive RCS messages to/from users.   </h5>
+    </div>
+    
+  </div>
+  <div class="right">
+      <div class="card">
+        <h1 style="margin: 0;" >{{ isLogin ? 'Log in to your account' : 'Sign Up for free' }}</h1>
+        <p *ngIf="isLogin" style="color: #5a5a5a;">Don't have an account? <a class="toggle-link" (click)="toggleAuth()">SIGN UP</a></p>
+        <form  *ngIf="isLogin" nz-form [formGroup]="loginForm" (ngSubmit)="onLogin()" style="margin-top: 2rem;">
+          
+          <nz-form-item nz-col [nzSpan]="32">
+            <nz-form-control nzErrorTip="Please enter your name!">
+              <nz-form-label nzFor="username" nzSpan="1-24" nzNoColon>UserName</nz-form-label>
+              <nz-input-group nzPrefixIcon="user" nzSize="large" >
+                <input nz-input formControlName="username" placeholder="Your Name" />
+              </nz-input-group>
+            </nz-form-control>
+          </nz-form-item>
+        
+          <nz-form-item nz-col [nzSpan]="32">
+            <nz-form-control nzErrorTip="Please enter your password!">
+              <nz-form-label nzFor="username" nzSpan="1-24" nzNoColon>Password</nz-form-label>
+              <nz-input-group nzPrefixIcon="lock" nzSize="large">
+                <input type="password" nz-input formControlName="password" placeholder="Password" />
+              </nz-input-group>
+            </nz-form-control>
+          </nz-form-item>
+        
+          <button nz-button nzType="primary" nzSize="large" class="auth-button" style="width: 100%; background-color: #d72626;">Log in</button>
+          
+          
+        </form>
+        <a *ngIf="!isLogin" class="toggle-link" (click)="toggleAuth()">I am already a member</a>
+        <form  *ngIf="!isLogin" nz-form [formGroup]="signupForm" (ngSubmit)="onSignup()" style="margin-top: 2rem;">
+          <nz-form-item nz-col [nzSpan]="32" >
+            <nz-form-control nzErrorTip="Please enter your email!">
+              <nz-form-label nzFor="companyEmail" nzSpan="1-24" nzNoColon>Company Email</nz-form-label>
+              <nz-input-group nzPrefixIcon="mail" nzSize="large">
+                <input nz-input formControlName="email" placeholder="Your Email" />
+              </nz-input-group>
+            </nz-form-control>
+          </nz-form-item>
+          <div class="" nz-row [nzGutter]="40" >
+          <div class=""nz-col [nzXs]="24" [nzSm]="24" [nzMd]="24" [nzLg]="12">
+            <nz-form-item   >
+              <nz-form-control nzErrorTip="Please enter First Name!">
+                <nz-form-label nzFor="companyEmail" nzSpan="1-24" nzNoColon>First Name</nz-form-label>
+                <nz-input-group nzPrefixIcon="user" nzSize="large" style="width:100%;">
+                  <input nz-input formControlName="firstname" placeholder="Your First Name" />
+                </nz-input-group>
+              </nz-form-control>
+            </nz-form-item>
+          </div>
+          <div class="" nz-col [nzXs]="24" [nzSm]="24" [nzMd]="24" [nzLg]="12">
+            <nz-form-item  >
+              <nz-form-control nzErrorTip="Please enter Last Name!">
+                <nz-form-label nzFor="companyEmail" nzSpan="1-24" nzNoColon>Last Name</nz-form-label>
+                <nz-input-group nzPrefixIcon="user" nzSize="large" style="width:100%;">
+                  
+                  <input nz-input formControlName="lastname" placeholder="Your Last Name" />
+                </nz-input-group>
+              </nz-form-control>
+            </nz-form-item>
+          </div>
+          <div class="" nz-col [nzXs]="24" [nzSm]="24" [nzMd]="24" [nzLg]="12">
+          <nz-form-item    >
+            <nz-form-control nzErrorTip="Please enter company website!">
+              <nz-form-label nzFor="companyEmail" nzSpan="1-24" nzNoColon>Company Website</nz-form-label>
+              <nz-input-group nzPrefixIcon="global" nzSize="large">
+                <input  nz-input formControlName="website" placeholder="Your company website " />
+              </nz-input-group>
+            </nz-form-control>
+          </nz-form-item>
+        </div>
+        <div class="" nz-col [nzXs]="24" [nzSm]="24" [nzMd]="24" [nzLg]="12">
+          <nz-form-item    >
+            <nz-form-control nzErrorTip="Please enter company Name!">
+              <nz-form-label nzFor="companyName" nzSpan="1-24" nzNoColon>Company Name</nz-form-label>
+              <nz-input-group nzPrefixIcon="global" nzSize="large">
+                <input  nz-input formControlName="companyName" placeholder="Your company website " />
+              </nz-input-group>
+            </nz-form-control>
+          </nz-form-item>
+        </div>
+        <div class="" nz-col [nzXs]="24" [nzSm]="24" [nzMd]="24" [nzLg]="12" >
+          <nz-form-item  >
+            <nz-form-control nzErrorTip="Please enter country!" >
+              <nz-form-label nzFor="contry" nzSpan="1-24" nzNoColon>Country</nz-form-label>
+              <nz-input-group nzPrefixIcon="global" nzSize="large">
+                <input nz-input formControlName="contry" placeholder="Your contry" />
+              </nz-input-group>
+            </nz-form-control>
+          </nz-form-item> 
+        </div>
+        <div class="" nz-col [nzXs]="24" [nzSm]="24" [nzMd]="24" [nzLg]="12" >
+          <nz-form-item  >
+            <nz-form-control nzErrorTip="Please enter country!" >
+              <nz-form-label nzFor="Contact" nzSpan="1-24" nzNoColon>Contact Number</nz-form-label>
+              <nz-input-group nzPrefixIcon="global" nzSize="large">
+                <input nz-input formControlName="mobile" placeholder="Your Contact Number" />
+              </nz-input-group>
+            </nz-form-control>
+          </nz-form-item> 
+        </div>
+        </div> 
+        <div class="" style="display: flex; flex-direction: column; ">
+          <div class="">
+            <label nz-checkbox [(ngModel)]="checked" [ngModelOptions]="{standalone: true}" style=" color: #989898;">I want to receive news, offer and blogs</label>
+          </div>
+          <div class="">
+            <label nz-checkbox [(ngModel)]="termschecked" [ngModelOptions]="{standalone: true}" style="color:#989898 ;">I confirm i have read and accept the Terms & Conditions</label>
+          </div>
+          
+        </div>
+        <p style="color:#989898 ;padding: 25px; text-align: justify;">By clicking, I confirm that data provided is accurate and that services would be provided to a named company/individual. Under criminal and civil liabilities that may result as a consequence of any misrepresentation or otherwise lack of permissions to execute acceptance, I confirm I have the authority to bind the contracting party legally.
+          <br/><br/>
+          Read our <a href="">Privacy Notice</a> to understand how Infobip processes personal data.
+        </p>
+          <div class="" style="display: flex; align-items: center; flex-direction: column; gap:5px;">
+          <button nz-button nzType="primary" nzSize="large" class="auth-button" style="width: 100%; background-color: #d72626;" (click)="onSignup()">SignUp For Free</button>
+          <span style="color:#afaeae ;">*No Credit Card Required</span>
+         </div>
+          
+          
+        </form>
+        <nz-divider nzText="OR CONTINUE WITH" style="color: #afaeae ; font-size: small;"></nz-divider>
+        <div class="" style="display: flex; justify-content: center; height: 150px; ">
+           <div class="" id="google-btn"></div>
+        </div>
+        <span style="color:#989898; position: fixed; bottom: 0 ; right: 24px;">Ved Tech Solutions ©2025</span>
+      </div>
+  </div>
+</div> -->
+<div class="login-container">
+  <div class="login-box">
+    <div class="login-icon">
+      <img src="assets/images/—Pngtree—host and admin marketing job_8815346.png" alt="Login" />
+    </div>
+    
+    <form *ngIf="isLogin" nz-form [formGroup]="loginForm" (ngSubmit)="onLogin()">
+      <h1 class="login-title">Log In</h1>
+      <nz-form-item>
+        <nz-form-control nzErrorTip="Please input your username!">
+          <nz-input-group nzPrefixIcon="user">
+            <input nz-input formControlName="username" placeholder="Username" (ngModelChange)="loginForm.controls['username'].setValue($event.trim())" />
+          </nz-input-group>
+        </nz-form-control>
+      </nz-form-item>
+
+      <nz-form-item>
+        <nz-form-control nzErrorTip="Please input your password!">
+          <nz-input-group nzPrefixIcon="lock">
+            <input nz-input formControlName="password" type="password" placeholder="Password" (ngModelChange)="loginForm.controls['password'].setValue($event.trim())" />
+          </nz-input-group>
+        </nz-form-control>
+      </nz-form-item>
+
+      <button nz-button nzType="primary" [disabled]="loginForm.invalid" class="login-btn">
+        Log in
+      </button>
+    </form>
+  </div>
+</div>
+
+
+</ng-container>
+
+
+
+
+<!--  -->

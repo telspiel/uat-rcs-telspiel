@@ -1,0 +1,77 @@
+
+<nz-spin [nzSpinning]="loading" nzSize="large" style="display: flex; justify-content: center; align-items: center; height: 100vh;">
+  <div *ngIf="!loading">
+<div >
+    <nz-card nzTitle="Rich Message Templates">
+
+      <nz-card style="margin-bottom: 2rem;">
+          <form action="">
+            <nz-form-label  nzFor="type">Select Bot<span style="color: red;"> * </span></nz-form-label>
+                <p style=" font-size: 10px; color: #999; line-height: 1.4;"></p>
+                <nz-form-control>
+                  <nz-select [(ngModel)]="botId" id="type"  nzPlaceHolder="Select Bot" style="width: 30%;" (ngModelChange)="getTemplates(botId)" [ngModelOptions]="{standalone: true}">
+                    <nz-option *ngFor="let item of newbot"  nzLabel="{{ item.botName }}" nzValue="{{item.botId}}" ></nz-option>
+                  </nz-select>
+                </nz-form-control>
+          </form>      
+      </nz-card>
+      
+      <nz-table
+      #templateTable
+      [nzBordered]="true"
+      [nzSize]="'middle'"
+      [nzData]="messageTemplates"
+      [nzScroll]="{ x: '100%' }"
+    >
+      <thead>
+        <tr>
+          <th nzWidth="25%">Template Name/Code</th>
+          <th nzWidth="40%">Template Message</th>
+          <th nzWidth="10%">Status</th>
+          <th nzWidth="25%">Last Updated</th>
+          <th nzWidth="25%" >Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let template of messageTemplates">
+          <td>{{ template.templateTitle }}</td>
+          <td>{{ template.templateText }}</td>
+          <td>
+            <span
+              [ngClass]="{
+                'status-active': template.status === 'Active',
+                'status-inactive': template.status !== 'Active'
+              }"
+            >
+              {{ template.status }}
+            </span>
+          </td>
+          <td>{{ template.createadDate }}</td>
+          <td>
+            <!-- <a [routerLink]="['']">
+            <button nz-button nzType="link" nzShape="circle" nzTooltipTitle="View">
+              <i nz-icon nzType="eye" nzTheme="outline"></i>
+            </button>
+            </a> -->
+            <a [routerLink]="['/template/viewtemplate']">
+                <button nz-button nzType="link" nzShape="circle" nzTooltipTitle="Edit" (click)="getTemplate(template.templateTitle)">
+                  <i nz-icon nzType="eye" nzTheme="outline"></i>
+                </button>
+              </a>                  
+          </td>
+        </tr>
+      </tbody>
+    </nz-table>
+    
+        <!-- <a style="margin-top: 8px;" nz-button  nzType="link">+ Add a Template</a> -->
+        <a [routerLink]="['/template/ ',]">+ Add a Template
+            <button nz-button nzType="link" nzShape="circle" nzTooltipTitle="Edit">
+              <i nz-icon nzType="" nzTheme="outline"></i>
+            </button>
+          </a>       
+      
+    </nz-card>
+
+  </div>
+</div>
+</nz-spin>

@@ -1,0 +1,29 @@
+<div class=""  style="display: flex; flex-direction:row; align-items: center;">
+  <nz-page-header class="site-page-header" nzTitle="Account Manager"></nz-page-header>
+<!-- <div class="" nz-flex nzJustify="flex-end" >
+  <nz-breadcrumb [nzAutoGenerate]="true" nzSeparator=">"  >
+    <nz-breadcrumb-item>
+      <a [routerLink]="['']"> <span nz-icon nzType="appstore" nzTheme="outline"></span></a>
+    </nz-breadcrumb-item>
+    <nz-breadcrumb-item>
+      <a [routerLink]="[' ']"> <span nz-icon nzType="user-add" nzTheme="outline"></span></a>
+    </nz-breadcrumb-item>
+  </nz-breadcrumb>
+</div> -->
+
+</div>
+<nz-card style="width: 100%;">
+    <ul nz-menu nzMode="horizontal">
+      <li nz-menu-item  nzMatchRouter >
+        <a [routerLink]="['addAccount']"  routerLinkActive="active"><span nzType="plus" nzTheme="outline" nz-icon></span>Add Account Manager</a>
+      </li>
+      <li nz-menu-item nzMatchRouter >
+        <a [routerLink]="['view-account']" routerLinkActive="active"  ><span nz-icon nzType="eye" nzTheme="outline"></span>View Account Manager</a>
+      </li>
+      <li nz-menu-item nzMatchRouter >
+        <a [routerLink]="['edit-account']" routerLinkActive="active" ><span nz-icon nzType="upload" nzTheme="outline"></span>Update Account Manager</a>
+      </li>
+    </ul>
+    
+  <router-outlet/>
+</nz-card>

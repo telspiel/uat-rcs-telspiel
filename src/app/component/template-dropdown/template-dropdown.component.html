@@ -1,0 +1,5 @@
+<label for="template" class="ant-form-item-label" style="font-weight: bold;">Template</label>
+<nz-select nzPlaceHolder="All Template" style="width: 100%;" [(ngModel)]="seletedTemplate" (ngModelChange)="onChange()">
+    <nz-option nzLabel="All Template" nzValue="" *ngIf="route==='/'"></nz-option>
+    <nz-option *ngFor="let data of messageTemplates" [nzLabel]="data.templateTitle" [nzValue]="data.templateTitle"></nz-option>
+</nz-select>

@@ -1,0 +1,610 @@
+.clientpage {
+  display: flex;
+  justify-content: center;  
+  align-items: center; 
+  height: 100vh;  
+  background-color: rgb(93, 145, 166); 
+}
+
+.clientpage > div {
+  width: 350px; 
+  padding: 20px;
+  background: white;
+  border-radius: 8px; 
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1); 
+}
+
+// .select{
+//   //max-width:224.22px;
+//    width: 224.22px;
+  
+// }
+// .page{
+//   width: 100vw; 
+//   height: 100vh; 
+//   background: #ffecec; 
+//   display: flex; 
+//   justify-content: center; 
+//   align-items: center;
+// }
+// .cards {
+//   width: 60%;
+//   height: 70%;
+//   border-radius: 25px;
+//   box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
+//   background-color: white;
+//   display: flex;
+
+// }
+
+// .left-side {
+//   height: 100%;
+//   width: 60%;
+//   background-image: url('../../assets/images/loginBg.jpeg');
+//   background-size: cover;
+//   border-top-left-radius: 25px;
+//   border-bottom-left-radius: 25px;
+//   display: flex;
+//   flex-direction: column;
+//   justify-content: flex-start;
+//   gap: 50px;
+
+//   div {
+
+//     padding-left: 20px;
+
+//     .img {
+//       filter: invert(100%);
+//       padding-top: 25px;
+//     }
+
+//     h2 {
+//       font-weight: 700;
+//       font-size: 2rem;
+//       margin: 0;
+//       color: white;
+//     }
+
+//     h1 {
+//       font-weight: 700;
+//       font-size: 2.5rem;
+//       margin: 0;
+//       color: white;
+//     }
+
+//     h5 {
+//       color: white;
+//       font-size: 1rem;
+//     }
+//   }
+
+//   span {
+//     width: 100%;
+//     height: 20%;
+//     padding-right: 5px;
+//     display: flex;
+//     justify-content: flex-end;
+//     align-items: end;
+//     font-size: small;
+//     color: white;
+//   }
+// }
+
+// .right-side {
+//   width: 50%;
+//   height: 100%;
+//   transform: scale(0.9);
+//   background-color: white;
+//   border-top-right-radius: 25px;
+//   border-bottom-right-radius: 25px;
+//   display: flex;
+//   flex-direction: column;
+//   justify-content: center;
+//   align-items: center;
+
+//   h1 {
+//     color: #d72626;
+//     font-weight: 700;
+//     font-size: 2rem;
+//   }
+
+//   form {
+//     //width: 100%;
+//     display: flex;
+//     flex-direction: column;
+//     justify-content: center;
+//     align-items: center;
+//   }
+// }
+
+// .auth-button {
+//   background-color: #d72626;
+//   color: white;
+//   border: none;
+//   width: 100%;
+//   margin-top: 1rem;
+
+//   &:hover {
+//     background-color: #b71c1c;
+//   }
+// }
+
+// @media only screen and (max-width: 600px) {
+//   .page{
+//     height: auto;
+//   }
+//   .cards {
+//     width: 100%;
+//     height: 100%;
+//     flex-direction: column;
+//     border-radius: 0;
+//   }
+
+//   .left-side {
+//     width: 100%;
+//     border-top-left-radius: 0;
+//     border-bottom-left-radius: 0;
+//     gap: 50px;
+
+//     div {
+
+//       h2 {
+//         font-weight: 700;
+//         font-size: 1rem;
+
+//       }
+
+//       h1 {
+//         font-weight: 700;
+//         font-size: 1.5rem;
+
+//       }
+
+//       h5 {
+//         color: white;
+//         font-size: 0.5rem;
+//       }
+//     }
+   
+//   }
+
+//   .right-side {
+//     width: 100%;
+//     padding-bottom: 25px;
+//     border-top-right-radius: 0;
+//     border-bottom-right-radius: 0;
+
+//     h1 {
+//       color: #d72626;
+//       font-weight: 700;
+//       font-size: 2.5rem;
+//     }
+
+//     form {
+//       display: flex;
+//       flex-direction: column;
+//       justify-content: center;
+//       align-items: center;
+
+
+//     }
+//     .select{
+//       width: 16.5rem;
+//     }
+//   }
+  
+// }
+
+// @media only screen and (max-width:1500px){
+//   .left-side{
+//     div{
+//       h2{
+//         font-size: 1.7rem;
+//       }
+//       h1{
+//         font-size: 2.5rem;
+//       }
+//       h5{
+//         font-size: 1rem;
+//       }
+      
+//     }
+//   }
+//   .right-side{
+//     transform: scale(0.8);
+//   }
+// }
+
+
+
+// @media only screen and (min-width:768px) and (max-width:1024px){
+//   .cards{
+//     width:70%;
+//   }
+//   .left-side{
+//     div{
+//       h2{
+//         font-size: 1rem;
+//       }
+//       h1{
+//         font-size: 2rem;
+//       }
+//       h5{
+//         font-size: 0.5rem;
+//       }
+      
+//     }
+    
+//   }
+//   .right-side{
+//     transform: scale(0.7);
+//   }
+// }
+// .page{
+//   height: 100%;
+//   width: 100%;
+//   display: flex;
+//   overflow: hidden;
+ 
+//   .card{
+//     height: 60%;
+//     width:80%;
+
+//   }
+
+//   .left{
+//     width: 50%;
+//     background:#d72626;
+//     // background-image: linear-gradient(to top, #f77062 0%, #fe5196 100%);
+//     // background:url('../../assets/images/image.png');
+//     background-size: cover;
+//     padding: 25px;
+//     .logo{
+//       h1{color: white;}
+      
+//     }
+//     .content{
+//       display: flex;
+//       height: 90%;
+//       flex-direction: column;
+//       justify-content: center;
+//             h2 {
+//               font-weight: 700;
+//               font-size: 2rem;
+//               margin: 0;
+//               color: white;
+//             }
+        
+//             h1 {
+//               font-weight: 700;
+//               font-size: 2.5rem;
+//               margin: 0;
+//               color: white;
+//             }
+        
+//             h5 {
+//               color: white;
+//               font-size: 1rem;
+//             }
+//     }
+//   }
+//   .right{
+//     width:50%;
+//     height: 100%;
+//     display: flex;
+//     justify-content: center;
+//     // align-items: center;
+//     overflow-y: auto;
+//     // margin-bottom: 100px;
+//     .card{
+//      // height: 100%;
+//      width: 100%;
+//      padding: 50px;
+//      //margin-top: 100px;
+    
+//     }
+//   }
+// }
+// nz-form-label{
+//   font-weight: 600;
+// }
+// @media only screen and (min-width:768px) and (max-width:1024px){
+//   .page{
+//     flex-direction: column;
+  
+//   .left{
+//   .content{
+//     h1{
+//       font-size: 2rem;
+
+//     }
+//     h2{
+//       font-size: 1.5rem;
+//     }
+//     h5{
+//       font-size: 0.5rem;
+//     }
+//   }
+// }}
+// }
+// @media only screen and (max-width: 600px){
+//   .page{
+//     flex-direction: column;
+//     height: 100%;
+//    width: 100%;
+//    overflow: visible;
+//    .left{
+//     width: 100%;
+//     .content{
+//       h1{
+//         font-size: 1.5rem;
+  
+//       }
+//       h2{
+//         font-size: 1rem;
+//       }
+//       h5{
+//         font-size: 0.5rem;
+//       }
+//     }
+//    }
+//    .right{
+//     width: 100%;
+//     height: 100%;
+//     overflow: visible;
+//    }
+//   }
+// }
+
+
+/* Background gradient */
+.login-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  
+  height: 100vh;
+  background: linear-gradient(45deg, #ff4d4f, #ff7875);
+}
+
+/* Login box */
+.login-box {
+  
+  padding: 40px;
+  display: flex;
+  width: auto;
+  max-width: 40%;
+  height: auto;
+  max-height: 50%;
+  justify-content: space-around;
+  align-items: center;
+  text-align: center;
+  background: rgba(255, 255, 255, 0.6);
+  border-radius: 12px;
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+  backdrop-filter: blur(10px);
+}
+
+/* Login icon */
+.login-icon img {
+  width: 300px;
+  height: 300px;
+  margin-bottom: 10px;
+}
+
+/* Title */
+.login-title {
+  font-size: 22px;
+  font-weight: bold;
+  margin-bottom: 20px;
+  color: white;
+}
+
+/* Input fields */
+.login-input {
+  
+  margin-bottom: 15px;
+  // border-radius: 20px !important;
+  
+  border: none;
+}
+
+/* Login button */
+.login-btn {
+  width: 100%;
+  height: 40px;
+  border-radius: 20px;
+  background-color: rgb(118, 118, 213);
+  color: white;
+  font-weight: bold;
+  border: none;
+  transition: 0.3s;
+}
+
+.login-btn:hover {
+  background-color:rgb(169, 169, 255);
+}
+
+
+body {
+  background-color: #e0d7ff;
+}
+
+.example {
+  background-color: #e0d7ff;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.25), inset 0 0 50px rgba(255, 255, 255, 0.15);
+  border-radius: 10px;
+}
+
+
+
+
+nz-card {
+  box-shadow: 0 0 10px rgba(0, 0, 0, .15), 0 0 20px rgba(0, 0, 0, .15);
+  border-radius: 10px;
+}
+
+.gradient-background {
+  background: linear-gradient(to right, #c3f1ec, #2fa4cb);
+  // background: var(--dashboard-gradient);
+}
+
+
+
+.form-login {
+
+  // display: flex;
+  // flex-direction: column;
+  // align-items: center;
+  form {
+      width: 100%;
+  }
+
+  .login-form-margin {
+      margin-bottom: 16px;
+  }
+
+  .login-form-button {
+      width: 100%;
+  }
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  font-family: sans-serif;
+  background: linear-gradient(to right, #b92b27, #1565c0)
+}
+
+.card {
+  margin-bottom: 20px;
+  border: none;
+}
+
+.box {
+  width: 500px;
+  padding: 40px;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  background: #191919;
+  ;
+  text-align: center;
+  transition: 0.25s;
+  margin-top: 100px
+}
+
+.box input[type="text"],
+.box input[type="password"] {
+  border: 0;
+  background: none;
+  display: block;
+  margin: 20px auto;
+  text-align: center;
+  border: 2px solid #3498db;
+  padding: 10px 10px;
+  width: 250px;
+  outline: none;
+  color: white;
+  border-radius: 24px;
+  transition: 0.25s
+}
+
+.box h1 {
+  color: white;
+  text-transform: uppercase;
+  font-weight: 500
+}
+
+.box input[type="text"]:focus,
+.box input[type="password"]:focus {
+  width: 300px;
+  border-color: #2ecc71
+}
+
+.box input[type="submit"] {
+  border: 0;
+  background: none;
+  display: block;
+  margin: 20px auto;
+  text-align: center;
+  border: 2px solid #2ecc71;
+  padding: 14px 40px;
+  outline: none;
+  color: white;
+  border-radius: 24px;
+  transition: 0.25s;
+  cursor: pointer
+}
+
+.box input[type="submit"]:hover {
+  background: #2ecc71
+}
+
+.forgot {
+  text-decoration: underline
+}
+
+ul.social-network {
+  list-style: none;
+  display: inline;
+  margin-left: 0 !important;
+  padding: 0
+}
+
+ul.social-network li {
+  display: inline;
+  margin: 0 5px
+}
+
+.social-network a.icoFacebook:hover {
+  background-color: #3B5998
+}
+
+.social-network a.icoTwitter:hover {
+  background-color: #33ccff
+}
+
+.social-network a.icoGoogle:hover {
+  background-color: #BD3518
+}
+
+.social-network a.icoFacebook:hover i,
+.social-network a.icoTwitter:hover i,
+.social-network a.icoGoogle:hover i {
+  color: #fff
+}
+
+a.socialIcon:hover,
+.socialHoverClass {
+  color: #44BCDD
+}
+
+.social-circle li a {
+  display: inline-block;
+  position: relative;
+  margin: 0 auto 0 auto;
+  border-radius: 50%;
+  text-align: center;
+  width: 50px;
+  height: 50px;
+  font-size: 20px
+}
+
+.social-circle li i {
+  margin: 0;
+  line-height: 50px;
+  text-align: center
+}
+
+.social-circle li a:hover i,
+.triggeredHover {
+  transform: rotate(360deg);
+  transition: all 0.2s
+}
+
+.social-circle i {
+  color: #fff;
+  transition: all 0.8s;
+  transition: all 0.8s
+}

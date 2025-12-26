@@ -1,0 +1,314 @@
+<!-- <div class="header-section">
+  <h2>Hey,</h2>
+  <p><span style="font-weight: bold;">{{userName}}</span> you can update wallet and also view the histroy of the by selecting the user type filters given below.</p>
+ 
+  <button  nz-button nzType="primary" [routerLink]="['/updateWallet']" nzShape="round">Update Wallet
+  </button>
+</div> -->
+
+<nz-card nzTitle="Wallet Management">
+  <nz-tabset nzType="card" (nzSelectedIndexChange)="onTabChange($event)">
+    <nz-header class="site-page-header" nzTitle="Summary"></nz-header>
+    <nz-tab [nzTitle]="Add">
+      <ng-template #Add>
+        <span>Add</span>
+      </ng-template>
+      <div>
+        <nz-card>
+          <form [formGroup]="updateWallet">
+            <nz-row [nzGutter]="16">
+              <nz-col nzSpan="24">
+                <app-filter-dropdown
+                  [role]="role"
+                  (selectionChange)="handleSelection($event)"
+                  [requierd]="false"
+                ></app-filter-dropdown>
+              </nz-col>
+              <!-- <nz-col [nzSpan]="8"  *ngIf="['superadmin'].includes(role)">
+          <nz-form-item>
+            <nz-form-label nzFor="user" [nzSpan]="24" class="left-align-label">Admin</nz-form-label>
+            <nz-form-control>
+              <nz-select id="User" nzPlaceHolder="Select a user"  [(ngModel)]="selectedAdmin"
+                [ngModelOptions]="{standalone: true}" (ngModelChange)="onAdminChange($event)" [(ngModel)]="selectedAdmin">
+                <nz-option *ngFor="let user of Adminlist" [nzValue]="user.label" [nzLabel]="user.label"></nz-option>
+              </nz-select>
+            </nz-form-control>
+          </nz-form-item>
+        </nz-col> -->
+              <!-- Reseller -->
+              <!-- <nz-col [nzSpan]="8" *ngIf="role==='admin'">
+          <nz-form-item>
+            <nz-form-label nzFor="reseller" [nzSpan]="24" class="left-align-label">Reseller</nz-form-label>
+            <nz-form-control>
+                <nz-select id="Reseller" nzPlaceHolder="Select a user" [(ngModel)]="selectedReseller"
+                [ngModelOptions]="{standalone: true}" (ngModelChange)="onResellerChange($event)" [(ngModel)]="selectedReseller">
+                <nz-option *ngFor="let reseller of ResllerList" [nzValue]="reseller.label" [nzLabel]="reseller.label"></nz-option>
+              </nz-select>
+            </nz-form-control>
+          </nz-form-item>
+        </nz-col> -->
+
+              <!-- Seller -->
+              <!-- <nz-col [nzSpan]="8" *ngIf="role === 'reseller' || role === 'admin'">
+          <nz-form-item>
+            <nz-form-label nzFor="seller" [nzSpan]="24" class="left-align-label">Seller</nz-form-label>
+            <nz-form-control>
+                <nz-select id="Seller" nzPlaceHolder="Select a user" [(ngModel)]="selectedSeller"
+                [ngModelOptions]="{standalone: true}"  (ngModelChange)="onSellerChange($event)"  [(ngModel)]="selectedSeller">
+                <nz-option *ngFor="let seller of SellerList" [nzValue]="seller.label" [nzLabel]="seller.label"></nz-option>
+              </nz-select>
+            </nz-form-control>
+          </nz-form-item>
+        </nz-col> -->
+
+              <!-- Client -->
+              <!-- <nz-col [nzSpan]="8" *ngIf="role==='seller' || role ==='reseller' || role ==='admin'">
+          <nz-form-item>
+            <nz-form-label nzFor="client" [nzSpan]="24" class="left-align-label">Client</nz-form-label>
+            <nz-form-control>
+                <nz-select id="Client" nzPlaceHolder="Select a user" [(ngModel)]="selectedClient"
+                [ngModelOptions]="{standalone: true}" (ngModelChange)="onClientChange($event)" [(ngModel)]="selectedClient">
+                <nz-option *ngFor="let Client of Clientlist" [nzValue]="Client.label" [nzLabel]="Client.label"></nz-option>
+              </nz-select>
+            </nz-form-control>
+          </nz-form-item>
+        </nz-col> -->
+
+              <nz-col [nzSpan]="8" class="filter-item">
+                <nz-form-item>
+                  
+                  <nz-form-control>
+                    <nz-form-label nzFor="client" class="left-align-label"
+                    >Sellect Billing Plan</nz-form-label
+                  >
+                    <nz-select
+                      id="Client"
+                      nzPlaceHolder="Select Plan"
+                      formControlName="walletPlanName"
+                    >
+                      <nz-option
+                        *ngFor="let name of plans"
+                        [nzLabel]="name"
+                        [nzValue]="name"
+                      ></nz-option>
+                    </nz-select>
+                  </nz-form-control>
+                </nz-form-item>
+              </nz-col>
+
+              <!-- Logged In User Wallet -->
+              <nz-col [nzSpan]="8" class="filter-item">
+                <nz-form-item>
+                  
+                  <nz-form-control>
+                    <nz-form-label
+                    nzFor="loggedInUserWallet"
+                    class="left-align-label"
+                  >
+                    Your Wallet Balance
+                  </nz-form-label>
+                    <input
+                      nz-input
+                      id="loggedInUserWallet"
+                      placeholder="Your Wallet Balance"
+                      [value]="loggedInUserWallet"
+                      [disabled]="true"
+                    />
+                  </nz-form-control>
+                </nz-form-item>
+              </nz-col>
+
+              <!-- Selected User Wallet -->
+              <nz-col [nzSpan]="8" class="filter-item">
+                <nz-form-item>
+                  
+                  <nz-form-control>
+                    <nz-form-label
+                    nzFor="userAvailableWallet"
+                    class="left-align-label"
+                  >
+                    User Wallet Balance
+                  </nz-form-label>
+                    <input
+                      nz-input
+                      id="userAvailableWallet"
+                      placeholder="User Wallet Balance"
+                      [value]="userAvailableWallet"
+                      [disabled]="true"
+                    />
+                  </nz-form-control>
+                </nz-form-item>
+              </nz-col>
+
+              <nz-col [nzSpan]="8" class="filter-item">
+                <nz-form-item>
+                  
+                  <nz-form-control>
+                    <nz-form-label nzFor="client" class="left-align-label"
+                    >Add Wallet Balance</nz-form-label
+                  >
+                    <input
+                      nz-input
+                      placeholder="Add Wallet Blance"
+                      formControlName="balanceAdded"
+                    />
+                  </nz-form-control>
+                </nz-form-item>
+              </nz-col>
+              <nz-col [nzSpan]="8" class="filter-item">
+                <nz-form-item>
+                  
+                  <nz-form-control>
+                    <nz-form-label nzFor="Comment"
+                    >Comment</nz-form-label>
+                    <input nz-input formControlName="remarks" />
+                  </nz-form-control>
+                </nz-form-item>
+              </nz-col>
+            </nz-row>
+
+            <nz-row class="button-container">
+              <nz-col
+                [nzSpan]="24"
+                style="display: flex; justify-content: center; gap: 10px "
+
+              >
+                <button nz-button nzType="primary" (click)="updateWalletData()">
+                  Add Balance
+                </button>
+                <button
+                  nz-button
+                  nzType="default"
+                  nzDanger
+                  (click)="updateWallet.reset()"
+                >
+                  Reset
+                </button>
+              </nz-col>
+            </nz-row>
+          </form>
+        </nz-card>
+      </div>
+    </nz-tab>
+    <nz-tab [nzTitle]="History">
+      <ng-template #History>
+        <span>History</span>
+      </ng-template>
+
+      <div>
+        <nz-card style="margin-top: 20px">
+          <nz-row [nzGutter]="16" nzAlign="middle">
+            <!-- Date Range -->
+            <nz-col [nzSpan]="6">
+              <nz-form-item>
+                <nz-form-label class="left-align-label"
+                  >Date Range</nz-form-label
+                >
+                <nz-form-control>
+                  <nz-range-picker
+                    nzRangePicker
+                    style="width: 100%"
+                    [(ngModel)]="date"
+                    [nzDisabledDate]="disableFutureDates"
+                    [ngModelOptions]="{ standalone: true }"
+                    (ngModelChange)="onChange('date')"
+                    (ngModelChange)="onChangeDate()"
+                  ></nz-range-picker>
+                </nz-form-control>
+              </nz-form-item>
+            </nz-col>
+            <nz-col [nzXs]="24" [nzSm]="24" [nzMd]="12" [nzLg]="14">
+                <app-filter-dropdown
+                  [role]="role"
+                  (selectionChange)="handleSelection($event)"
+                  [requierd]="false"
+                ></app-filter-dropdown>
+              </nz-col>
+            <!-- Reseller -->
+            <!-- <nz-col [nzSpan]="4" *ngIf="['admin'].includes(role)">
+      <nz-form-item>
+        <nz-form-label nzFor="reseller" [nzSpan]="24" class="left-align-label">Reseller</nz-form-label>
+        <nz-form-control>
+            <nz-select id="Reseller" nzPlaceHolder="Select a user" [(ngModel)]="selectedReseller"
+            [ngModelOptions]="{standalone: true}" (ngModelChange)="onChange('reseller')" [(ngModel)]="Reseller">
+            <nz-option *ngFor="let reseller of ResllerList" [nzValue]="reseller.label" [nzLabel]="reseller.label" ></nz-option>
+          </nz-select>
+        </nz-form-control>
+      </nz-form-item>
+    </nz-col> -->
+
+            <!-- Seller -->
+            <!-- <nz-col [nzSpan]="4" *ngIf="['admin', 'reseller'].includes(role)">
+      <nz-form-item>
+        <nz-form-label nzFor="seller" [nzSpan]="24" class="left-align-label">Seller</nz-form-label>
+        <nz-form-control>
+            <nz-select id="Seller" nzPlaceHolder="Select a user" [(ngModel)]="selectedSeller"
+            [ngModelOptions]="{standalone: true}"  (ngModelChange)="onChange('seller')"  [(ngModel)]="Seller">
+           >
+            <nz-option *ngFor="let seller of SellerList" [nzValue]="seller.label" [nzLabel]="seller.label"></nz-option>
+          </nz-select>
+        </nz-form-control>
+      </nz-form-item>
+    </nz-col> -->
+
+            <!-- Client -->
+            <!-- <nz-col [nzSpan]="4" *ngIf="['admin', 'reseller', 'seller'].includes(role)">
+      <nz-form-item>
+        <nz-form-label nzFor="client" [nzSpan]="24" class="left-align-label">Client</nz-form-label>
+        <nz-form-control>
+            <nz-select id="Client" nzPlaceHolder="Select a user"  [(ngModel)]="Client"
+            [ngModelOptions]="{standalone: true}" (ngModelChange)="onChange('client')" [(ngModel)]="selectedClient"> >
+            <nz-option *ngFor="let Client of Clientlist" [nzValue]="Client.label" [nzLabel]="Client.label" ></nz-option>
+          </nz-select>
+        </nz-form-control>
+      </nz-form-item>
+    </nz-col> -->
+
+            <nz-col style="margin-top: 13px">
+              <button nz-button nzType="primary" (click)="onSearch()">
+                Search
+              </button>
+            </nz-col>
+          </nz-row>
+
+          <nz-table
+            #basicTable
+            [nzBordered]="true"
+            [nzData]="tableData"
+            style="margin-top: 10px"
+          >
+            <thead>
+              <tr>
+                <th>User Name</th>
+                <th>Created Date</th>
+                <th>Plan Name</th>
+                <th>Updated Amount</th>
+                <th>Amount</th>
+                <th>Comment</th>
+                <th>Remarks</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let data of basicTable.data">
+                <td>{{ data.userName }}</td>
+                <td>
+                  {{
+                    data.createdDate
+                      ? (data.createdDate | date : "yyyy-MM-dd HH:mm:ss")
+                      : "N/A"
+                  }}
+                </td>
+
+                <td>{{ data.planName }}</td>
+                <td>{{ data.updatedAmount }}</td>
+                <td>{{ data.amount }}</td>
+                <td>{{ data.comments }}</td>
+                <td>{{ data.remarks }}</td>
+              </tr>
+            </tbody>
+          </nz-table>
+        </nz-card>
+      </div>
+    </nz-tab></nz-tabset
+  ></nz-card
+>

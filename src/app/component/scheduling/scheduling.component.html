@@ -1,0 +1,55 @@
+<!-- <h3>Scheduling Options</h3> -->
+<h4>Communication start</h4>
+<div nz-row nzGutter="24">
+    <div nz-col [nzSpan]="10">
+        <nz-form-item>
+            <nz-form-label nzRequired nzFor="email">Start date</nz-form-label>
+            <nz-form-control [nzSm]="20">
+                <nz-date-picker [(ngModel)]="date" (ngModelChange)="onChange($event)"></nz-date-picker>
+            </nz-form-control>
+        </nz-form-item>
+    </div>
+    <div nz-col [nzSpan]="10">
+        <nz-form-item>
+            <nz-form-label [nzSm]="24" [nzXs]="24" nzRequired nzFor="email">Start time</nz-form-label>
+            <nz-form-control [nzSm]="24" [nzXs]="24">
+                <nz-time-picker [(ngModel)]="time" nzFormat="HH:mm"></nz-time-picker>
+            </nz-form-control>
+        </nz-form-item>
+    </div>
+</div>
+
+<!-- <nz-divider nzPlain></nz-divider> -->
+
+<h4>Delivery time window</h4>
+<div nz-row nzGutter="24">
+    <div nz-col [nzSpan]="8">
+        <nz-form-item>
+            <nz-form-label [nzSm]="20" [nzXs]="24" nzRequired nzFor="email">Start time</nz-form-label>
+            <nz-form-control [nzSm]="20" [nzXs]="24">
+                <nz-time-picker [(ngModel)]="time" nzFormat="HH:mm"></nz-time-picker>
+            </nz-form-control>
+        </nz-form-item>
+    </div>
+
+    <div nz-col [nzSpan]="8">
+        <nz-form-item>
+            <nz-form-label [nzSm]="20" [nzXs]="24" nzRequired nzFor="email">End time</nz-form-label>
+            <nz-form-control [nzSm]="20" [nzXs]="24">
+                <nz-time-picker [(ngModel)]="time" nzFormat="HH:mm"></nz-time-picker>
+            </nz-form-control>
+        </nz-form-item>
+    </div>
+
+    <div nz-col [nzSpan]="8">
+        <nz-form-item>
+            <nz-form-label [nzSm]="20" [nzXs]="24" nzRequired nzFor="email">Days</nz-form-label>
+            <nz-form-control [nzSm]="20" [nzXs]="24">
+                <nz-select size="medium" nzPlaceHolder="Please select" nzMode="tags">
+                    <nz-option *ngFor="let option of weekDays" [nzLabel]="option.slice(0,3)"
+                        [nzValue]="option"></nz-option>
+                </nz-select>
+            </nz-form-control>
+        </nz-form-item>
+    </div>
+</div>

@@ -1,0 +1,7 @@
+
+    <nz-form-label for="bots" class="ant-form-item-nz-form-label">Bots</nz-form-label>
+    <nz-select nzPlaceHolder="All Bots" style="width: 100%;" [(ngModel)]="botSelected" (ngModelChange)="onChange()">
+      <!-- <nz-option nzLabel="All Bots" nzValue="all"></nz-option> -->
+      <nz-option *ngFor="let data of bots" [nzLabel]="data.botName" [nzValue]="data.botName"></nz-option>
+    </nz-select>
+ 

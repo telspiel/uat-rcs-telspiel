@@ -1,0 +1,89 @@
+<!-- <nz-card nzTitle="User Profile"> -->
+  <!-- Basic Info Section -->
+  <nz-card nzType="inner" nzTitle="Basic Info">
+    <form [formGroup]="profileform">
+     <div class="ant-row ant-row-space-between ant-row-middle" style="margin-bottom: 24px">
+       <div class="ant-col">
+         <nz-avatar [nzSrc]="logoUrl" [nzSize]="96"></nz-avatar>
+       </div>
+       <div class="ant-col" style="flex: 1; padding-left: 24px">
+        <h2 style="margin: 0 0 8px 0">{{ USER_NAME }}</h2>
+         <div class="text-muted" style="margin-bottom: 8px">
+           <!-- ID: 22 <i nz-icon nzType="copy" nzTheme="outline" style="margin-left: 8px; cursor: pointer;"></i> -->
+         </div>
+         <button nz-button nzType="default" (click)="showModal()">
+           <i nz-icon nzType="lock" style="margin-right: 4px;"></i> Change Password
+         </button>
+       </div>
+     </div>
+ 
+     <!-- Form Fields -->
+   <nz-row [nzGutter]="10">
+ 
+ 
+  <div nz-col [nzSpan]="12" class="form-section"   >
+       <nz-form-item>
+         <nz-form-label nz-col [nzSpan]="6" nzFor="userName" nzLabelAlign="left" >User Name:  <span style="color: red;"> * </span></nz-form-label>
+         <nz-form-control nz-col nzSpan="16" nzHasFeedback nzErrorTip="Please enter website URL">
+       <input nz-input formControlName="userName"  readonly />
+         </nz-form-control>
+       </nz-form-item>
+     </div>
+ 
+      <div nz-col [nzSpan]="12" class="form-section"   >
+       <nz-form-item>
+         <nz-form-label nz-col [nzSpan]="6" nzFor="officialWebsite" nzLabelAlign="left" >Role  <span style="color: red;"> * </span></nz-form-label>
+         <nz-form-control nz-col nzSpan="16" nzHasFeedback nzErrorTip="Please enter website URL">
+           <input id="officialWebsite" nz-input formControlName="role" placeholder="Role"  readonly/>
+         </nz-form-control>
+       </nz-form-item>
+     </div>
+  <div nz-col [nzSpan]="12" class="form-section"   >
+       <nz-form-item>
+         <nz-form-label nz-col [nzSpan]="6" nzFor="email" nzLabelAlign="left" >Email Id  <span style="color: red;"> * </span></nz-form-label>
+         <nz-form-control nz-col nzSpan="16" nzHasFeedback nzErrorTip="Please enter EmailId">
+           <input id="email" nz-input formControlName="email" placeholder="Email ID" readonly/>
+         </nz-form-control>
+       </nz-form-item>
+     </div>
+       <div nz-col [nzSpan]="12" class="form-section"   >
+       <nz-form-item>
+         <nz-form-label nz-col [nzSpan]="6" nzFor="billingtype" nzLabelAlign="left" >Billing Type  <span style="color: red;"> * </span></nz-form-label>
+         <nz-form-control nz-col nzSpan="16" nzHasFeedback nzErrorTip="Please enter Billing type">
+           <input id="billingtype" nz-input formControlName="billingtype" placeholder="Billing Type" readonly />
+         </nz-form-control>
+       </nz-form-item>
+     </div>
+ 
+ 
+     <nz-modal [(nzVisible)]="isVisible" nzTitle="The first Modal" (nzOnCancel)="handleCancel()" (nzOnOk)="handleOk()">
+       <ng-container *nzModalContent>
+          <nz-row [nzGutter]="16">
+      <div nz-col [nzSpan]="20" class="form-section"   >
+       <nz-form-item>
+         <nz-form-label nz-col [nzSpan]="8" nzFor="oldpassword" nzLabelAlign="left" >Current Password:  <span style="color: red;"> * </span></nz-form-label>
+         <nz-form-control nz-col nzSpan="16" nzHasFeedback nzErrorTip="Old Password">
+       <input nz-input type="password" formControlName="oldPassword" readonly class="current-password"/>
+         </nz-form-control>
+       </nz-form-item>
+     </div>
+ 
+      <div nz-col [nzSpan]="20" class="form-section"   >
+       <nz-form-item>
+         <nz-form-label nz-col [nzSpan]="7" nzFor="officialWebsite" nzLabelAlign="left" >New Password:  <span style="color: red;"> * </span></nz-form-label>
+         <nz-form-control nz-col nzSpan="16" nzHasFeedback nzErrorTip="New Password">
+           <input id="newPassword" nz-input formControlName="newPassword" placeholder="New Password" class="new-password"/>
+         </nz-form-control>
+       </nz-form-item>
+     </div>
+          </nz-row>
+     
+       </ng-container>
+     </nz-modal>
+ 
+     </nz-row>
+     </form>
+   </nz-card>
+ 
+ <!-- </nz-card> -->
+ 

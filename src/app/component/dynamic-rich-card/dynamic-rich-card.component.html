@@ -1,0 +1,103 @@
+<div *ngIf="showCardPreview()" class="card-container"
+     style="position: absolute; top: 25%; width: 100%; display: flex; justify-content: center; z-index: 2;">
+
+  <div class="card"
+       [ngClass]="{ 'horizontal-card': orientation === 'HORIZONTAL', 'vertical-card': orientation === 'VERTICAL' }"
+       [ngStyle]="{
+         'flex-direction': orientation === 'HORIZONTAL'
+           ? (alignment === 'RIGHT' ? 'row-reverse' : 'row')
+           : 'column'
+       }"
+       style="width: 100%; box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); border-radius: 8px; background: white; display: flex; z-index: -1; justify-content: start;">
+
+    <!-- Image / Video Section -->
+    <div class="card-header"
+         [ngStyle]="{
+            flexShrink: 0,
+           width: orientation === 'HORIZONTAL' ? '30%' : '100%',
+           borderRadius: orientation === 'HORIZONTAL'
+             ? (alignment === 'LEFT' ? '8px 0 0 8px' : '0 8px 8px 0')
+             : '8px 8px 0 0',
+           overflow: 'hidden'
+         }">
+      <img *ngIf="fileUrl && !isVideo" [src]="fileUrl" alt="Image"
+           [ngStyle]="{
+             height: orientation === 'HORIZONTAL' ? '100%' : imageHeight + 'px',
+             width: '100%',
+             objectFit: 'cover'
+           }" />
+      <video *ngIf="fileUrl && isVideo" [src]="fileUrl" controls
+             [ngStyle]="{
+               height: orientation === 'HORIZONTAL' ? '100%' : imageHeight + 'px',
+               width: '100%',
+               objectFit: 'cover'
+             }"></video>
+    </div>
+
+    <!-- Text Content -->
+    <div class="card-content"
+         [ngStyle]="{
+           padding: '16px',
+           display: 'flex',
+           flexDirection: 'column',
+           flex: 1
+         }">
+
+      <!-- Title -->
+    <div class="card-title"
+         [ngStyle]="{
+         fontSize: '18px',
+         fontWeight: 'bold',
+         marginBottom: '8px',
+         color: '#333',
+         wordWrap: 'break-word',
+         overflowWrap: 'break-word',
+         maxWidth: orientation === 'HORIZONTAL' ? '75%' : '100%',
+         whiteSpace: 'pre-wrap',
+         lineHeight: '1.4'
+         }">
+      {{ cardTitle || 'Card Title' }}
+    </div>
+
+      <!-- Description -->
+      <p class="card-description"
+         [ngStyle]="{
+           textAlign: 'justify',
+           fontSize: '14px',
+           color: '#6c6b6b',
+           lineHeight: '1.4',
+           
+           wordWrap: 'break-word',
+           maxWidth: '100%'
+         }">
+        {{ carddescription || 'Card Description' }}
+      </p>
+
+      <!-- Suggestions -->
+      <div [ngStyle]="{
+        display: 'flex',
+        justifyContent: getSuggestionAlignment(),
+        alignItems: 'center',
+        height: '100%'
+      }">
+        <div>
+          <div *ngFor="let suggestion of suggestionsFormArray.controls">
+            <div *ngIf="suggestion.get('text')?.value" style="margin-top: 10px;">
+              <a nz-button
+                 [nzType]="'link'"
+                 [href]="suggestion.get('text')?.value"
+                 target="_blank"
+                 [ngStyle]="{
+                   color: '#007bff',
+                   fontSize: '14px'
+                 }">
+                <span nz-icon [nzType]="getSuggestionIcon(suggestion.get('type')?.value)" nzTheme="outline"></span>
+                {{ suggestion.get('text')?.value }}
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

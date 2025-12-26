@@ -1,0 +1,66 @@
+<nz-page-header class="site-page-header" nzTitle="Templates Message"></nz-page-header>
+<nz-card style="width:100%;">
+    <form nz-form [nzLayout]="'vertical'">
+        <!-- <h3>Compose</h3> -->
+
+        <nz-form-item>
+            <nz-form-label [nzSm]="6" [nzXs]="24" nzRequired nzFor="cname">Campaign Name</nz-form-label>
+            <nz-form-control [nzSm]="8" [nzXs]="24" nzErrorTip="required!">
+                <input nz-input id="cname" />
+            </nz-form-control>
+        </nz-form-item>
+
+        <div nz-row [nzGutter]="24">
+            <div nz-col [nzSpan]="24">
+                <div nz-col [nzSpan]="8">
+                    Choose File to Upload :
+                    <br/>
+                    <input  #fileInput type="file" name="file" (change)="onUpload($event)"/>
+                    <br/>
+                </div>
+
+                <nz-form-item>
+                    <nz-form-label nzRequired>Schedule Message</nz-form-label>
+                    <nz-form-control [nzSm]="8" [nzXs]="24">
+                        <nz-radio-group [(ngModel)]="scheduleMessage" [ngModelOptions]="{standalone: true}">
+                            <label nz-radio nzValue="no">Now</label>
+                            <label nz-radio nzValue="yes">Later</label>
+                        </nz-radio-group>
+                    </nz-form-control>
+                    <app-date-time-picker></app-date-time-picker>
+                </nz-form-item>
+
+                <nz-form-item nzGutter="24">
+                    <nz-form-label [nzSm]="7" [nzXs]="24" nzRequired nzFor="email">Select Template
+                    </nz-form-label>
+                    <nz-form-control [nzSm]="8" [nzXs]="24">
+                        <nz-select size="medium" [(ngModel)]="templateDropdownSelected" nzPlaceHolder="Please select"
+                            (ngModelChange)="onTemplateSelect($event)" name="template">
+                            <nz-option *ngFor="let option of listTemplates" [nzLabel]="option.template_name"
+                                [nzValue]="option.id">{{ option.template_name }}</nz-option>
+                        </nz-select>
+                    </nz-form-control>
+                </nz-form-item>
+
+                <div nz-row nzGutter="24" *ngIf="selectedTemplateData">
+                    <div nz-col nzSm="24">
+                        <app-template-preview-custom [previewInput]="selectedTemplateData"></app-template-preview-custom>
+                        <br />
+                        <div nz-col nzSpan="4" nzOffset="9">
+                            <button nz-button nzType="primary" (click)="submitForm()">Continue To Preview</button>
+                        </div>
+                    </div>
+                </div>
+                <!-- <div nz-row>
+                    <div nz-col nzSpan="8" nzOffset="18">
+                        <button nz-button nzType="primary" (click)="submitForm()">Continue To Preview</button>
+                    </div>
+                </div> -->
+            </div>
+        </div>
+    </form>
+</nz-card>
+
+<app-preview [visibility]="visible" [previewTemplate]="newMessagePreviewTemplate.template"
+    [previewData]="newMessagePreviewTemplate.data" (pushSubmit)="submitDataToSendTemplate()"
+    (previewIgnored)="visible = false;"></app-preview>

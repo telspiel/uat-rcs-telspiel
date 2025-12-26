@@ -1,0 +1,272 @@
+$theme-color:var(--theme-color) !default;
+$alpha: 40;
+$final-color: #{$theme-color}#{$alpha};
+
+
+/* Custom scrollbar styling */
+// ::-webkit-scrollbar {
+//     width: 2px;
+//     height: 5px;
+// }
+
+// ::-webkit-scrollbar-thumb {
+//     background-color: var(--theme-color);
+//     border-radius: 4px;
+// }
+
+// ::-webkit-scrollbar-thumb:hover {
+//     background-color: var(--theme-color);
+// }
+
+// ::-webkit-scrollbar-track {
+//     background-color: #f1f1f1;
+//     border-radius: 4px;
+// }
+.logo {
+    // height: 35px;
+    
+    margin: 16px;
+    // background: rgba(255, 255, 255, 0.3);
+    display: flex;
+    justify-content: center;
+    
+    
+}
+.menu-list{
+    //margin-top:7%;
+    overflow-x: hidden;
+    overflow-y: auto;
+    scroll-behavior: smooth;
+    //scroll-padding-bottom: 100px;
+    height: auto;
+    max-height: 60%;
+    min-height: 50%; 
+}
+// main-layout.component.scss
+::ng-deep .ant-layout-header {
+    background: var(--theme-color) !important;
+    color: white;
+    padding: 0;
+    position: sticky;
+    top: 0;
+    z-index: 999;
+    overflow-y: auto;
+    max-height: 300px;
+    scrollbar-width: none;          /* Firefox */
+    -ms-overflow-style: none;       /* IE and Edge */
+    }
+    
+    ::-webkit-scrollbar {
+      display: none;                /* Chrome, Safari, Opera */
+    }
+
+  ::ng-deep .ant-menu:not(.ant-menu-horizontal) .ant-menu-item-selected{
+    background-color: var(--theme-color-rbga) !important;
+    color: var(--theme-color) !important;
+  }
+  ::ng-deep .ant-menu-inline .ant-menu-item::after{
+    border-right: 3px solid var(--theme-color) !important;
+  }
+  ::ng-deep .ant-menu-item a:hover{
+    color: var(--theme-color) !important;
+  }
+
+  ::ng-deep .ant-menu-light .ant-menu-item:hover, .ant-menu-light .ant-menu-item-active, .ant-menu-light .ant-menu:not(.ant-menu-inline) .ant-menu-submenu-open, .ant-menu-light .ant-menu-submenu-active, .ant-menu-light .ant-menu-submenu-title:hover {
+    background-color: var(--theme-color-rbga) !important;
+    color: var(--theme-color) !important;
+  }
+  
+  ::ng-deep .ant-menu-item-selected a{
+    color: var(--theme-color)!important;
+  }
+// nz-header {
+//     background: var(--theme-color) !important;
+//     color: white;
+//     padding: 0;
+//     position: fixed;
+//     width: 100%;
+//     z-index: 999;
+//     // display: flex;
+//     // align-items: center;
+// }
+.dropdown{
+ 
+    background-color: white;
+    width: 300px; 
+    min-height: 250px; 
+    display: flex; 
+    flex-direction: column; 
+    justify-content: center; 
+    align-items: center; 
+    gap:10px; 
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+ 
+}
+nz-content {
+    // margin: 0 16px;
+    
+    //margin: 24px 16px 0;
+    overflow: initial;
+    min-height: calc(100vh - 64px);
+    //min-height: calc(100vh - 140px);
+}
+
+nz-breadcrumb {
+    margin: 16px 0;
+}
+
+.inner-content {
+    padding: 24px;
+    background: #fff;
+    min-height: 360px;
+}
+
+.right-layout {
+    margin-left: 200px;
+   
+}
+
+nz-footer {
+    text-align: center;
+}
+
+
+nz-sider {
+    overflow:hidden;
+    height: 100%;
+    position: fixed;
+    left: 0;
+   
+}
+.menu-item-content {
+    display: flex;
+    flex-direction: column;
+}
+.disabled-link {
+    pointer-events: none; /* Disables clicking */
+    color: gray; /* Makes it look inactive */
+    text-decoration: none;
+}
+.upcoming-tag {
+    font-size: 12px;
+    margin-top: 4px; /* Adds spacing below the link */
+    align-self: flex-start; /* Aligns tag properly */
+}
+.topbar-container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+  align-items: center;
+  gap: 20px;
+  padding: 10px 25px;
+  color: white;
+}
+
+
+.custom-header {
+  background: #001529;
+  color: white;
+  padding: 0;
+  line-height: normal;
+}
+
+.header-container {
+  display: flex;
+  flex-wrap: nowrap;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 1rem;
+  padding: 0.75rem 1.5rem;
+  max-width: 100%;
+  box-sizing: border-box;
+  overflow-x: auto;
+}
+
+.credits-container {
+  display: flex;
+  flex-wrap: nowrap;
+  gap: 1rem;
+  align-items: center;
+  flex: 1;
+  min-width: 0;
+}
+
+.credit-item,
+.login-info {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 0.9rem;
+  white-space: nowrap;
+}
+
+.user-actions {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  min-width: 10rem;
+}
+
+.user-info {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  color: white;
+  font-size: 0.9rem;
+}
+
+.logout {
+  color: white;
+  font-size: 1rem;
+}
+
+.dropdown {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  padding: 1rem;
+  background: white;
+  color: #001529;
+}
+
+/* Media query for smaller screens */
+@media (max-width: 768px) {
+  .header-container {
+    padding: 0.5rem 1rem;
+  }
+
+  .credits-container {
+    gap: 0.75rem;
+  }
+
+  .credit-item,
+  .login-info,
+  .user-info {
+    font-size: 0.8rem;
+  }
+
+  .logout {
+    font-size: 0.9rem;
+  }
+}
+
+/* Media query for very small screens */
+@media (max-width: 480px) {
+  .header-container {
+    padding: 0.5rem;
+  }
+
+  .credits-container {
+    gap: 0.5rem;
+  }
+
+  .credit-item,
+  .login-info,
+  .user-info {
+    font-size: 0.75rem;
+  }
+
+  .logout {
+    font-size: 0.85rem;
+  }
+}

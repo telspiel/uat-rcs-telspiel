@@ -1,0 +1,13 @@
+<form nz-form>
+
+    <nz-steps [nzCurrent]="currentStep" [nzStartIndex]="currentStep" nzLabelPlacement="vertical">
+        <nz-step nzTitle="Template Editor" nzStatus="process" nzIcon="message"></nz-step>
+        <nz-step nzTitle="Preview" [nzStatus]="currentStep === 0 ? 'wait' : 'finish'"
+            nzIcon="fund-projection-screen"></nz-step>
+    </nz-steps>
+
+    <!-- <app-template-builder [hidden]="currentStep === 0 ? false:true"></app-template-builder> -->
+
+    <app-template-preview [hidden]="currentStep === 1 ? false:true"></app-template-preview>
+
+</form>

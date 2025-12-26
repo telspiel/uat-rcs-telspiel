@@ -1,0 +1,373 @@
+
+
+<app-page-header [title]="'Create Brand'" [backLink]="['/Brand']"></app-page-header>
+
+<nz-card style="width: 100%;">
+<form nz-form [formGroup]="brandForm" class="brand-form">
+  <!-- Brand Information Section -->
+  <nz-divider nzText="Select User" nzOrientation="left" style=" margin-left: -20px; color: black; font-weight: bold;  border-top: 1px  black;" ></nz-divider>
+  
+  <app-filter-dropdown [role]="role" (selectionChange)="handleSelection($event)"></app-filter-dropdown>
+
+  <!-- <div nz-row [nzGutter]="24" style=" padding-top: 24px; border-top: 2px rgb(225, 225, 225); margin-bottom: 2%; ">
+
+      <div *ngIf="role==='admin'" nz-col [nzSpan]="8">
+        <nz-form-control>
+          <label for="Reseller"> Select Reseller*</label>
+          <nz-select id="Reseller" nzPlaceHolder="Select a user" [(ngModel)]="selectedReseller"
+            [ngModelOptions]="{standalone: true}" (ngModelChange)="onResellerChange($event)" [(ngModel)]="selectedReseller">
+            <nz-option *ngFor="let reseller of ResllerList" [nzValue]="reseller.label"
+              [nzLabel]="reseller.label"></nz-option>
+          </nz-select>
+        </nz-form-control>
+      </div>
+  
+      <div *ngIf="role === 'reseller' || role === 'admin'"nz-col [nzSpan]="8">
+        <nz-form-control>
+          <label for="Client"> Select Seller*</label>
+          <nz-select id="Client" nzPlaceHolder="Select a user" [(ngModel)]="selectedSeller"
+            [ngModelOptions]="{standalone: true}" (ngModelChange)="onSellerChange($event)" [(ngModel)]="selectedSeller">
+            <nz-option *ngFor="let  seller of SellerList " [nzValue]="seller.label"
+              [nzLabel]="seller.label"></nz-option>
+          </nz-select>
+        </nz-form-control>
+          
+      </div>
+      
+      <div *ngIf="role==='seller' || role ==='reseller' || role ==='admin'" nz-col [nzSpan]="8">
+        <nz-form-control>
+          <label for="Client"> Select Client*</label>
+          <nz-select id="Client" nzPlaceHolder="Select a user" [(ngModel)]="selectedClient"
+            [ngModelOptions]="{standalone: true}" (ngModelChange)="onClientChange($event)" [(ngModel)]="selectedClient">
+            <nz-option *ngFor="let Client of Clientlist" [nzValue]="Client.label"
+              [nzLabel]="Client.label"></nz-option>
+          </nz-select>
+        </nz-form-control>
+      </div>
+
+  </div> -->
+
+
+  <nz-divider nzText="Brand Information" nzOrientation="left" style="margin-left: -20px; color: black; font-weight: bold;  border-top: 1px  black;" ></nz-divider>
+  
+  <div nz-row [nzGutter]="24" style=" padding-top: 24px; border-top: 2px rgb(225, 225, 225); ">
+    
+   
+    <div nz-col [nzSpan]="12" class="form-section" >
+
+      
+ 
+      <nz-form-item>
+        <nz-form-label nz-col [nzSpan]="6" nzFor="brandName" nzLabelAlign="left">Brand Name  <span style="color: red;"> * </span> </nz-form-label>
+        <nz-form-control nz-col nzSpan="16" nzHasFeedback nzErrorTip="Please enter brand name">
+          <input id="brandName" nz-input formControlName="brandName"  placeholder="Enter Brand Name" />
+        </nz-form-control>
+      </nz-form-item>
+   
+    </div>
+    
+    <div nz-col [nzSpan]="12" class="form-section"   >
+      <nz-form-item>
+        <nz-form-label nz-col [nzSpan]="6" nzFor="officialWebsite" nzLabelAlign="left" >Official Website Url  <span style="color: red;"> * </span></nz-form-label>
+        <nz-form-control nz-col nzSpan="16" nzHasFeedback [nzErrorTip]="websiteErrorTpl">
+          <input id="officialWebsite" type="url" nz-input formControlName="officialWebsite" placeholder="https://example.com" />
+          <ng-template #websiteErrorTpl let-control>
+            <ng-container *ngIf="control.hasError('pattern')">
+              Url is invalid
+            </ng-container>
+            <ng-container *ngIf="control.hasError('required')">
+              Please enter Website Url
+            </ng-container>
+          </ng-template>
+        </nz-form-control>
+      </nz-form-item>
+    </div>
+    
+   
+
+      <!-- <div nz-col [nzSpan]="12" class="form-section" >
+        <nz-form-item>
+          <nz-form-label nz-col [nzSpan]="6" nzLabelAlign="left" nzRequired>Bot Logo</nz-form-label>
+          <nz-form-control nzHasFeedback nz-col nzSpan="16" nzErrorTip="Bot Logo!">
+            <input type="file" formControlName="botlogo" (change)="onFileSelected($event)" accept=".jpg, .jpeg, .png" />
+
+
+          </nz-form-control>
+
+        </nz-form-item>
+       
+      </div> -->
+      <nz-form-label nz-col [nzSpan]="2" nzLabelAlign="left">Brand Logo  <span style="color: red;"> * </span></nz-form-label>
+      <div nz-col [nzSpan]="10" class="form-section">
+        
+        <nz-form-item>
+          <nz-form-control [nzSm]="8" [nzXs]="10" nzErrorTip="Bot Logo!">
+            <div class="" style="display: flex; flex-direction: column; align-items: center; gap: 10px;">
+              <!-- <img src="assets\images\size-brand.png" *ngIf="!backgroundUrl" alt="" style="width: 200px; height: 150px;"> -->
+              <div *ngIf="backgroundUrl" class="preview-container">
+                
+                <img [src]="backgroundUrl" alt="Bot Logo Preview" class="image-preview" />
+              </div>
+              <button nz-button nzType="primary" (click)="showModal()" >
+                <span>Upload</span>
+              </button>
+          </div>
+            <nz-modal [(nzVisible)]="isVisible" [nzTitle]="modalTitle" [nzContent]="modalContent"
+              [nzFooter]="modalFooter" (nzOnCancel)="handleCancel()">
+
+              
+              <ng-template #modalTitle>Select An Image</ng-template>
+
+              <ng-template #modalContent>
+                <nz-tabset>
+                  <nz-tab nzTitle="Upload Image">
+                    <p>The image you upload must be 224 pixels wide x 224 pixels tall, have a max file size of 90KB, and be a JPEG, JPG or PNG. IF the image you select doesn’t meet these requirements, you’ll have the opportunity to edit it.</p>
+                    <!-- <nz-upload nzType="drag" [nzMultiple]="true"
+                      nzAction="https://www.mocky.io/v2/5cc8019d300000980a055e76" (nzChange)="onFileSelectedBackground($event)" formControlName="bannerimage" style="width: 100% ;">
+                      <p class="ant-upload-drag-icon" >
+                        <span nz-icon nzType="inbox"></span>
+                      </p>
+                      <p class="ant-upload-text">Click or drag file to this area to upload</p>
+                      
+                    </nz-upload> -->
+
+                    <input type="file" (change)="fileChangeEvent($event)" accept=".png"/>
+                    <image-cropper [imageChangedEvent]="imageChangedEvent"
+                    [maintainAspectRatio]="true"
+                    [aspectRatio]=" 1/ 1"
+                    [resizeToWidth]="224"
+                    [resizeToHeight]="224"
+                    (imageCropped)="imageCropped($event)"></image-cropper>
+                    
+
+                  </nz-tab>
+                  <!-- <nz-tab nzTitle="Upload By Link">
+                    <p>The image you upload must be 224 pixels wide x 224 pixels tall, have a max file size of 90KB, and be a JPEG, JPG or PNG. IF the image you select doesn’t meet these requirements, you’ll have the opportunity to edit it.</p>
+                    <p>Upload Image by link</p>
+                    <input type="text" nz-input placeholder="Enter Image URL" accept=".jpg, .jpeg, .png" />
+                    <button nz-button nzType="primary">Upload</button>
+
+                  </nz-tab> -->
+
+                </nz-tabset>
+              </ng-template>
+
+              <ng-template #modalFooter>
+                <button nz-button nzType="default" (click)="handleCancel()">Cancel</button>
+                <button nz-button nzType="primary" (click)="handleOk()" [nzLoading]="isConfirmLoading">Submit</button>
+              </ng-template>
+            </nz-modal>
+
+            <!-- <div *ngIf="backgroundUrl" class="preview-container">
+              <p>Banner Preview:</p>
+              <img [src]="backgroundUrl" alt="Banner Preview" class="image-preview" />
+            </div> -->
+          </nz-form-control>
+        </nz-form-item>
+      </div>
+      
+      
+      <!-- <nz-modal [(nzVisible)]="isCropperModalVisible" (nzOnCancel)="closeCropper()" (nzOnOk)="saveCroppedImage()">
+        <ng-template #modalTitle>Select an Image</ng-template>
+        <ng-template #modalContent>
+          <image-cropper
+            [imageChangedEvent]="imageChangedEvent"
+            [maintainAspectRatio]="true"
+            [aspectRatio]="1/1"
+            [resizeToWidth]="1000"
+            [resizeToHeight]="1000"
+            (imageCropped)="imageCropped($event)">
+          </image-cropper>
+        </ng-template>
+      </nz-modal> -->
+      
+
+      
+      <!-- <div  *ngIf="imageUrl" class="preview-container">
+      
+          <p style=" margin-left: -300px;  margin-top: 10px; display: block;" >Image Preview:</p>
+        <img [src]="imageUrl" alt="Bot Logo Preview" class="image-preview" style="max-width: 80px; margin-left: -300px;  margin-top: 10px; display: block;  " />
+      </div> -->
+    
+    
+    
+    
+    
+    
+    <div nz-col [nzSpan]="12" class="form-section" >
+      <nz-form-item>
+        <nz-form-label nz-col [nzSpan]="6" nzFor="industryType" nzLabelAlign="left">Industry Type  <span style="color: red;"> * </span></nz-form-label>
+        <nz-form-control nzHasFeedback nz-col nzSpan="16">
+          <nz-select id="industryType" formControlName="industryType" nzPlaceHolder="Select Industry">
+            <nz-option nzValue="technology" nzLabel="Technology"></nz-option>
+            <nz-option nzValue="retail" nzLabel="Retail"></nz-option>
+            <nz-option nzValue="manufacturing" nzLabel="Manufacturing"></nz-option>
+            <!-- Add more options as needed -->
+          </nz-select>
+        </nz-form-control>
+      </nz-form-item>
+    </div>
+    <div  *ngIf="imageUrl" class="preview-container">
+      <p style="margin-left: 40px;" >Image Preview:</p>
+    <img [src]="imageUrl" alt="Bot Logo Preview" class="image-preview" style="margin-left: 45px; max-width: 90px; margin-top: 10px; display: block; border-radius: 10px; box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.3);"  />
+  </div>
+  </div>
+
+  <!-- Contact Person Section -->
+  <nz-divider nzText="Contact Person Details" nzOrientation="left" style="margin-left: -20px; color: black; font-weight: bold;  border-top: 1px  black; "></nz-divider>
+  
+  <div nz-row [nzGutter]="24" style="border-top: 2px rgb(225, 225, 225); padding-top: 24px; ">
+
+    <div nz-col [nzSpan]="12" class="form-section">
+      <nz-form-item>
+        <nz-form-label nzFor="firstName" nzLabelAlign="left"  nz-col [nzSpan]="6">First Name  <span style="color: red;"> * </span></nz-form-label>
+        <nz-form-control nzHasFeedback nz-col nzSpan="16" >
+          <input id="firstName" nz-input formControlName="firstName" placeholder="Enter First Name" />
+        </nz-form-control>
+      </nz-form-item>
+    </div>
+    
+    <div nz-col [nzSpan]="12" class="form-section">
+      <nz-form-item>
+        <nz-form-label  nzFor="lastName" nzLabelAlign="left"  nz-col [nzSpan]="6" >Last Name  <span style="color: red;"> * </span></nz-form-label>
+        <nz-form-control nzHasFeedback  nzSpan="16">
+          <input id="lastName" nz-input formControlName="lastName" placeholder="Enter Last Name" />
+        </nz-form-control>
+      </nz-form-item>
+    </div>
+
+
+  
+    <div nz-col [nzSpan]="12" class="form-section">
+      <nz-form-item>
+        <nz-form-label nzFor="designation" nzLabelAlign="left" nz-col [nzSpan]="6"  >Designation  <span style="color: red;"> * </span></nz-form-label>
+        <nz-form-control  nzHasFeedback  nzSpan="16" >
+          <input id="designation" nz-input formControlName="designation" placeholder="Enter Designation" />
+        </nz-form-control>
+      </nz-form-item>
+    </div>
+    
+    <div nz-col [nzSpan]="12" class="form-section">
+      <nz-form-item>
+        <nz-form-label nzFor="mobileNumber" nzLabelAlign="left" nz-col [nzSpan]="6" >Mobile Number  <span style="color: red;"> * </span></nz-form-label>
+        <nz-form-control nzHasFeedback nzSpan="16" [nzErrorTip]="mobileNumberErrorTpl">
+          <nz-input-group>
+            <input id="mobileNumber" maxLength="13" nz-input formControlName="mobileNumber" placeholder="Enter Mobile Number" />
+          </nz-input-group>
+          <!-- <ng-template #prefixTemplate>
+            <nz-select [ngModel]="prefix" class="phone-select">
+              <nz-option nzLabel="+91" nzValue="+91"></nz-option>
+              
+            </nz-select>
+          </ng-template> -->
+          <ng-template #mobileNumberErrorTpl let-control>
+            <ng-container *ngIf="control.hasError('pattern')">
+              Mobile number is invalid
+            </ng-container>
+            <ng-container *ngIf="control.hasError('required')">
+              Please enter mobile number
+            </ng-container>
+          </ng-template>
+        </nz-form-control>
+      </nz-form-item>
+    </div>
+    
+    <div nz-col [nzSpan]="12" class="form-section">
+      <nz-form-item>
+        <nz-form-label nzFor="email" nzLabelAlign="left" nz-col [nzSpan]="6" >Email ID  <span style="color: red;"> * </span></nz-form-label>
+        <nz-form-control nzHasFeedback nzSpan="16" >
+          <input id="email" nz-input formControlName="email" placeholder="Enter Email ID" />
+        </nz-form-control>
+      </nz-form-item>
+    </div>
+  </div>
+
+
+  <!-- Address Section -->
+  <nz-divider nzText="Company Address" nzOrientation="left" style="margin-left: -20px; color: black; font-weight: bold;  border-top: 1px black "></nz-divider>
+  
+  <div nz-row [nzGutter]="24" style=" padding-top: 24px; border-top: 2px rgb(225, 225, 225); " >
+    <div nz-col [nzSpan]="12" class="form-section">
+      <nz-form-item>
+        <nz-form-label  nzFor="addressLine1" nzLabelAlign="left" nz-col [nzSpan]="6" >Address Line 1 <span style="color: red;"> * </span></nz-form-label>
+        <nz-form-control nzHasFeedback nzSpan="16">
+          <input id="addressLine1" nz-input formControlName="addressLine1" placeholder="Enter Address Line 1" />
+        </nz-form-control>
+      </nz-form-item>
+    </div>
+    
+    <div nz-col [nzSpan]="12" class="form-section">
+      <nz-form-item>
+        <nz-form-label nzFor="addressLine2" nzLabelAlign="left" nz-col [nzSpan]="6"  >Address Line 2</nz-form-label>
+        <nz-form-control nzHasFeedback   nzSpan="16" >
+          <input id="addressLine2" nz-input formControlName="addressLine2" placeholder="Enter Address Line 2" />
+        </nz-form-control>
+      </nz-form-item>
+    </div>
+ 
+
+ 
+    <div nz-col [nzSpan]="12" class="form-section">
+      <nz-form-item>
+        <nz-form-label nzFor="city" nzLabelAlign="left" nz-col [nzSpan]="6"  >City  <span style="color: red;"> * </span> </nz-form-label>
+        <nz-form-control nzHasFeedback nzSpan="16">
+          <input id="city" nz-input formControlName="city" placeholder="Enter City" />
+        </nz-form-control>
+      </nz-form-item>
+    </div>
+    
+    <div nz-col [nzSpan]="12" class="form-section">
+      <nz-form-item>
+        <nz-form-label nzFor="state" nzLabelAlign="left" nz-col [nzSpan]="6"  >State/Province  <span style="color: red;"> * </span></nz-form-label>
+        <nz-form-control nzHasFeedback nzSpan="16">
+          <input id="state" nz-input formControlName="state" placeholder="Enter State" />
+        </nz-form-control>
+      </nz-form-item>
+    </div>
+    
+    <div nz-col [nzSpan]="12" class="form-section">
+      <nz-form-item>
+        <nz-form-label nzFor="postalCode" nzLabelAlign="left" nz-col [nzSpan]="6" >ZIP/Postal Code <span style="color: red;"> * </span></nz-form-label>
+        <nz-form-control nzHasFeedback nz-col nzSpan="16" [nzErrorTip]="ZIPPostalCodeNumberErrorTpl">
+          <input id="postalCode" nz-input formControlName="postalCode"  placeholder="Enter ZIP Code" />
+        
+        <ng-template #ZIPPostalCodeNumberErrorTpl let-control>
+            <ng-container *ngIf="control.hasError('pattern')">
+              ZIP/Postal Code  is invalid
+            </ng-container>
+            <ng-container *ngIf="control.hasError('required')">
+              Please enter mobile number
+            </ng-container>
+          </ng-template>
+        </nz-form-control>
+      </nz-form-item>
+    </div>
+    
+    <div nz-col [nzSpan]="12" class="form-section">
+      <nz-form-item>
+        <nz-form-label  nzFor="country" nzLabelAlign="left" nz-col [nzSpan]="6" >Country  <span style="color: red;"> * </span></nz-form-label>
+        <nz-form-control nzHasFeedback  nzSpan="16" >
+          <nz-select id="country" formControlName="country" nzShowSearch nzPlaceHolder="Select Country">
+           
+            <nz-option nzValue="India" nzLabel="India"></nz-option>
+            <!-- Add more countries as needed -->
+          </nz-select>
+        </nz-form-control>
+      </nz-form-item>
+    </div>
+  </div>
+  
+
+  <!-- Action Buttons -->
+  <div class="action-buttons-container">
+    <div class="centered-buttons">
+      <button nz-button nzType="default" (click)="onBack()" class="action-button">
+        <i nz-icon nzType="left"></i>Back
+      </button>
+      <button nz-button nzType="primary" type="submit" class="action-button" (click)="onSubmit()" [nzLoading]="isDisabled">
+        <i nz-icon nzType="save"></i>Submit
+      </button>
+    </div>
+  </div>
+</form>
+</nz-card>

@@ -1,0 +1,18 @@
+<div class="broadcast-container">
+  <!-- Horizontal Tabs -->
+  <nav class="channel-tabs">
+    <div class="nav nav-tabs">
+      <a class="nav-item nav-link"
+         *ngFor="let tab of tabs"
+         routerLinkActive="active"
+         [routerLink]="tab.path">
+         {{ tab.label }}
+      </a>
+    </div>
+  </nav>
+
+  <!-- Nested Router Outlet -->
+  <div class="channel-content">
+    <router-outlet></router-outlet>
+  </div>
+</div>

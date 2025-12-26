@@ -1,0 +1,219 @@
+<nz-breadcrumb>
+  <nz-breadcrumb-item>
+    <div style="display: flex; flex-direction: row; align-items: center; width: 100%; ">
+      <div style="width: 50%;  display: flex;  flex-direction: row; justify-content: flex-start;">
+   <h2> Bot Details </h2>  
+   </div>
+   
+
+   <div style="width: 50%;  display: flex;  flex-direction: row; justify-content: flex-end;">
+    <button nz-button nzType="primary" class="backbtn" [routerLink]="['/createbot']">
+      <span nz-icon nzType="arrow-left" nzTheme="outline"></span>
+    </button>
+  </div>
+   
+
+   <!-- <nz-icon nzType="right" nzTheme="outline" /> -->
+ 
+   </div>
+
+  </nz-breadcrumb-item>
+</nz-breadcrumb>
+
+<!-- Steps for Bot Progress -->
+<nz-steps [nzCurrent]="1" nzSize="small" style="margin-top: 16px;">
+  <nz-step nzTitle="Bot Creation" [nzStatus]="(botStatus==='Pending Verification'|| botStatus==='Approve'||botStatus==='LAUNCHED') ? 'finish' : 'process'"></nz-step>
+  <nz-step nzTitle="Development"  [nzStatus]="(botStatus==='Pending Verification'|| botStatus==='Approve'||botStatus==='LAUNCHED') ? 'finish' : 'process'"></nz-step>
+  <nz-step nzTitle="Verification" [nzStatus]="(botStatus==='Approved'||botStatus==='LAUNCHED') ? 'finish' :botStatus==='Pending Verification'? 'process': 'wait'"></nz-step>
+  <nz-step nzTitle="Launch" [nzStatus]="botStatus==='LAUNCHED'? 'finish' :(botStatus==='Approved') ? 'process' :'wait'"></nz-step>
+</nz-steps>
+
+<div style="margin-top: 24px; padding: 24px; background: #fff; border-radius: 8px;">
+  <p>
+    Your agent has been successfully created in Google RBM. Please find below the Bot ID that you have been assigned.
+    You are ready to send and receive messages now over RBM. Happy Bot-Journey! Once you have tested your bot, please
+    initiate verification from the 'Verification Status' section.
+  </p>
+</div>
+
+<!-- Dashboard Details -->
+<div nz-row [nzGutter]="16" style="margin-top: 16px;">
+  <div nz-col [nzSpan]="12" >
+    <nz-card style="height: 100%;">
+      
+      <h4>API Information</h4>
+      <div class="" style="display: flex; flex-direction: column; justify-content: space-between; ">
+      <span style="color: #818181;">Bot ID: {{ botId }}</span>
+      <span style="color: #818181;">Bot Name: {{ botName }}</span>
+    </div>
+      <!-- <a  nzType="link" style="margin-top: 16px;">View Full Documentation</a> -->
+    </nz-card>
+  </div>
+  <div nz-col [nzSpan]="12" >
+    <nz-card style="height: 100%;" [ngStyle]="botStatus==='Pending Verification' ? {'border': '1px solid yellow'} : botStatus==='Approve'||botStatus==='LAUNCHED'? {'border': '1px solid #52c41a'} :botStatus==='rejected'? {'border': '1px solid red'}: {'border': '1px'}">
+      <h4>Verification Status 
+        <nz-tag *ngIf="botStatus==='Pending Verification'" nzColor="yellow" style="padding-left: 2px;"><span nz-icon nzType="clock-circle" nzTheme="outline" style="margin-left: 2px; margin-right: 2px;"></span>{{botStatus}}</nz-tag>
+        <nz-tag *ngIf="botStatus==='Approved'" nzColor="green" style="padding-left: 2px;"><span nz-icon nzType="check-circle" nzTheme="outline"  style="margin-left: 2px; margin-right: 2px;"></span>{{botStatus}}</nz-tag>
+        <nz-tag *ngIf="botStatus==='rejected'" nzColor="red" style="padding-left: 2px;"><span nzType="close-circle" nzTheme="outline"   style="margin-left: 2px; margin-right: 2px;"></span>{{botStatus}}</nz-tag></h4>
+      <p>Submit your business details, complete the payment and get your bot and brand verified.</p>
+      <a   nzType="link" [routerLink]="['/verfication/',botId]" style="margin-top: 16px;" *ngIf="botStatus!=='LAUNCHED'">Submit for Verification and Launch</a>
+    </nz-card>
+  </div>
+</div>
+
+<div style="margin-top: 24px;">
+  <nz-card nzTitle="Test Devices" >
+    <nz-table
+      #basicTable
+      [nzBordered]="true"
+      [nzSize]="'middle'"
+      [nzData]="testDevices"
+    >
+      <thead>
+        <tr>
+          <th nzWidth="25%">Phone Number</th>
+          <th nzWidth="25%">Submitted Date</th>
+          <th nzWidth="25%">Status</th>
+          <th nzWidth="25%">Action</th>
+        
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let data of testDevices">
+          <td>{{ data.phoneNumber }}</td>
+          <td>{{ formatTimestamp(data.submittedDate) }}</td>
+
+          <td>
+            <nz-tag nzColor="yellow" *ngIf="data.status=='PENDING FOR APPROVAL'">{{ data.status }}</nz-tag>
+            <nz-tag nzColor="green" *ngIf="data.status=='SUCUSS'">{{ data.status }}</nz-tag>
+            <nz-tag nzColor="orange" *ngIf="data.status!='PENDING FOR APPROVAL' && data.status!='' ">{{data.status}}</nz-tag>
+          </td>
+
+          <td> <i nz-icon nzType="redo" nzTheme="outline" (click)="refreshOK(data.phoneNumber)"  style="margin-right: 5px; font-size: 20px; color: skyblue; "></i> </td>
+        </tr>
+      </tbody>
+    </nz-table>
+
+    <a style="margin-top: 8px;" nz-button nzType="link" (click)="showModal()">+ Add a Test Device</a>
+
+    <nz-modal [(nzVisible)]="isVisible" nzTitle="Add Test Number" (nzOnCancel)="handleCancel()" (nzOnOk)="handleOk()" [nzOkLoading]="isOkLoading">
+      <ng-container *nzModalContent>
+        <nz-form-label nzFor="Mobile Number" nzSpan="1-24" nzRequired>Mobile Number</nz-form-label>
+        <nz-input-group nzCompact >
+          <nz-select [(ngModel)]="code" style="width: 20%;" >
+            <nz-option [nzLabel]="'+91'" [nzValue]="'+91'"></nz-option>
+           
+          </nz-select>
+          <input nz-input  placeholder="000 000 0000" style="width:80%;" [(ngModel)]="phNumber" maxlength="10">
+        </nz-input-group>
+        <span style="color: rgb(217, 20, 20);">{{err}}</span>
+        
+      </ng-container>
+    </nz-modal>
+  </nz-card>
+</div>
+
+<!-- Rich Message Templates Table -->
+<div style="margin-top: 24px;">
+  <nz-card nzTitle="Rich Message Templates">
+    <p>
+      Run RCS Campaigns to your prospects and customers informing them about promotions, discounts, and offers.
+    </p>
+    <nz-table
+    #templateTable
+    [nzBordered]="true"
+    [nzSize]="'middle'"
+    [nzData]="messageTemplates"
+    [nzScroll]="{ x: '100%' }"
+  >
+    <thead>
+      <tr>
+        <th nzWidth="25%">Template Name/Code</th>
+        <th nzWidth="40%">Template Message</th>
+        <th nzWidth="10%">Status</th>
+        <th nzWidth="25%">Last Updated</th>
+        <th nzWidth="25%" >Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let template of messageTemplates">
+        <td>{{ template.templateTitle }}</td>
+        <td>{{ template.templateText }}</td>
+        <td>
+          <span
+            [ngClass]="{
+              'status-active': template.status === 'Active',
+              'status-inactive': template.status !== 'Active'
+            }"
+          >
+            {{ template.status }}
+          </span>
+        </td>
+        <td>{{ template.createadDate }}</td>
+        <td>
+          <a >
+            <button nz-button nzType="link" nzShape="circle" nz-tooltip nzTooltipTitle="Test Template" (click)="showTestTemplate(template.templateTitle)">
+              <i nz-icon nzType="send" nzTheme="outline"></i>
+            </button>
+          </a>
+
+          <nz-modal [(nzVisible)]="isTestTemplate" nzTitle="Test Template" (nzOnCancel)="handleClose()" (nzOnOk)="handleSubmit()">
+            <ng-container *nzModalContent>
+              <div class="" nz-row nzAlign="middle">
+              <div class="" nz-col [nzSpan]="18" >
+              <nz-form-label nzFor="Select Test Devices" nzSpan="1-24" nzRequired>Select Test Number</nz-form-label>
+              <!-- <a  (click)="selectAllOptions()" >Select All</a> -->
+              <nz-select [(ngModel)]="mobileNumber" name="mobileNumber" nzPlaceHolder="" nzAllowClear style="width: 100%;">
+                
+                <nz-option
+                  *ngFor="let item of testDevices"
+                  [nzLabel]="item.phoneNumber"
+                  [nzValue]="item.phoneNumber">
+                </nz-option>
+              </nz-select>
+              </div>
+              <div class="" nz-col [nzSpan]="18">
+              <nz-form-label nzFor="Mobile Number" nzSpan="1-24" nzRequired>Add Mobile Number</nz-form-label>
+              <nz-input-group nzCompact >
+                <nz-select [(ngModel)]="code" style="width: 20%;" >
+                  <nz-option [nzLabel]="'+91'" [nzValue]="'+91'"></nz-option>
+                 
+                </nz-select>
+                <input nz-input  placeholder="000 000 0000" style="width:80%;" [(ngModel)]="phNumber" maxlength="10">
+              </nz-input-group>
+              <span style="color: rgb(217, 20, 20);">{{err}}</span>
+              <button nz-button nzType="primary"  style="margin-top: 10px;" (click)="addNumber()">+ Add</button>
+              
+              </div>
+
+              
+            </div>
+            <!-- <nz-form-label nzFor="" nzSpan="1-24">Selected numbers</nz-form-label>
+            {{mobileNumber}} -->
+            </ng-container>
+          </nz-modal>
+          <a [routerLink]="['/viewtemplate']">
+          <button nz-button nzType="link" nzShape="circle" nz-tooltip nzTooltipTitle="View" (click)="getTemplate(template.templateTitle)">
+            <i nz-icon nzType="eye" nzTheme="outline"></i>
+          </button>
+          </a>
+          <a [routerLink]="['/template/ ']">
+              <button nz-button nzType="link" nzShape="circle" nz-tooltip nzTooltipTitle="Edit" (click)="getTemplate(template.templateTitle)">
+                <i nz-icon nzType="edit" nzTheme="outline"></i>
+              </button>
+            </a>                  
+        </td>
+      </tr>
+    </tbody>
+  </nz-table>
+  
+      <!-- <a style="margin-top: 8px;" nz-button  nzType="link">+ Add a Template</a> -->
+      <!-- <a  [routerLink]="['/template/ ']">+ Add a Template
+          <button nz-button nzType="link" nzShape="circle" nzTooltipTitle="Edit">
+            <i nz-icon nzType="" nzTheme="outline"></i>
+          </button>
+        </a>        -->
+    
+  </nz-card>
+
+</div>

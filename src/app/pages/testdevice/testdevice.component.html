@@ -1,0 +1,66 @@
+<div class="add-test-devices">
+    <a class="go-back" style="color: red; font-weight: bold; text-decoration: none;" href="javascript:void(0);">Go back</a>
+    <h2 style="text-align: center; margin-top: 10px;">Add Test Devices</h2>
+  
+    <div class="form-section" style="max-width: 50%; margin-left: 0;">
+        <label for="mobileNumber">
+          <i nz-icon nzType="mobile" style="color: red; margin-right: 5px;"></i>
+          <span style="font-weight: bold;">Mobile Number*</span>
+        </label>
+        <div style="display: flex; align-items: center; margin-top: 10px;">
+          <select style="border: 1px solid #ddd; padding: 5px; border-radius: 5px;">
+            <option>🇮🇳 +91</option>
+          </select>
+          <input
+            id="mobileNumber"
+            type="text"
+            placeholder="Enter mobile number"
+            style="margin-left: 10px; border: 1px solid #ddd; border-radius: 5px; padding: 5px; flex: 1;"
+          />
+          <button
+            nz-button
+            nzType="primary"
+            style="background-color: red; margin-left: 10px; color: white;"
+          >
+            Add
+          </button>
+        </div>
+        <p style="margin-top: 10px; color: #666;">
+          Before launch, your agent can only send messages to designated test devices.
+        </p>
+        <p style="color: #666;">To add a test device, enter the device's phone number, including the country code.</p>
+      </div>
+      
+      
+  
+    <table class="test-device-table" style="width: 100%; border-collapse: collapse; margin-top: 20px;">
+      <thead>
+        <tr style="background-color: #f5f5f5;">
+          <th style="padding: 10px; border: 1px solid #ddd; text-align: left;">Phone Number</th>
+          <th style="padding: 10px; border: 1px solid #ddd; text-align: left;">Submitted</th>
+          <th style="padding: 10px; border: 1px solid #ddd; text-align: left;">Status</th>
+          <th style="padding: 10px; border: 1px solid #ddd; text-align: center;">Action</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let device of testDevices">
+          <td style="padding: 10px; border: 1px solid #ddd;">{{ device.phoneNumber }}</td>
+          <td style="padding: 10px; border: 1px solid #ddd;">{{ device.submitted }}</td>
+          <td style="padding: 10px; border: 1px solid #ddd;">
+            <span *ngIf="device.status === 'Ready'" style="color: green;">{{ device.status }}</span>
+            <span *ngIf="device.status === 'Pending'" style="color: orange;">{{ device.status }}</span>
+          </td>
+          <td style="padding: 10px; border: 1px solid #ddd; text-align: center;">
+            <button nz-button nzType="default" style="color: red;">
+              <i nz-icon nzType="delete"></i>
+            </button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  
+    <div style="text-align: center; margin-top: 20px;">
+      <nz-pagination [(nzPageIndex)]="pageIndex" [nzTotal]="testDevices.length" [nzPageSize]="5"></nz-pagination>
+    </div>
+  </div>
+  

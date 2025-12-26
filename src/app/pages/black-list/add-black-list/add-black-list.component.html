@@ -1,0 +1,130 @@
+<app-page-header
+  [title]="'Create Blacklist Entry'"
+  [backLink]="['/blacklist']"
+></app-page-header>
+
+<nz-card>
+  <nz-row nzGutter="24">
+    <!-- Upload Contact Section -->
+    <div class="upload-contact" style="width: 50%">
+      <h3>Upload Contact</h3>
+      <div class="instruction-box">
+        <p>
+          * You can upload any .csv file which carry the information in the
+          following format:
+        </p>
+        <p>Number</p>
+        <p>Example:</p>
+        <p>919998......</p>
+        <p>8435......</p>
+        <!-- <p>Mobile number can be uploaded with or without 91</p> -->
+      </div>
+      <form nz-form nzLayout="vertical" [formGroup]="uploadForm">
+        <nz-form-item>
+          <nz-form-label><span style="color: red">*</span> File</nz-form-label>
+          <nz-form-control>
+            <!-- <nz-upload nzFileType="txt" [(nzFileList)]="fileList" (nzChange)="handleUpload()">
+            <button nz-button><span nz-icon nzType="down"></span>Select File</button>
+          </nz-upload>   -->
+
+           <nz-upload
+  [(nzFileList)]="fileList"
+  [nzMultiple]="false"
+  nzAccept=".csv"
+  [nzLimit]="1"
+  [nzBeforeUpload]="beforeUpload"
+>
+  <button nz-button>
+    <span nz-icon nzType="upload"></span>
+    Select .csv
+  </button>
+</nz-upload>
+
+
+        
+            <p>Note: Only .csv allowed</p>
+          </nz-form-control>
+        </nz-form-item>
+
+        <nz-form-item>
+          <nz-form-label
+            ><span style="color: red">*</span>Description</nz-form-label
+          >
+
+          <nz-form-control>
+            <textarea
+              rows="3"
+              nz-input
+              formControlName="description"
+            ></textarea>
+          </nz-form-control>
+        </nz-form-item>
+
+        <nz-form-item>
+          <div class="button-group">
+           <button
+  nz-button
+  nzType="primary"
+  [disabled]="uploadbutton"
+  (click)="handleUpload()"
+>
+  Upload Blacklist
+</button>
+            <button nz-button (click)="clearUploadForm()">Clear</button>
+          </div>
+        </nz-form-item>
+      </form>
+    </div>
+
+    <!-- Add New Contact Section -->
+
+    <div class="bots-section" style="width: 50%">
+      <nz-card nzTitle="Add Number" style="width: 100%">
+        <form [formGroup]="groupForm" nz-form [nzLayout]="'vertical'">
+          <!-- Mobile Number -->
+          <nz-form-item>
+            <nz-form-label [nzRequired]="true" nzFor="addmobileNumber"
+              >Mobile Number</nz-form-label
+            >
+            <nz-form-control 
+              [nzErrorTip]="
+                groupForm.get('addmobileNumber')?.hasError('required') ? 'Mobile number required' : 
+                (groupForm.get('addmobileNumber')?.hasError('pattern') ? 'Invalid mobile number' : '')
+            ">
+              <input
+                nz-input
+                id="addmobileNumber"
+                formControlName="addmobileNumber"
+                placeholder="Enter the number"
+              />
+            </nz-form-control>
+          </nz-form-item>
+
+          <!-- Description -->
+          <nz-form-item>
+            <nz-form-label [nzRequired]="true" nzFor="Descripton"
+              >Description</nz-form-label
+            >
+            <nz-form-control>
+              <input
+                nz-input
+                id="Descripton"
+                formControlName="Descripton"
+                placeholder="Description"
+              />
+            </nz-form-control>
+          </nz-form-item>
+
+          <!-- Submit Button -->
+          <nz-form-item>
+            <nz-form-control>
+              <button nz-button nzType="primary" (click)="onSumbit()">
+                Submit
+              </button>
+            </nz-form-control>
+          </nz-form-item>
+        </form>
+      </nz-card>
+    </div>
+  </nz-row>
+</nz-card>

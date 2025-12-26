@@ -1,0 +1,53 @@
+<nz-page-header class="site-page-header" nzTitle="Manage Templates" nzSubtitle="({{listTemplates.length}} templates)">
+
+    <nz-page-header-extra>
+        <button nz-button nzType="primary" (click)="open()">
+            <span nz-icon nzType="appstore-add"></span>
+            Add Template
+        </button>
+    </nz-page-header-extra>
+</nz-page-header>
+
+<app-simple-table [listOfData]="listTemplates" (deleteTriggred)="deleteTemplate($event)"
+    (editTriggred)="launchEditTemplateView($event)"></app-simple-table>
+
+
+<!-- Create Template -->
+<nz-drawer [nzBodyStyle]="{ overflow: 'auto' }" [nzMaskClosable]="false" [nzWidth]="720" [nzVisible]="drawerVisible"
+    nzTitle="Create Template" [nzFooter]="footerTpl" (nzOnClose)="close()">
+
+    <form nz-form *nzDrawerContent>
+
+        <nz-steps [nzCurrent]="currentStep" [nzStartIndex]="currentStep" nzLabelPlacement="vertical">
+            <nz-step nzTitle="Template Editor" nzStatus="process" nzIcon="message"></nz-step>
+            <nz-step nzTitle="Preview" [nzStatus]="currentStep === 0 ? 'wait' : 'finish'"
+                nzIcon="fund-projection-screen"></nz-step>
+        </nz-steps>
+
+        <app-template-builder [hidden]="currentStep === 0 ? false:true"
+            [previewBtnClicked]="previewBtnClickedSubject.asObservable()"
+            [templateData]="editTemplateData"></app-template-builder>
+
+        <app-template-preview [hidden]="currentStep === 1 ? false:true"></app-template-preview>
+
+    </form>
+    <!-- Footer Button -->
+    <ng-template #footerTpl>
+        <button nz-button style="margin-right: 8px;" (click)="close()">Close</button>
+        <div style="float: right">
+            <nz-space [nzSize]="'small'">
+                
+                <!-- <button *nzSpaceItem nz-button (click)="preStep()">Back to editor</button> -->
+                <button *nzSpaceItem nz-button nzType="primary" (click)="nextStep()"
+                    [hidden]="currentStep === 0 ? false:true">Preview</button>
+
+                <button *nzSpaceItem nz-button nzType="primary" (click)="addTemplate()"
+                    [hidden]="!isEditModeEnabled && currentStep === 1 ? false:true">Add
+                    Template</button>
+
+                <button *nzSpaceItem nz-button nzType="primary" (click)="updateTemplate()"
+                    [hidden]="isEditModeEnabled && currentStep === 1 ? false:true">Update Template</button>
+            </nz-space>
+        </div>
+    </ng-template>
+</nz-drawer>

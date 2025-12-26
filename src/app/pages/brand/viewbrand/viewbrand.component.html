@@ -1,0 +1,339 @@
+<!-- <div style="display: flex; flex-direction: row; align-items: center; width: 100%;  ">
+  <div style="width: 50%;  display: flex;  flex-direction: row; justify-content: flex-start; ">
+    <nz-page-header class="site-page-header" nzTitle="View Brand"></nz-page-header>
+  </div>
+
+  <div style="width: 50%;  display: flex;  flex-direction: row; justify-content: flex-end;">
+    <button nz-button nzType="primary" class="backbtn" [routerLink]="['/Brand']">
+      <span nz-icon nzType="arrow-left" nzTheme="outline"></span>
+    </button>
+  </div>
+
+</div> -->
+
+<app-page-header [title]="'View Brand'" [backLink]="['/Brand']"></app-page-header>
+
+
+<!-- <nz-card style="margin-bottom: 3rem;">
+<div nz-col [nzSpan]="9" class="form-section" >
+  <nz-form-label nz-col [nzSpan]="6" nzFor="industryType" nzLabelAlign="left">Select Brand  <span style="color: red;"> * </span></nz-form-label>
+  <nz-form-item>
+    
+    <nz-form-control nz-col nzSpan="16" >
+      <nz-select id="selectbrand"  nzPlaceHolder="Select Brand" [(ngModel)]="selectbrand" (ngModelChange)="getBranddetails(selectbrand)">
+        <nz-option *ngFor="let name of names"  [nzValue]="name.brandName" nzLabel="{{name.brandName}}"></nz-option>
+      </nz-select>
+    </nz-form-control>
+  </nz-form-item>
+</div>
+</nz-card> -->
+
+
+ <!-- <div *ngIf="selectbrand "> -->
+
+
+  <nz-card style="width: 100%;">
+    <form class="my" nz-row [nzGutter]="16"  nzAlign="middle" nzJustify="space-around" style="margin-bottom: 2rem; margin-top: 2rem; ">
+      <!-- <div nz-col [nzSpan]="6">
+          
+          <nz-form-control >
+              <label for="Admin"> Select Admin*</label>
+              <nz-select id="Reseller" nzPlaceHolder="Select a user" [(ngModel)]="Admin" [ngModelOptions]="{standalone: true}" (ngModelChange)="getUserData(Admin,'admin')">
+                      <nz-option *ngFor="let admin of Adminlist" [nzValue]="admin.label" [nzLabel]="admin.label" ></nz-option>
+                      
+              </nz-select>
+          </nz-form-control>
+      </div> -->
+  
+      <!-- <div nz-col [nzSpan]="6">
+        
+        <nz-form-control >
+            <label for="Reseller"> Select Reseller*</label>
+            <nz-select id="Reseller" nzPlaceHolder="Select a user" [(ngModel)]="Reseller" [ngModelOptions]="{standalone: true}" (ngModelChange)="getUserData(Reseller,'reseller')">
+                    <nz-option *ngFor="let reseller of ResllerList" [nzValue]="reseller.label" [nzLabel]="reseller.label" ></nz-option>
+                    
+            </nz-select>
+        </nz-form-control>
+    </div>
+    <div nz-col [nzSpan]="6">
+        
+        <nz-form-control >
+            <label for="Seller"> Select Seller*</label>
+            <nz-select id="Seller" nzPlaceHolder="Select a user" [(ngModel)]="Seller" [ngModelOptions]="{standalone: true}" (ngModelChange)="getUserData(Seller,'Seller')">
+                
+                    <nz-option *ngFor="let seller of SellerList;" [nzValue]="seller.label" [nzLabel]="seller.label"></nz-option>
+                  
+            </nz-select>
+        </nz-form-control>
+    </div>
+    <div nz-col [nzSpan]="6">
+        
+        <nz-form-control >
+            <label for="Client"> Select Client*</label>
+            <nz-select id="Client"  nzPlaceHolder="Select a user" [(ngModel)]="client" [ngModelOptions]="{standalone: true}" (ngModelChange)="getUserData(client,'client')">
+                
+                    <nz-option *ngFor="let Client of Clientlist" [nzValue]="Client.label" [nzLabel]="Client.label"></nz-option>
+                  
+            </nz-select>
+        </nz-form-control>
+    </div> -->
+  
+  </form>
+
+ 
+  <!-- <nz-card style="margin-bottom: 3rem;"> -->
+    <!-- <div nz-col [nzSpan]="9" class="newsection" *ngIf="isUserSelected">
+      <nz-form-label nz-col [nzSpan]="6" nzFor="industryType" nzLabelAlign="left">Select Brand  <span style="color: red; "> * </span></nz-form-label>
+      <nz-form-item>
+        
+        <nz-form-control nz-col nzSpan="16" >
+          <nz-select id="selectbrand"  nzPlaceHolder="Select Brand" [(ngModel)]="selectbrand" (ngModelChange)="getBranddetails(selectbrand)">
+            <nz-option *ngFor="let name of names"  [nzValue]="name.brandName" nzLabel="{{name.brandName}}"></nz-option>
+          </nz-select>
+        </nz-form-control>
+      </nz-form-item>
+    </div> -->
+   
+  
+    
+   
+    
+  
+
+  <!-- <div *ngIf="selectbrand "> -->
+  
+   
+<form nz-form [formGroup]="viewbrand"  class="brand-form">
+
+
+    <!-- Brand Information Section -->
+    <nz-divider nzText="View Information" nzOrientation="left" style="margin-left: -65px; color: black; " ></nz-divider>
+    
+    <div nz-row [nzGutter]="24" style=" padding-top: 24px; border-top: 2px rgb(225, 225, 225); ">
+      
+     
+      <div nz-col [nzSpan]="12" class="form-section" >
+   
+        <nz-form-item>
+          <nz-form-label nz-col [nzSpan]="6" nzFor="brandName" nzLabelAlign="left">Brand Name  <span style="color: red;"> * </span> </nz-form-label>
+          <nz-form-control nz-col nzSpan="16" nzHasFeedback nzErrorTip="Please enter brand name">
+            <input id="brandName" nz-input formControlName="brandName"  placeholder="Enter Brand Name" />
+          </nz-form-control>
+        </nz-form-item>
+     
+      </div>
+      
+      <div nz-col [nzSpan]="12" class="form-section"   >
+        <nz-form-item>
+          <nz-form-label nz-col [nzSpan]="6" nzFor="officialWebsite" nzLabelAlign="left" >Official Website  <span style="color: red;"> * </span></nz-form-label>
+          <nz-form-control nz-col nzSpan="16" nzErrorTip="Please enter website URL">
+            <input id="officialWebsite" nz-input formControlName="officialWebsite" placeholder="https://example.com" />
+          </nz-form-control>
+        </nz-form-item>
+      </div>
+      
+      <div nz-col [nzSpan]="12" class="form-section">
+        <nz-form-item>
+          <nz-form-label nz-col [nzSpan]="6" nzLabelAlign="left">Brand Logo <span style="color: red;"> *
+            </span></nz-form-label>
+
+        </nz-form-item>
+      </div>
+     
+
+        <!-- <div nz-col [nzSpan]="12" class="form-section" >
+          <nz-form-item>
+            <nz-form-label nz-col [nzSpan]="6" nzLabelAlign="left" nzRequired>Bot Logo</nz-form-label>
+            <nz-form-control nz-col nzSpan="16" nzErrorTip="Bot Logo!">
+              <input type="file" formControlName="botlogo" (change)="onFileSelected($event)" accept=".jpg, .jpeg, .png" />
+            </nz-form-control>
+            <div  *ngIf="imageUrl" class="preview-container">
+        
+              <p style="margin-left: -50px;" >Image Preview:</p>
+            <img [src]="imageUrl" alt="Bot Logo Preview" class="image-preview"  />
+          </div>
+          </nz-form-item>
+        </div> -->
+
+        
+        <!-- <div  *ngIf="imageUrl" class="preview-container">
+        
+            <p style=" margin-left: -300px;  margin-top: 10px; display: block;" >Image Preview:</p>
+          <img [src]="imageUrl" alt="Bot Logo Preview" class="image-preview" style="max-width: 80px; margin-left: -300px;  margin-top: 10px; display: block;  " />
+        </div> -->
+
+        
+      
+      
+      
+      
+      
+      
+      <div nz-col [nzSpan]="12" class="form-section" >
+        <nz-form-item>
+          <nz-form-label nz-col [nzSpan]="6" nzFor="industryType" nzLabelAlign="left">Industry Type  <span style="color: red;"> * </span></nz-form-label>
+          <nz-form-control nz-col nzSpan="16">
+            <nz-select id="industryType" formControlName="industryType" nzPlaceHolder="Select Industry">
+              <nz-option nzValue="technology" nzLabel="Technology"></nz-option>
+              <nz-option nzValue="retail" nzLabel="Retail"></nz-option>
+              <nz-option nzValue="manufacturing" nzLabel="Manufacturing"></nz-option>
+              <!-- Add more options as needed -->
+            </nz-select>
+          </nz-form-control>
+        </nz-form-item>
+      </div>
+
+      <div *ngIf="imageUrl" class="preview-container">
+        <p style="margin-left: 40px;">Image Preview:</p>
+        <img [src]="imageUrl" alt="Bot Logo Preview" class="image-preview"
+          style="margin-left: 45px; max-width: 90px; margin-top: 10px; display: block; border-radius: 10px; box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.3);" />
+      </div>
+   
+    </div>
+
+   
+
+    <!-- Contact Person Section -->
+    <nz-divider nzText="Contact Person Details" nzOrientation="left" style="margin-left: -65px; color: black; "></nz-divider>
+    
+    <div nz-row [nzGutter]="24" style="border-top: 2px rgb(225, 225, 225); padding-top: 24px; ">
+
+      <div nz-col [nzSpan]="12" class="form-section">
+        <nz-form-item>
+          <nz-form-label nzFor="firstName" nzLabelAlign="left"  nz-col [nzSpan]="6">First Name  <span style="color: red;"> * </span></nz-form-label>
+          <nz-form-control nzHasFeedback nz-col nzSpan="16" >
+            <input id="firstName" nz-input formControlName="firstName" placeholder="Enter First Name" />
+          </nz-form-control>
+        </nz-form-item>
+      </div>
+      
+      <div nz-col [nzSpan]="12" class="form-section">
+        <nz-form-item>
+          <nz-form-label  nzFor="lastName" nzLabelAlign="left"  nz-col [nzSpan]="6" >Last Name  <span style="color: red;"> * </span></nz-form-label>
+          <nz-form-control nzHasFeedback  nzSpan="16">
+            <input id="lastName" nz-input formControlName="lastName" placeholder="Enter Last Name" />
+          </nz-form-control>
+        </nz-form-item>
+      </div>
+  
+
+    
+      <div nz-col [nzSpan]="12" class="form-section">
+        <nz-form-item>
+          <nz-form-label nzFor="designation" nzLabelAlign="left" nz-col [nzSpan]="6"  >Designation  <span style="color: red;"> * </span></nz-form-label>
+          <nz-form-control  nzHasFeedback  nzSpan="16" >
+            <input id="designation" nz-input formControlName="designation" placeholder="Enter Designation" />
+          </nz-form-control>
+        </nz-form-item>
+      </div>
+      
+      <div nz-col [nzSpan]="12" class="form-section">
+        <nz-form-item>
+          <nz-form-label nzFor="mobileNumber" nzLabelAlign="left" nz-col [nzSpan]="6" >Mobile Number  <span style="color: red;"> * </span></nz-form-label>
+          <nz-form-control nzSpan="16" >
+            <nz-input-group [nzAddOnBefore]="prefixTemplate">
+              <input id="mobileNumber" nz-input formControlName="mobileNumber" placeholder="Enter Mobile Number" />
+            </nz-input-group>
+            <ng-template #prefixTemplate>
+              <nz-select formControlName="phonePrefix" class="phone-select">
+                <nz-option nzLabel="+91" nzValue="+91"></nz-option>
+                <!-- Add more country codes as needed -->
+              </nz-select>
+            </ng-template>
+          </nz-form-control>
+        </nz-form-item>
+      </div>
+      
+      <div nz-col [nzSpan]="12" class="form-section">
+        <nz-form-item>
+          <nz-form-label nzFor="email" nzLabelAlign="left" nz-col [nzSpan]="6" >Email ID  <span style="color: red;"> * </span></nz-form-label>
+          <nz-form-control nzHasFeedback nzSpan="16" >
+            <input id="email" nz-input formControlName="email" placeholder="Enter Email ID" />
+          </nz-form-control>
+        </nz-form-item>
+      </div>
+    </div>
+  
+
+    <!-- Address Section -->
+    <nz-divider nzText="Company Address" nzOrientation="left" style="margin-left: -65px;  color: black;  "></nz-divider>
+    
+    <div nz-row [nzGutter]="24" style=" padding-top: 24px; border-top: 2px rgb(225, 225, 225); " >
+      <div nz-col [nzSpan]="12" class="form-section">
+        <nz-form-item>
+          <nz-form-label  nzFor="addressLine1" nzLabelAlign="left" nz-col [nzSpan]="6" >Address Line 1 <span style="color: red;"> * </span></nz-form-label>
+          <nz-form-control nzSpan="16">
+            <input id="addressLine1" nz-input formControlName="addressLine1" placeholder="Enter Address Line 1" />
+          </nz-form-control>
+        </nz-form-item>
+      </div>
+      
+      <div nz-col [nzSpan]="12" class="form-section">
+        <nz-form-item>
+          <nz-form-label nzFor="addressLine2" nzLabelAlign="left" nz-col [nzSpan]="6"  >Address Line 2</nz-form-label>
+          <nz-form-control   nzSpan="16" >
+            <input id="addressLine2" nz-input formControlName="addressLine2" placeholder="Enter Address Line 2" />
+          </nz-form-control>
+        </nz-form-item>
+      </div>
+   
+
+   
+      <div nz-col [nzSpan]="12" class="form-section">
+        <nz-form-item>
+          <nz-form-label nzFor="city" nzLabelAlign="left" nz-col [nzSpan]="6"  >City  <span style="color: red;"> * </span> </nz-form-label>
+          <nz-form-control nzSpan="16">
+            <input id="city" nz-input formControlName="city" placeholder="Enter City" />
+          </nz-form-control>
+        </nz-form-item>
+      </div>
+      
+      <div nz-col [nzSpan]="12" class="form-section">
+        <nz-form-item>
+          <nz-form-label nzFor="state" nzLabelAlign="left" nz-col [nzSpan]="6"  >State/Province  <span style="color: red;"> * </span></nz-form-label>
+          <nz-form-control nzSpan="16">
+            <input id="state" nz-input formControlName="state" placeholder="Enter State" />
+          </nz-form-control>
+        </nz-form-item>
+      </div>
+      
+      <div nz-col [nzSpan]="12" class="form-section">
+        <nz-form-item>
+          <nz-form-label nzFor="postalCode" nzLabelAlign="left" nz-col [nzSpan]="6" >ZIP/Postal Code <span style="color: red;"> * </span></nz-form-label>
+          <nz-form-control nz-col nzSpan="16" >
+            <input id="postalCode" nz-input formControlName="postalCode"  placeholder="Enter ZIP Code" />
+          </nz-form-control>
+        </nz-form-item>
+      </div>
+      
+      <div nz-col [nzSpan]="12" class="form-section">
+        <nz-form-item>
+          <nz-form-label  nzFor="country" nzLabelAlign="left" nz-col [nzSpan]="6" >Country  <span style="color: red;"> * </span></nz-form-label>
+          <nz-form-control  nzSpan="16" >
+            <nz-select id="country" formControlName="country" nzShowSearch nzPlaceHolder="Select Country">
+             
+              <nz-option nzValue="India" nzLabel="India"></nz-option>
+              <nz-option nzValue="UK" nzLabel="United Kingdom"></nz-option>
+              <!-- Add more countries as needed -->
+            </nz-select>
+          </nz-form-control>
+        </nz-form-item>
+      </div>
+    </div>
+    
+
+    <!-- Action Buttons -->
+    <!-- <div class="action-buttons-container">
+      <div class="centered-buttons">
+        <button nz-button nzType="default" (click)="onBack()" class="action-button">
+          <i nz-icon nzType="left"></i>Back
+        </button>
+        <button nz-button nzType="primary" type="submit" class="action-button">
+          <i nz-icon nzType="save"></i>Submit
+        </button>
+      </div>
+    </div> -->
+  </form>
+  <!-- </div> -->
+  </nz-card>
+<!-- </div> -->

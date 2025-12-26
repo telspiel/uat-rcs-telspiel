@@ -1,0 +1,170 @@
+<div class="rcs-page-container">
+  <div class="header-section">
+    <h2>Hey,</h2>
+    <p>
+      Hey <b>{{ logedinuser }}</b
+      >, by Adding a new number to the blacklist, you can prevent unwanted calls
+      or messages.
+    </p>
+    <button
+      nz-button
+      nzType="primary"
+      [routerLink]="['/addblacklist']"
+      nzShape="round"
+    >
+      Add Blacklist Number
+    </button>
+  </div>
+
+
+
+  <div class="bots-section" style="margin-top: 20px">
+    <nz-card nzTitle="Blacklist Management">
+      <nz-card style="margin-bottom: 2rem">
+        <form action="" nz-row [nzGutter]="16" [formGroup]="groupForm">
+          <div nz-col [nzSpan]="5" class="filter-item">
+            <label for="bots" class="ant-form-item-label"
+              >Search Number<span style="color: red"> * </span>
+            </label>
+            <input
+              id="Title"
+              nz-input
+              placeholder="Enter the number"
+              formControlName="searchNumber"
+            />
+            
+          </div>
+
+          <!--     
+<div  nz-col [nzSpan]="5" class="filter-item" >
+    <label for="bots" class="ant-form-item-label">Description <span style="color: red;"> * </span></label>
+    <input id="Description" nz-input   placeholder="Descripton" formControlName="Descripton"/>
+
+   
+
+    -->
+          <!-- </div> -->
+
+          <div style="margin-top: 22px">
+            <button nz-button nzType="primary" (click)="searchNumbers()">
+              Search
+            </button>
+
+            <button
+              nz-button
+              nzType="primary"
+              style="margin-left: 20px"
+              (click)="downloadCSV()"
+            >
+              Download List
+            </button>
+
+
+            <button nz-button nzType="primary" style="margin-left: 30px"  nz-popconfirm
+                [nzPopconfirmTitle]="
+                  'Are you sure to want the delete the numbers?'
+                "
+                nzPopconfirmPlacement="bottom"
+                (nzOnConfirm)="deleteSelectedGroups()"
+                 (nzOnCancel)="cancelGroup()"  *ngIf="setOfCheckedId.size > 0" >         
+                Delete Selected
+
+               
+            </button>
+
+          </div>
+        </form>
+      </nz-card>
+
+      <nz-table
+        #templateTable
+        [nzFrontPagination]="true"
+        [nzTotal]="filteredData.length"
+        [nzPageSize]="10"
+        [nzPageIndex]="1"
+        nzTableLayout="fixed"
+        [nzBordered]="true"
+        [nzSize]="'middle'"
+        [nzData]="numberList"
+        (nzCurrentPageDataChange)="onCurrentPageDataChange($event)"
+        [nzScroll]="{ x: '100%' }"
+      >
+        <thead>
+          <tr>
+            <th
+            nzWidth="50px"
+            [nzSelections]="listOfSelections"
+            [(nzChecked)]="checked"
+            [nzIndeterminate]="indeterminate"
+            (nzCheckedChange)="onAllChecked($event)"
+          ></th>
+            <th>Total Numbers</th>
+            <th>Description</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let group of templateTable.data">
+               <td> <label   nz-checkbox [ngModel]="setOfCheckedId.has(group.userBlackListNumber)" (ngModelChange)="onItemChecked(group.userBlackListNumber, $event)"></label></td>
+            <td>{{ group.userBlackListNumber }} </td>
+            <td>{{ group.description }}</td>
+
+            <td>
+              <a
+                nz-popconfirm
+                [nzPopconfirmTitle]="
+                  'Are you sure to want the delete the number?'
+                "
+                nzPopconfirmPlacement="bottom"
+                (nzOnConfirm)="removeGroup(group.userBlackListNumber)"
+                (nzOnCancel)="cancelGroup()"
+              >
+                <i
+                  nz-icon
+                  nzType="delete"
+                  nzTheme="outline"
+                  style="color: #ff0000"
+                ></i>
+              </a>
+            </td>
+          </tr>
+        </tbody>
+      </nz-table>
+
+      <!-- <a style="margin-top: 8px;" nz-button  nzType="link">+ Add a Template</a> -->
+      <!-- <a [routerLink]="['/add']" >+ Add a Template
+            <button nz-button nzType="link" nzShape="circle" nzTooltipTitle="Edit">
+              <i nz-icon nzType="" nzTheme="outline"></i>
+            </button>
+          </a>           
+        
+      </nz-card>
+  
+
+    
+    
+        
+    </div>
+
+  </div>
+
+
+<!-- <nz-page-header class="site-page-header" nzTitle="Template"></nz-page-header> -->
+
+      <!-- (nzclick)="" -->
+      <!-- <ul nz-menu nzMode="horizontal">
+  <li nz-menu-item nzMatchRouter>
+    <a [routerLink]="[' ']"  routerLinkActive="active"><span nzType="plus" nzTheme="outline" nz-icon ></span> Add Template </a>
+    
+  </li>
+  <li nz-menu-item nzMatchRouter>
+    <a [routerLink]="['/view']"  routerLinkActive="active"><span nzType="eye" nzTheme="outline" nz-icon ></span> View Template</a>
+    
+  </li>
+</ul> -->
+      <!-- <router-outlet></router-outlet> -->
+
+      <!-- Rich Message Templates Table --></nz-card
+    >
+  </div>
+</div>

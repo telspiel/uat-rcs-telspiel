@@ -1,0 +1,63 @@
+<div
+  [ngStyle]="{
+    display: 'flex',
+    flexDirection: messageOrder === 'textTop' ? 'column-reverse' : 'column',
+    gap: '8px',
+    fontFamily: 'Arial, sans-serif',
+    maxWidth: '320px'
+
+  }"
+  style="position: absolute; top: 40%; left: 0%; width: 100%; z-index: 2;"
+>
+  <!-- Card containing PDF preview and message -->
+  <div  [ngStyle]="{ display: 'flex', flexDirection: templateForm.get('messageOrder')?.value === 'textTop' ? 'column-reverse' : 'column', gap: '8px', fontFamily: 'Arial, sans-serif', maxWidth: '320px' }" style="margin-top: 20px;">
+    <!-- PDF Preview -->
+    <div
+      *ngIf="getPdfFileName()"
+      style="display: flex; align-items: center; background-color: #f9f9f9; padding: 12px 16px; border-radius: 12px; gap: 12px;"
+    >
+      <div
+        style="background-color: #1a73e8; width: 40px; height: 40px; border-radius: 50%; display: flex; align-items: center; justify-content: center; flex-shrink: 0;"
+      >
+        <span style="color: white; font-weight: bold; font-size: 14px;">PDF</span>
+      </div>
+      <div style="display: flex; flex-direction: column; overflow: hidden;">
+        <div
+          style="font-size: 14px; font-weight: 500; color: #202124; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;"
+        >
+          {{ getPdfFileName() }}
+        </div>
+      </div>
+    </div>
+
+    <!-- Message -->
+    <div style="margin-top: 10px; font-size: 14px; color: #202124;">
+      {{ getMessageBody() }}
+    </div>
+  </div>
+
+
+<!-- Suggestions -->
+<div style="display: flex; justify-content: flex-start; align-items: center; height: 100%; text-align: center;">
+  <div>
+    <div *ngFor="let suggestion of suggestionsFormArray.controls">
+      <div *ngIf="suggestion.get('text')?.value" style="margin-top: 20px;">
+        <a
+          nz-button
+          [nzType]="'primary'"
+          [href]="suggestion.get('text')?.value"
+          target="_blank"
+          style="border-radius: 20px;"
+        >
+          <span
+            nz-icon
+            [nzType]="getSuggestionIcon(suggestion.get('type')?.value)"
+            nzTheme="outline"
+          ></span>
+          {{ suggestion.get('text')?.value }}
+        </a>
+      </div>
+    </div>
+  </div>
+</div>
+</div>

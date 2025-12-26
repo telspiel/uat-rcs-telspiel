@@ -1,0 +1,90 @@
+<nz-page-header class="site-page-header" nzTitle="Latency Report"></nz-page-header>
+<div class="" nz-flex nzJustify="flex-end" style="float: right; margin-right: 20px;">
+  <nz-breadcrumb [nzAutoGenerate]="true" nzSeparator=">"  >
+    <nz-breadcrumb-item>
+      <a [routerLink]="['']"> <span nz-icon nzType="appstore" nzTheme="outline"></span></a>
+    </nz-breadcrumb-item>
+    <nz-breadcrumb-item>
+      <a [routerLink]="[' ']"> <span nz-icon nzType="user" nzTheme="outline"></span></a>
+    </nz-breadcrumb-item>
+  </nz-breadcrumb>
+</div>
+
+
+
+<nz-card style="width: 100%; margin-top: 1.5rem; ">  
+
+    <form class="my" nz-row [nzGutter]="16"  nzAlign="middle" nzJustify="space-around" style="margin-bottom: 2rem; margin-top: 2rem; " nzAlign="bottom">
+    
+        <div nz-col [nzSpan]="4">
+            
+            <nz-form-control >
+                <label for="Reseller"> Select Reseller*</label>
+                <nz-select id="Reseller" nzPlaceHolder="Select a user" [(ngModel)]="Reseller" [ngModelOptions]="{standalone: true}" >
+                        <!-- <nz-option *ngFor="let reseller of ResllerList" [nzValue]="reseller.label" [nzLabel]="reseller.label" ></nz-option> -->
+                        
+                </nz-select>
+            </nz-form-control>
+        </div>
+        <div nz-col [nzSpan]="4">
+            
+            <nz-form-control >
+                <label for="Seller"> Select Seller*</label>
+                <nz-select id="Seller" nzPlaceHolder="Select a user" [(ngModel)]="Seller" [ngModelOptions]="{standalone: true}" >
+                    
+                        <!-- <nz-option *ngFor="let seller of SellerList;" [nzValue]="seller.label" [nzLabel]="seller.label"></nz-option> -->
+                      
+                </nz-select>
+            </nz-form-control>
+        </div>
+        <div nz-col [nzSpan]="4">
+            
+            <nz-form-control >
+                <label for="Client"> Select Client*</label>
+                <nz-select id="Client"  nzPlaceHolder="Select a user" [(ngModel)]="client" [ngModelOptions]="{standalone: true}">
+                    
+                        <!-- <nz-option *ngFor="let Client of Clientlist" [nzValue]="Client.label" [nzLabel]="Client.label"></nz-option> -->
+                      
+                </nz-select>
+            </nz-form-control>
+        </div>
+        <div nz-col [nzSpan]="4" >
+            
+            <nz-form-control>
+                <label for="Expiry">Date*</label>
+                <nz-date-picker formControlName="Expiry" style="width: 100%;" ></nz-date-picker>
+            </nz-form-control>
+        </div>
+
+        <div nz-col [nzSpan]="4" class="" >
+        
+            <button nz-button nzType="primary" class="btn-gap" (click)="onSubmit()">Submit</button>
+            <button nz-button nzType="default" type="button" class="btn-gap">Back</button>
+        
+    </div>
+    </form>
+  <nz-table
+  nzShowSizeChanger
+  [nzTotal]="total"
+  [nzPageSize]="pageSize"
+  [nzPageIndex]="pageIndex"
+>
+  <thead>
+    <tr>
+      <th nzColumnKey="date" [nzSortFn]="true">Date</th>
+      <th nzColumnKey="hour" [nzSortFn]="true">Hour</th>
+      <th nzColumnKey="kannelid" [nzSortFn]="true">Kannel ID</th>
+      <th nzColumnKey="0-2sec" [nzSortFn]="true">0-2 Sec</th>
+      <th nzColumnKey="3-5sec" [nzSortFn]="true">3-5 Sec</th>
+      <th nzColumnKey="6-10sec" [nzSortFn]="true">6-10 Sec</th>
+      <th nzColumnKey="11-30sec" [nzSortFn]="true">11-30 Sec</th>
+      <th nzColumnKey="Above30sec" [nzSortFn]="true">Above 30 sec</th>
+      <th nzColumnKey="FailedRetryCount" [nzSortFn]="true">Failed Retry Count</th>
+    </tr>
+  </thead>
+  <tbody>
+    
+  </tbody>
+</nz-table>
+  <!-- <router-outlet/> -->
+</nz-card>

@@ -1,0 +1,540 @@
+
+
+<app-page-header [title]="this.templateForm.get('name')?.value" [backLink]="['/template']"></app-page-header>
+
+<form nz-form [nzLayout]="'vertical'" [formGroup]="templateForm">
+
+  <nz-card style="width: 100%;">
+    
+    <nz-row nzGutter="24">
+      
+
+      <nz-col [nzSpan]="12" style="height: 100vh; overflow-y: auto; ">
+
+        <!-- <nz-col [nzSpan]="24">
+          <div class="info-text" style="margin-left: -10px;">
+            <strong>Agent Use Case :</strong> Promotional
+          </div>
+        </nz-col> -->
+
+        <!-- Select Bot -->
+
+        <nz-form-item>
+          <nz-form-label nzFor="type">Select Bot<span style="color: red;"> * </span></nz-form-label>
+          <p style=" font-size: 10px; color: #999; line-height: 1.4;"></p>
+          <nz-form-control>
+            <!-- <nz-select formControlName="botid" id="type" nzPlaceHolder="Select Bot"
+              (ngModelChange)="onBotSelect(templateForm.get('botid')?.value)">
+              <nz-option *ngFor="let item of newbot" [nzLabel]="item.botName" [nzValue]="item.botId">
+              </nz-option>
+            </nz-select> -->
+
+            <input nz-input id="type" [value]="validateForm.get('botName')?.value" (ngModelChange)="validateForm.get('botName')?.setValue($event)" placeholder="Select Bot " [disabled]="true"/>
+          </nz-form-control>
+        </nz-form-item>
+
+
+        <!-- Template Name / Code -->
+        <nz-form-item>
+          <nz-form-label nzFor="name">Template Name/Code <span style="color: red;"> * </span></nz-form-label>
+          <p style=" font-size: 10px; color: #999; line-height: 1.4;">Please give your template a name in accordance
+            with the "Agent Use Case" that you have selected. e.g. if your "Agent Use Case" is "Promotional", provide
+            a name such as "BotNamePromotion", For an "OTP" Agent Use Case, provide a name such as - "BotNameOTP" and
+            likewise.
+            Please Note: Only alphanumeric characters and underscore are allowed. Spaces/other special characters are
+            not allowed.</p>
+          <nz-form-control>
+            <input nz-input id="name" formControlName="name" placeholder="Enter Template Name/Code" maxlength="20" />
+            <small class="char-limit">20 characters left</small>
+          </nz-form-control>
+        </nz-form-item>
+
+        <!-- Template Content Type -->
+        <nz-form-item>
+          <nz-form-label nzFor="type">Template Content Type <span style="color: red;"> * </span></nz-form-label>
+          <p style=" font-size: 10px; color: #999; line-height: 1.4;">Choose the type of message template you want to
+            create</p>
+          <nz-form-control>
+            <nz-select formControlName="type" id="type" (ngModelChange)="ontypeChange($event)"
+              nzPlaceHolder="Choose content type" [(ngModel)]="type">
+              <nz-option nzValue="rich_card" nzLabel="Rich Card Stand Alone"></nz-option>
+              <nz-option nzValue="carousel" nzLabel="Rich Card carousel"></nz-option>
+              <nz-option nzValue="TextMessage" nzLabel="Text Message"></nz-option>
+              <nz-option nzValue="TextMessagewithpdf" nzLabel="Text Message with PDF"></nz-option>
+            </nz-select>
+          </nz-form-control>
+        </nz-form-item>
+
+        <!-- Select Card Orientation -->
+        <nz-form-item
+          *ngIf="templateForm.get('type')?.value !== 'TextMessage' && templateForm.get('type')?.value !== 'carousel' && templateForm.get('type')?.value !== 'TextMessagewithpdf'">
+          <nz-form-label nzFor="cardOrientation">Select Card Orientation <span style="color: red;"> *
+            </span></nz-form-label>
+          <nz-form-control>
+            <nz-select formControlName="cardOrientation" id="cardOrientation" nzPlaceHolder="Select orientation"
+              (ngModelChange)="onOrientationChange($event)">
+              <nz-option nzValue="VERTICAL" nzLabel="VERTICAL"></nz-option>
+              <nz-option nzValue="HORIZONTAL" nzLabel="HORIZONTAL"></nz-option>
+            </nz-select>
+          </nz-form-control>
+        </nz-form-item>
+
+
+        <!-- Select card width -->
+
+
+
+        <nz-form-item
+          *ngIf="!['TextMessage', 'TextMessagewithpdf', 'rich_card'].includes(templateForm.get('type')?.value)">
+          <nz-form-label nzFor="cardOrientation">Select Card Width <span style="color: red;"> *
+            </span></nz-form-label>
+          <nz-form-control>
+            <nz-select formControlName="width" id="templateContentType" (ngModelChange)="ontypeChange($event)"
+              nzPlaceHolder="Choose content type">
+              <nz-option nzValue="SMALL_WIDTH" nzLabel="SMALL"></nz-option>
+              <nz-option nzValue="MEDIUM_WIDTH" nzLabel="MEDIUM"></nz-option>
+            </nz-select>
+          </nz-form-control>
+        </nz-form-item>
+
+
+        <!-- Select Card Alignment* -->
+        <nz-form-item *ngIf="templateForm.get('type')?.value !== 'TextMessage' && templateForm.get('type')?.value !== 'carousel'
+        && templateForm.get('cardOrientation')?.value === 'HORIZONTAL'">
+          <nz-form-label nzFor="mediaHeight">Select Card Alignment <span style="color: red;"> *
+            </span></nz-form-label>
+          <nz-form-control>
+            <nz-select formControlName="alignment" id="mediaHeight" nzPlaceHolder="Select alignment">
+              <nz-option nzValue="RIGHT" nzLabel="RIGHT"></nz-option>
+              <nz-option aria-selected="true" nzValue="LEFT" nzLabel="LEFT"></nz-option>
+            </nz-select>
+          </nz-form-control>
+        </nz-form-item>
+
+
+
+        <!-- Select Media Height -->
+        <nz-form-item
+          *ngIf="(templateForm.get('type')?.value !== 'TextMessagewithpdf')&&(templateForm.get('type')?.value !== 'TextMessage') && (templateForm.get('cardOrientation')?.value === 'VERTICAL') || (templateForm.get('type')?.value === 'carousel')">
+          <nz-form-label nzFor="mediaHeight">Select Media Height <span style="color: red;"> * </span></nz-form-label>
+          <nz-form-control>
+            <nz-select formControlName="height" id="mediaHeight" nzPlaceHolder="Select height"
+              (ngModelChange)="onHeightChange($event)">
+              <nz-option nzValue="SHORT_HEIGHT" nzLabel="SHORT"></nz-option>
+              <nz-option nzValue="MEDIUM_HEIGHT" nzLabel="MEDIUM"></nz-option>
+            </nz-select>
+          </nz-form-control>
+        </nz-form-item>
+        
+        <nz-card
+          *ngIf="!['TextMessage', 'TextMessagewithpdf', 'rich_card'].includes(templateForm.get('type')?.value)">
+          <nz-form-label nzFor="" nzSpan="1-24">Select Card</nz-form-label>
+          <div class="card-container">
+            <div *ngFor="let card of carouselList; let i = index" (click)="selectCard(i)"
+              [ngClass]="{'selected-card': selectedCardIndex === i}"
+              [ngStyle]="{'transform': selectedCardIndex === i ? 'scale(1.2)' : 'scale(1)', 'transition': 'transform 0.3s'}"
+              class="custom-card-grid">
+              <div class="card-content">
+                Card {{i+1}}
+              </div>
+
+              <!-- Delete Button (positioned at top-right) -->
+              <button nz-button nzDanger nzSize="small" nzShape="circle" class="delete-btn" *ngIf="i >= 2"
+                (click)="deleteCard(i)">X</button>
+            </div>
+          </div>
+
+          <!-- Add Button -->
+          <div class="add-card-btn">
+            <button *ngIf="carouselList.length < 10" nzType="dashed" (click)="addCard()" nzSize="large">+ Add
+              Card</button>
+          </div>
+        </nz-card>
+        <!-- Image/Video Upload -->
+        
+       
+          <!-- <div class="" style="display: flex; flex-direction: row; gap:20px;">
+          <div class="" *ngFor="let index of carouselList" >
+            <img  [src]="index.mediaUrl" style="width: auto; height: auto; max-width: 250px; max-height: 250px;" *ngIf="previewUrl && !isVideo  && templateForm.get('type')?.value === 'carousel'" />
+
+          </div>
+          </div> -->
+          <!-- <img *ngFor="let index of carouselList" [src]="index.mediaUrl" style="width: auto; height: auto; max-width: 250px; max-height: 250px;" *ngIf="previewUrl && !isVideo  && templateForm.get('type')?.value === 'carousel'" /> -->
+        <img [src]="fileUrl" style="width: auto; height: auto; max-width: 250px; max-height: 250px;" *ngIf="previewUrl && !isVideo  && templateForm.get('type')?.value === 'rich_card'" />
+        <img [src]="thumbnailUrl" style="width: auto; height: auto; max-width: 250px; max-height: 250px;" *ngIf="thumbnailUrl && isVideo" />
+        <!-- Card Title -->
+        <nz-form-item
+          *ngIf="templateForm.get('type')?.value !== 'TextMessage' && templateForm.get('type')?.value !== 'TextMessagewithpdf'">
+          <nz-form-label nzFor="cardTitle">Card Title</nz-form-label>
+          <nz-form-control>
+            <!-- Bind the input field to the cardTitle variable -->
+            <input  nz-input  placeholder="Enter Card Title" formControlName="cardTitle" maxlength="200" 
+              [(ngModel)]="cardTitle" />
+            <div class="" nz-row nzJustify="space-between">
+              <small class="char-limit">{{ templateForm.get('cardTitle')?.value?.length || 0 }}/200 characters used</small>
+              <button nz-button nzType="link" (click)="addVariable('cardTitle')">+ Add variable</button>
+            </div>
+          </nz-form-control>
+        </nz-form-item>
+
+
+        <!-- Card Description -->
+        <nz-form-item
+          *ngIf="templateForm.get('type')?.value !== 'TextMessage' && templateForm.get('type')?.value !== 'TextMessagewithpdf'">
+          <nz-form-label nzFor="cardDescription">Card Description</nz-form-label>
+          <nz-form-control>
+
+            <textarea nz-input id="cardDescription" formControlName="cardDescription"
+              placeholder="Enter Card Description" maxlength="2000" class="card-description-textarea"></textarea>
+            <div class="" nz-row nzJustify="space-between">
+              <small class="char-limit">{{ templateForm.get('cardDescription')?.value?.length || 0 }}/2000 characters
+                used</small>
+              <button nz-button nzType="link" (click)="addVariable('currentDescription')">+ Add variable</button>
+            </div>
+          </nz-form-control>
+        </nz-form-item>
+
+
+        <!-- Message Content -->
+        <nz-form-item
+          *ngIf="templateForm.get('type')?.value == 'TextMessage' && templateForm.get('type')?.value !== 'carousel' && templateForm.get('type')?.value !== 'TextMessagewithpdf'">
+          <nz-form-label nzFor="messagecontent">Message Content</nz-form-label>
+          <nz-form-control>
+            <textarea nz-input id="cardDescription" formControlName="messagecontent"
+              placeholder="Enter Card Description" maxlength="2500" [(ngModel)]="messagecontent"
+              class="card-description-textarea custom-textarea"></textarea>
+            <small class="char-limit">
+              <small>{{templateForm.get('messagecontent')?.value?.length || 0 }}/2500 characters used</small>
+            </small>
+            <button nz-button nzType="link" (click)="addVariable('mess')">+ Add variable</button>
+          </nz-form-control>
+        </nz-form-item>
+
+        <!-- Message Order -->
+        <nz-form-item
+          *ngIf="templateForm.get('type')?.value !== 'TextMessage' && templateForm.get('type')?.value !== 'carousel' && templateForm.get('type')?.value == 'TextMessagewithpdf'">
+          <nz-form-label [nzRequired]="true" nzFor="messageOrder">Message Order</nz-form-label>
+          <nz-form-control>
+            <nz-radio-group formControlName="messageOrder">
+              <label nz-radio nzValue="textTop">Text Message at Top</label>
+              <label nz-radio nzValue="pdfTop">PDF at Top</label>
+            </nz-radio-group>
+          </nz-form-control>
+        </nz-form-item>
+
+        <!-- Message Body -->
+        <nz-form-item
+          *ngIf="templateForm.get('type')?.value !== 'TextMessage' && templateForm.get('type')?.value !== 'carousel' && templateForm.get('type')?.value == 'TextMessagewithpdf'">
+          <nz-form-label [nzRequired]="" nzFor="messageBody">Message body</nz-form-label>
+          <nz-form-control>
+            <textarea formControlName="messageBody" nz-input nzPlaceHolder="Enter your message" rows="5"
+              [maxLength]="2000"></textarea>
+              <div class="" nz-row nzJustify="space-between">
+              <small class="char-limit">
+                <small>{{templateForm.get('messageBody')?.value?.length || 0 }}/2000 characters used</small>
+              </small>
+              <button nz-button nzType="link" (click)="addVariable('messageBody')">+ Add variable</button>
+              </div>
+          </nz-form-control>
+        </nz-form-item>
+
+        <!-- Upload PDF File -->
+        <nz-form-item
+          *ngIf="templateForm.get('type')?.value !== 'TextMessage' && templateForm.get('type')?.value !== 'carousel' && templateForm.get('type')?.value == 'TextMessagewithpdf'">
+          <nz-form-label [nzRequired]="" nzFor="pdfFile">Upload PDF File</nz-form-label>
+          <nz-form-control>
+            <!-- <nz-upload 
+              [nzAction]="apiUrl" 
+              [nzHeaders]="{ authorization: token }" 
+              [nzData]="{'userName': userName}"  
+              nzListType="picture" 
+              [nzMultiple]="false" 
+              [nzBeforeUpload]="beforeFileChange" 
+              [nzAccept]="'.pdf'" 
+              (nzChange)="handleChange($event)">
+              <button nz-button nzType="primary">
+                <span nz-icon nzType="upload"></span> Upload
+              </button>
+            </nz-upload> -->
+           
+          </nz-form-control>
+        </nz-form-item>
+
+
+
+
+
+
+      </nz-col>
+      <nz-card nz-col [nzSpan]="12" style="
+      position: sticky;
+      top: 0;
+      height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;">
+      
+      <app-template-preview
+               
+                [imageUrl]="imageUrl"
+                [validateForm]="validateForm"
+                [templateForm]="templateForm"
+                [selectedBotId12]="true"
+                [type]="templateForm.get('type')?.value || ''"
+                [carouselList]="carouselList"
+                [alignment]="alignment"
+                [orientation]="orientation"
+                [uploadedFileName]="templateForm.get('documentFileName')?.value || ''"
+                [messageOrder]="templateForm.get('messageOrder')?.value || ''"
+                >
+
+                </app-template-preview>
+    </nz-card>
+    </nz-row>
+
+  </nz-card>
+
+  <nz-card>
+   
+    <nz-row nzGutter="24">
+     
+      <nz-col [nzSpan]="24">
+        <nz-form-item>
+          <nz-form-label nzFor="suggestedAction">
+            <h2>Suggested Action/Reply Button</h2>
+          </nz-form-label>
+          <nz-form-control>
+            <button nz-button nzType="primary" (click)="addSuggestion()" [disabled]="err? true: false">Add Suggestion</button>
+
+          </nz-form-control>
+          <span style="color: red;">{{err}}</span>
+        </nz-form-item>
+        <p style="border: 1px solid #333;"></p>
+
+        <div formArrayName="suggestions">
+          <div *ngFor="let suggestion of suggestionsFormArray.controls; let i = index" [formGroupName]="i"
+            class="suggestion-item">
+            <nz-row nzGutter="16">
+              <nz-col [nzSpan]="5">
+                <nz-form-item>
+                  <nz-form-label [nzRequired]="true" [nzFor]="'actionType-' + i">Type of Action</nz-form-label>
+                  <nz-form-control>
+                    <nz-select id="actionType-{{i}}" formControlName="type" nzPlaceHolder="Select action type"
+                      (ngModelChange)="onActionTypeChange($event)">
+                      <nz-option nzValue="reply" nzLabel="Reply"></nz-option>
+                      <nz-option nzValue="url_action" nzLabel="URL Action"></nz-option>
+                      <nz-option nzValue="dialer_action" nzLabel="Dialer Action"></nz-option>
+                      <nz-option nzValue="view_location_latlong" nzLabel="View Location (Lat/Long)"></nz-option>
+                      <nz-option nzValue="view_location_query" nzLabel="View Location (Query)"></nz-option>
+                      <nz-option nzValue="share_location" nzLabel="Share Location"></nz-option>
+                      <nz-option nzValue="calendar_event" nzLabel="Create Calendar Event"></nz-option>
+                    </nz-select>
+                  </nz-form-control>
+                </nz-form-item>
+              </nz-col>
+
+              <nz-col [nzSpan]="5">
+                <nz-form-item>
+                  <nz-form-label nzFor="suggestionText-{{i}}">Suggestion Text</nz-form-label>
+                  <nz-form-control>
+                    <input nz-input id="suggestionText-{{i}}" formControlName="text"
+                      placeholder="Enter suggestion text" [maxlength]="25"
+                      (input)="updateSuggestionText(i, suggestion.get('text')?.value)" />
+
+
+
+                    <div nz-row nzJustify="space-between">
+                      <small>{{ suggestion.get('text')?.value?.length || 0 }}/25 characters used</small>
+                      <a (click)="addVariableToSuggestion('SuggestionText', i)">+ Add variable</a>
+                    </div>
+                  </nz-form-control>
+
+                  <!-- Link Preview -->
+
+
+                </nz-form-item>
+              </nz-col>
+
+              <nz-col [nzSpan]="5">
+                <nz-form-item>
+                  <nz-form-label nzFor="suggestionPostback-{{i}}">Suggestion Postback</nz-form-label>
+                  <nz-form-control>
+                    <input nz-input id="suggestionPostback-{{i}}" formControlName="postback"
+                      placeholder="Enter postback" [maxlength]="120" />
+
+                    <div class="" nz-row nzAlign="middle" nzJustify="space-between">
+                      <small>{{ suggestion.get('postback')?.value?.length || 0 }}/120 characters used</small>
+                      <a (click)="addVariableToSuggestion('SuggestionPostBack',i)">+ Add variable</a>
+                    </div>
+                  </nz-form-control>
+                </nz-form-item>
+              </nz-col>
+              <!-- ✅ URL Input Field (Only show when "URL Action" is selected) -->
+              <nz-col [nzSpan]="5" *ngIf="this.suggestionsFormArray.at(i).get('type')?.value=== 'url_action'">
+                <nz-form-item>
+                  <nz-form-label nzFor="URL/URL to open-{{i}}">URL/URL to open</nz-form-label>
+                  <nz-form-control>
+                    <input nz-input id="URL/URL to open-{{i}}" formControlName="url" placeholder="Enter URL"
+                      maxlength="120" />
+
+                    <div class="" nz-row nzJustify="space-between">
+                      <small>{{ templateForm.get('url')?.value?.length || 0 }}/120 characters used</small>
+                      <!-- <button nz-button nzType="link">+ Add variable</button> -->
+                    </div>
+                  </nz-form-control>
+                </nz-form-item>
+              </nz-col>
+              <nz-col [nzSpan]="5" *ngIf="this.suggestionsFormArray.at(i).get('type')?.value=== 'dialer_action'">
+                <nz-form-item>
+                  <nz-form-label nzFor="Enter Phone Number-{{i}}">Phone Number to Dial</nz-form-label>
+                  <nz-form-control>
+                    <input nz-input id="Enter Phone Number-{{i}}" formControlName="phoneNumber"
+                      placeholder="Enter Phone Number" />
+                    <!-- <small>{{ suggestion.get('urlopen')?.value?.length || 0 }}</small> -->
+                  </nz-form-control>
+                </nz-form-item>
+              </nz-col>
+
+              <nz-col [nzSpan]="5"
+                *ngIf="this.suggestionsFormArray.at(i).get('type')?.value=== 'view_location_latlong'">
+                <nz-form-item>
+                  <nz-form-label nzFor="Latitude-{{i}}">Latitude</nz-form-label>
+                  <nz-form-control>
+                    <input nz-input id="Latitude-{{i}}" formControlName="latitude" placeholder="Enter Latitude" />
+                    <!-- <small>{{ suggestion.get('urlopen')?.value?.length || 0 }}/120 characters used</small> -->
+                  </nz-form-control>
+                </nz-form-item>
+              </nz-col>
+
+              <nz-col [nzSpan]="5"
+                *ngIf="this.suggestionsFormArray.at(i).get('type')?.value=== 'view_location_latlong'">
+                <nz-form-item>
+                  <nz-form-label nzFor="Latitude-{{i}}">Longitude</nz-form-label>
+                  <nz-form-control>
+                    <input nz-input id="Latitude-{{i}}" formControlName="longitude" placeholder="Enter Latitude" />
+                    <!-- <small>{{ suggestion.get('urlopen')?.value?.length || 0 }}/120 characters used</small> -->
+                  </nz-form-control>
+                </nz-form-item>
+              </nz-col>
+
+              <nz-col [nzSpan]="5"
+                *ngIf="this.suggestionsFormArray.at(i).get('type')?.value=== 'view_location_latlong'">
+                <nz-form-item>
+                  <nz-form-label nzFor="Label-{{i}}">Label</nz-form-label>
+                  <nz-form-control>
+                    <input nz-input id="Label-{{i}}" formControlName="label" placeholder="Enter Label"
+                      maxlength="25" />
+                    <small>{{ suggestion.get('urlopen')?.value?.length || 0 }}/25 characters used</small>
+                  </nz-form-control>
+                </nz-form-item>
+              </nz-col>
+
+              <nz-col [nzSpan]="5"
+                *ngIf="this.suggestionsFormArray.at(i).get('type')?.value===  'view_location_query'">
+                <nz-form-item>
+                  <nz-form-label nzFor="Query-{{i}}">Query</nz-form-label>
+                  <nz-form-control>
+                    <input nz-input id="Query-{{i}}" formControlName="query" placeholder="Enter Query"
+                      maxlength="1024" />
+                    <small>{{ suggestion.get('Query')?.value?.length || 0 }}/1024 characters used</small>
+                  </nz-form-control>
+                </nz-form-item>
+              </nz-col>
+
+              <nz-col [nzSpan]="5" *ngIf="this.suggestionsFormArray.at(i).get('type')?.value === 'calendar_event'">
+                <nz-form-item>
+                  <nz-form-label nzFor="Event Date-{{i}}">Event Start Date</nz-form-label>
+                  <nz-form-control>
+                    <nz-date-picker style="width: 100%;" formControlName="startTime" nzShowTime></nz-date-picker>
+
+                  </nz-form-control>
+                </nz-form-item>
+              </nz-col>
+              <nz-col [nzSpan]="5" *ngIf="this.suggestionsFormArray.at(i).get('type')?.value === 'calendar_event'">
+                <nz-form-item>
+                  <nz-form-label nzFor="Event Date-{{i}}">Event End Date</nz-form-label>
+                  <nz-form-control>
+                    <nz-date-picker style="width: 100%;" formControlName="endTime" nzShowTime></nz-date-picker>
+
+                  </nz-form-control>
+                </nz-form-item>
+              </nz-col>
+
+              <nz-col [nzSpan]="5" *ngIf="this.suggestionsFormArray.at(i).get('type')?.value===  'calendar_event'">
+                <nz-form-item>
+                  <nz-form-label nzFor="Event Title-{{i}}">Event Title</nz-form-label>
+                  <nz-form-control>
+                    <input nz-input id="EventTitle-{{i}}" formControlName="title" placeholder="Enter Event Title"
+                      [maxlength]="2048" />
+                    <small>{{ suggestion.get('EventTitle')?.value?.length || 0 }}/2048 characters used</small>
+                  </nz-form-control>
+                </nz-form-item>
+              </nz-col>
+
+              <nz-col [nzSpan]="5" *ngIf="this.suggestionsFormArray.at(i).get('type')?.value===  'calendar_event'">
+                <nz-form-item>
+                  <nz-form-control>
+                    <nz-form-label nzFor="Event TimeZone-{{i}}">Select
+                      TimeZone</nz-form-label>
+                    <nz-select nzShowSearch nzAllowClear nzPlaceHolder="Select TimeZone" formControlName="timeZone">
+                      <nz-option nzLabel="(GMT+5:30) Asia/Kolkata" nzValue="Asia/Kolkata">
+                      </nz-option>
+                    </nz-select>
+                  </nz-form-control>
+                </nz-form-item>
+              </nz-col>
+
+              <nz-col [nzSpan]="5" *ngIf="this.suggestionsFormArray.at(i).get('type')?.value===  'calendar_event'">
+                <nz-form-item>
+                  <nz-form-label nzFor="Event Title-{{i}}">Discription</nz-form-label>
+                  <nz-form-control>
+                    <input nz-input id="Discription-{{i}}" formControlName="description"
+                      placeholder="Enter Discription" [maxlength]="2048" />
+                    <small>{{ suggestion.get('Discription')?.value?.length || 0 }}/2048 characters used</small>
+                  </nz-form-control>
+                </nz-form-item>
+              </nz-col>
+
+
+              <nz-col [nzSpan]="2" style="padding-top: 22px;">
+                <button nz-button nzType="text" nzDanger (click)="removeSuggestion(i)">
+                  <i nz-icon nzType="delete"></i>
+                </button>
+              </nz-col>
+            </nz-row>
+          </div>
+        </div>
+
+        <!-- Fallback SMS -->
+        <!-- <nz-form-item>
+          <nz-form-label [nzRequired]="true" nzFor="fallbackSms">Do you want automatic fallback to
+            SMS?</nz-form-label>
+          <nz-form-control>
+            <nz-radio-group id="fallbackSms" formControlName="fallback">
+              <label nz-radio [nzValue]="'yes'">Yes</label>
+              <label nz-radio [nzValue]="'no'">No</label>
+            </nz-radio-group>
+          </nz-form-control>
+        </nz-form-item>
+
+        <nz-form-item *ngIf="isFallbackEnabled">
+          <nz-form-label nzFor="smsContent">Fallback SMS</nz-form-label>
+          <nz-form-control>
+            <textarea nz-input id="smsContent" formControlName="fallbackText" placeholder="Enter fallback SMS content"
+              maxlength="160"></textarea>
+            <small>{{ templateForm.get('fallbackText')?.value?.length || 0 }}/160 characters used</small>
+          </nz-form-control>
+        </nz-form-item> -->
+      </nz-col>
+
+    </nz-row>
+    <!-- <div nz-row [nzJustify]="'center'" [nzGutter]="12" class="margin-top">
+      <button nz-button nzType="primary" class="btn-gap" (click)="onSubmit()" [nzLoading]="isDisabled">Submit</button>
+      <button nz-button nzType="default" class="btn-gap" (click)="templateForm.reset()">Reset</button>
+    </div> -->
+  </nz-card>
+
+</form>
+
+
+<!-- </div> -->

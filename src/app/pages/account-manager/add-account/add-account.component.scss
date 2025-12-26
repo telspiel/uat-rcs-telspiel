@@ -1,0 +1,31 @@
+.button-container {
+    text-align: center;
+    margin-top: 10px;
+    font-weight: bold;
+  }
+  
+  .button-group {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+  }
+  
+  .filter-item {
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .ant-form-item-label {
+    // font-weight: bold;
+    .left-align-label {
+        text-align: right !important;
+      }
+      
+    // margin-bottom: 5px;
+  }
+  .left-align-label {
+    text-align: left !important;
+  }
+  .historytable{
+    margin-top: 2%;
+  }

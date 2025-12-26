@@ -1,0 +1,17 @@
+.filter-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 16px;
+}
+
+:host ::ng-deep .custom-max-width-admin {
+  max-width: 100% !important;
+}
+
+:host ::ng-deep .custom-max-width-reseller {
+  max-width: 100% !important;
+}
+
+:host ::ng-deep .custom-max-width-seller {
+  max-width: 100% !important;
+}

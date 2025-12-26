@@ -1,0 +1,163 @@
+<nz-layout class="layout">
+  <nz-sider
+    nzCollapsible
+    nzInlineCollapsed
+    nzWidth="250px"
+    nzTheme="light"
+    (nzCollapsedChange)="toggleSidebar()"
+  >
+    <div class="logo">
+      <!-- <span nz-icon nzType="message" nzTheme="twotone" style="font-size: 32px; "></span> -->
+      <!-- <img src="assets/images/vtslogo.jpeg" alt="" style="height: 100%; width:100%;"> -->
+      <img
+        [src]="logoUrl"
+        alt="Logo"
+        onerror="this.src='assets/images/nopictures.png'"
+        style="width: 100%"
+      />
+    </div>
+
+    <div class="menu-list">
+      <ul nz-menu nzTheme="light" nzMode="inline">
+        <ng-container *ngFor="let item of menuItems">
+          <li
+            *ngIf="item.roles.includes(role) && item.enabled !== false"
+            nz-menu-item
+            [routerLinkActive]="
+              item.link == '/dashboard' || item.group === 'routelink'
+                ? 'ant-menu-item-selected'
+                : ''
+            "
+            [routerLinkActiveOptions]="{ exact: true }"
+          >
+            <span nz-icon [nzType]="item.icon" nzTheme="outline"></span>
+            <span
+              ><a [routerLink]="[item.link]">{{ item.label }}</a></span
+            >
+          </li>
+        </ng-container>
+      </ul>
+    </div>
+  </nz-sider>
+  <nz-layout
+    class="right-layout"
+    [ngStyle]="{ 'margin-left': isCollapsed ? '80px' : '250px' }"
+    style="transition: margin-left 0.2s ease; height: 100%"
+  >
+    <nz-header>
+      <div
+        style="
+          display: flex;
+          flex-wrap: nowrap;
+          align-items: center;
+          justify-content: flex-end;
+          gap: 20px;
+          padding-right: 1.5rem;
+          transition: margin-left 0.2s ease;
+          color: white;
+          margin-bottom: 1px;
+        "
+      >
+        <!-- Credits and Last Login Info -->
+        <div
+          *ngIf="role !== 'agent'"
+          style="display: flex; flex-wrap: wrap; gap: 10px; align-items: center"
+        >
+          <span>
+            Available Rich Credit:
+            <span style="margin-left: 4px">{{ availableRichCredit }}</span>
+            <button
+              nz-button
+              nzType="link"
+              nzShape="circle"
+              nz-tooltip
+              nzTooltipTitle="Refresh"
+              (click)="totalRichcredit()"
+            >
+              <i nz-icon nzType="redo" nzTheme="outline"></i>
+            </button>
+          </span>
+
+          <span>
+            Available Text Credit:
+            <span style="margin-left: 4px">{{ availableTextCredit }}</span>
+            <button
+              nz-button
+              nzType="link"
+              nzShape="circle"
+              nz-tooltip
+              nzTooltipTitle="Refresh"
+              (click)="totalTextcredit()"
+            >
+              <i nz-icon nzType="redo" nzTheme="outline"></i>
+            </button>
+          </span>
+
+          <span>
+            Available Wallet Balance:
+            <span style="margin-left: 4px">{{ userAvailableBalance }}</span>
+            <button
+              nz-button
+              nzType="link"
+              nzShape="circle"
+              nz-tooltip
+              nzTooltipTitle="Refresh"
+              (click)="AvailableBalance()"
+            >
+              <i nz-icon nzType="redo" nzTheme="outline"></i>
+            </button>
+          </span>
+
+
+          <!-- User Info -->
+          <a
+            nz-dropdown
+            [nzDropdownMenu]="menu"
+            style="display: flex; align-items: center; gap: 5px; color: white"
+            [nzPlacement]="'bottomCenter'"
+          >
+            <span nz-icon nzType="user" nzTheme="outline"></span>
+            <span>Welcome {{ userName }}</span>
+            <span nz-icon nzType="down"></span>
+          </a>
+
+          <!-- Logout -->
+          <a
+            (click)="logout()"
+            nz-tooltip
+            nzTooltipTitle="LogOut"
+            nzTooltipPlacement="bottom"
+            style="color: white"
+          >
+            <i class="fas fa-sign-out-alt"></i>
+          </a>
+        </div>
+      </div>
+      <nz-dropdown-menu #menu="nzDropdownMenu">
+        <div class="dropdown" >
+          <nz-avatar [nzSize]="64" nzIcon="user"></nz-avatar>
+          <h3>UserName: {{ userName }}</h3>
+        
+        
+          <span>
+            Last Login IP:
+            <span style="margin-left: 4px; margin-right: 4px">{{
+              lastLoginIp
+            }}</span>
+          </span>
+
+          <span>
+            Last Login Time:
+            <span style="margin-left: 4px">{{ lastLoginTime }}</span>
+          </span>
+          <button nz-button nzType="primary" [routerLink]="'/profile'">View Profile</button>
+        </div>
+      </nz-dropdown-menu>
+    </nz-header>
+
+    <nz-content style="padding: 20px">
+      <router-outlet></router-outlet>
+    </nz-content>
+    <!-- <nz-footer>Ved Tech Solutions ©2025</nz-footer> -->
+  </nz-layout>
+</nz-layout>

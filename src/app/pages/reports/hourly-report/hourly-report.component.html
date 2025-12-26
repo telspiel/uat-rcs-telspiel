@@ -1,0 +1,38 @@
+<nz-page-header class="site-page-header" nzTitle="Hourly Report"></nz-page-header>
+<div class="" nz-flex nzJustify="flex-end" style="float: right; margin-right: 20px;">
+  <nz-breadcrumb [nzAutoGenerate]="true" nzSeparator=">"  >
+    <nz-breadcrumb-item>
+      <a [routerLink]="['']"> <span nz-icon nzType="appstore" nzTheme="outline"></span></a>
+    </nz-breadcrumb-item>
+    <nz-breadcrumb-item>
+      <a > <span nz-icon nzType="user" nzTheme="outline"></span></a>
+    </nz-breadcrumb-item>
+  </nz-breadcrumb>
+</div>
+
+<nz-card style="width: 100%; margin-top: 1.5rem; ">  
+  <nz-table
+  nzShowSizeChanger
+  
+  [nzFrontPagination]="false"
+  [nzTotal]="total"
+  [nzPageSize]="pageSize"
+  [nzPageIndex]="pageIndex"
+>
+  <thead>
+    <tr>
+      <th nzColumnKey="summaryDate" [nzSortFn]="true">Summary Date</th>
+      <th nzColumnKey="totalRequested" [nzSortFn]="true">Total Requested</th>
+      <th nzColumnKey="totalRejected" [nzSortFn]="true">Total Rejected</th>
+      <th nzColumnKey="totalSubmit" [nzSortFn]="true">Total Submit</th>
+      <th nzColumnKey="totalRequested" [nzSortFn]="true">Total Delivered</th>
+      <th nzColumnKey="totalFailed" [nzSortFn]="true">Total Failed</th>
+      <th nzColumnKey="totalAwaited" [nzSortFn]="true">Total Awaited</th>
+    </tr>
+  </thead>
+  <tbody>
+    
+  </tbody>
+</nz-table>
+  <!-- <router-outlet/> -->
+</nz-card>

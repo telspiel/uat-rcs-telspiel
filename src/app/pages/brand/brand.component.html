@@ -1,0 +1,147 @@
+
+
+<div class="rcs-page-container" style="padding: 20px; margin-top: 20px;">
+  <div class="header-section">
+    <h2>Hey,</h2>
+    <p>
+      Hey <b>{{ loggedInUserName }}</b>, Submit your brand for RCS (Rich Communication Services) messaging and deliver rich, interactive, and engaging experiences directly to your audience’s mobile devices.
+    </p>
+    <button *ngIf="role==='admin' || role==='seller' || role ==='reseller'" nz-button nzType="primary" [routerLink]="['/addbrand']" nzShape="round">Create New Brand</button>
+  </div>
+ 
+ 
+  <div class="search-section" style="margin: 20px 0;">
+    <nz-input-group nzSize="large" nzPrefixIcon="search">
+      <input type="text" nz-input placeholder="Keyword search" [formControl]="searchControl" />
+    </nz-input-group>
+  </div>
+
+  <div class="bots-section">
+    <nz-card nzTitle="Brand" style="margin-top: 20px;">
+
+      <!-- <nz-row [nzGutter]="24">
+        <div *ngIf="role==='admin'" nz-col [nzSpan]="8">
+            <nz-form-control>
+                <label for="Reseller">Select Reseller*</label>
+                <nz-select id="Reseller"
+                nzPlaceHolder="Select a user"
+                [(ngModel)]="Reseller"
+                [ngModelOptions]="{standalone: true}"
+                (ngModelChange)="getUserData(Reseller, 'reseller')">
+                <nz-option *ngFor="let reseller of ResllerList" [nzValue]="reseller.label" [nzLabel]="reseller.label"></nz-option>
+                </nz-select>
+            </nz-form-control>
+        </div>
+    
+        <div *ngIf="role === 'reseller' || role === 'admin'"nz-col [nzSpan]="8">
+            <nz-form-control>
+                <label for="Seller">Select Seller*</label>
+                <nz-select id="Seller"
+                nzPlaceHolder="Select a user"
+                [(ngModel)]="Seller"
+                [ngModelOptions]="{standalone: true}"
+                (ngModelChange)="getUserData(Seller, 'seller')">
+                <nz-option *ngFor="let seller of SellerList" [nzValue]="seller.label" [nzLabel]="seller.label"></nz-option>
+                </nz-select>
+            </nz-form-control>
+        </div>
+    
+        <div *ngIf="role==='seller' || role ==='reseller' || role ==='admin'" nz-col [nzSpan]="8">
+            <nz-form-control>
+                <label for="Client">Select Client*</label>
+                <nz-select id="Client"
+                nzPlaceHolder="Select a user"
+                [(ngModel)]="client"
+                [ngModelOptions]="{standalone: true}"
+                (ngModelChange)="getUserData(client, 'client')">
+                <nz-option *ngFor="let Client of Clientlist" [nzValue]="Client.label" [nzLabel]="Client.label"></nz-option>
+                </nz-select>
+            </nz-form-control>
+        </div>
+    </nz-row> -->
+    
+    <app-filter-dropdown [role]="role" (selectionChange)="handleSelection($event)"></app-filter-dropdown>
+    <br>
+  
+
+      <p>
+      </p>
+      <nz-table
+      #templateTable
+      [nzBordered]="true"
+      [nzSize]="'middle'"
+      [nzData]="brandDataList"
+      [nzScroll]="{ x: '100%' }"
+    >
+      <thead>
+        <tr>
+          <th nzWidth="25%">Brand Name</th>
+          <!-- <th nzWidth="40%">Brand Message</th> -->
+          <th nzWidth="10%">Status</th>
+          <!-- <th nzWidth="25%">Last Updated</th> -->
+          <th *ngIf="role==='admin' || role==='seller' || role ==='reseller'" nzWidth="25%">Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let brand of filteredData">
+          <td>{{ brand.brandName }}</td>
+          <!-- <td>-</td> -->
+          <td>
+            <span class="status-active">Active</span>
+          </td>
+          <!-- <td>-</td> -->
+          <td *ngIf="role==='admin' || role==='seller' || role ==='reseller'">
+            <a [routerLink]="['/viewbrand']" [queryParams]="{ brandName: brand.brandName }">
+              <button nz-button nzType="link" nzShape="circle" nzTooltipTitle="View">
+                <i nz-icon nzType="eye" nzTheme="outline"></i>
+              </button>
+            </a>
+            <a [routerLink]="['/updatebrand']" [queryParams]="{ brandName: brand.brandName }">
+              <button nz-button nzType="link" nzShape="circle" nzTooltipTitle="Edit">
+                <i nz-icon nzType="edit" nzTheme="outline"></i>
+              </button>
+            </a>                            
+          </td>
+        </tr>
+      </tbody>
+    </nz-table>
+    
+    
+        <!-- <a style="margin-top: 8px;" nz-button  nzType="link">+</a> -->
+        <a *ngIf="role==='admin' || role==='seller' || role ==='reseller'" [routerLink]="['/addbrand',]" >+ Add a Brand
+            <button nz-button nzType="link" nzShape="circle" nzTooltipTitle="Edit">
+              <i nz-icon nzType="" nzTheme="outline"></i>
+            </button>
+          </a>       
+      
+    </nz-card>
+    </div>
+
+  </div>
+<!-- <div class="" nz-flex nzJustify="flex-end" >
+  <nz-breadcrumb [nzAutoGenerate]="true" nzSeparator=">"  >
+    <nz-breadcrumb-item>
+      <a [routerLink]="['']"> <span nz-icon nzType="appstore" nzTheme="outline"></span></a>
+    </nz-breadcrumb-item>
+    <nz-breadcrumb-item>
+      <a [routerLink]="[' ']"> <span nz-icon nzType="user-add" nzTheme="outline"></span></a>
+    </nz-breadcrumb-item>
+  </nz-breadcrumb>
+</div> -->
+
+
+<!-- <nz-card style="width: 100%;">
+    <ul nz-menu nzMode="horizontal">
+      <li nz-menu-item  nzMatchRouter >
+        <a [routerLink]="[' ']"  routerLinkActive="active"><span nzType="plus" nzTheme="outline" nz-icon></span> Add Brand</a>
+      </li>
+      <li nz-menu-item nzMatchRouter >
+        <a [routerLink]="['viewbrand']" routerLinkActive="active"  ><span nz-icon nzType="eye" nzTheme="outline"></span> View Brand</a> 
+      </li>
+      <li nz-menu-item nzMatchRouter >
+        <a [routerLink]="['updatebrand']" routerLinkActive="active"  ><span nz-icon nzType="eye" nzTheme="outline"></span> Update Brand</a> 
+      </li>
+    </ul>
+    
+  <router-outlet/>
+</nz-card> -->

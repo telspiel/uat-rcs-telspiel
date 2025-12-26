@@ -1,0 +1,108 @@
+::ng-deep .ant-steps-item-process .ant-steps-item-icon {
+  background-color: green !important; /* ✅ Change active step to green */
+  border-color: green !important;
+}
+
+::ng-deep .ant-steps-item-finish .ant-steps-item-icon {
+  background-color: green !important; /* ✅ Change completed steps to green */
+  border-color: green !important;
+}
+
+::ng-deep .ant-steps-item-finish .ant-steps-item-icon > .ant-steps-icon {
+  color: white !important; /* ✅ Ensure check icon remains visible */
+}
+
+:host ::ng-deep {
+    nz-breadcrumb {
+      margin-bottom: 16px;
+    }
+  
+    nz-steps {
+      margin-top: 24px;
+      margin-bottom: 16px;
+    }
+  
+    p {
+      font-size: 14px;
+      line-height: 1.5;
+      color: #666;
+    }
+  
+    nz-card {
+      border-radius: 8px;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    }
+  
+    button {
+      font-size: 14px;
+      font-weight: bold;
+    }
+  }
+  .status-ready {
+    color: green;
+    font-weight: bold;
+  }
+  
+  .status-pending {
+    color: orange;
+    font-weight: bold;
+  }
+  
+  .status-approved {
+    color: green;
+    font-weight: bold;
+  }
+  
+  .status-rejected {
+    color: red;
+    font-weight: bold;
+  }
+  
+  table-container {
+    //width: 100%;
+    overflow-x: auto;
+  }
+
+  /* Responsive Styles */
+  @media screen and (max-width: 768px) {
+    nz-table {
+      font-size: 14px;
+    }
+  }
+
+  @media screen and (max-width: 480px) {
+    nz-table {
+      font-size: 12px;
+    }
+    
+    th, td {
+      white-space: nowrap;
+    }
+  }
+  .status-active {
+    color: green;
+    font-weight: bold;
+  }
+
+  .status-inactive {
+    color: red;
+    font-weight: bold;
+  }
+
+  /* Responsive Styles */
+  @media screen and (max-width: 768px) {
+    nz-table {
+      font-size: 14px;
+    }
+  }
+
+  @media screen and (max-width: 480px) {
+    nz-table {
+      font-size: 12px;
+    }
+
+    th, td {
+      white-space: nowrap;
+    }
+  }
+

@@ -1,0 +1,97 @@
+<div class="whatsapp-preview-block" style="width: 310px;
+height: 610px;
+position: relative;
+overflow: hidden;
+background: url('assets/images/mobile-frame.png') no-repeat center;
+background-size: cover;
+display: flex;
+justify-content: center;
+align-items: center;" >
+    <div class="inner-container">
+  
+      <!-- Background Image -->
+      <div
+        [ngStyle]="{ 'background': backgroundUrl ? 'transparent' : '#f5f5f5' }"
+        class="header-background"
+      >
+        <img *ngIf="backgroundUrl" [src]="backgroundUrl" class="background-img" />
+      </div>
+  
+      <!-- Profile Image -->
+      <div class="profile-img">
+        <img *ngIf="imageUrl" [src]="imageUrl" />
+      </div>
+  
+      <!-- Bot Name -->
+      <div class="bot-name">{{ botName }}</div>
+  
+      <!-- Bot Summary -->
+      <div class="bot-summary">{{ botSummary }}</div>
+  
+      <!-- Contact Icons -->
+      <div #icons class="icons-row">
+        <div class="icon-col">
+            <i 
+            nz-icon 
+            nzType="custom:call" 
+            [ngStyle]="{ 'color': selectedColor || 'black' }" 
+            style="font-size: 1.5rem;">
+            </i>
+          <div [ngStyle]="{ 'color': selectedColor || 'black' }" >Call</div>
+        </div>
+        <div class="icon-col">
+          <i nz-icon nzType="custom:globals" style="font-size: 1.5rem;" [ngStyle]="{ 'color': selectedColor || 'black' }" ></i>
+          <div [ngStyle]="{ 'color': selectedColor || 'black' }" >Website</div>
+        </div>
+        <div class="icon-col">
+          <i nz-icon nzType="custom:mail" style="font-size: 1.5rem;" [ngStyle]="{ 'color': selectedColor || 'black' }" ></i>
+          <div [ngStyle]="{ 'color': selectedColor || 'black' }" >Email</div>
+        </div>
+      </div>
+  
+      <!-- Tabs -->
+      <div class="tabs-container">
+        <nz-tabset>
+          <nz-tab nzTitle="Info">
+            <ul #icons class="info-list">
+              <li class="info-item">
+                <i nz-icon nzType="custom:call" style="font-size: 1.5rem; padding-right: 10px;"></i>
+                <div class="info-details">
+                  <span>{{ '+91' + validateForm.get('primaryphone')?.value || "+91 000 000 0000" }}</span>
+                  <span class="info-label">{{ validateForm.get('labelphone')?.value || 'Phone Label' }}</span>
+                </div>
+              </li>
+              <li class="info-item">
+                <i nz-icon nzType="custom:mail" style="font-size: 1.5rem; padding-right: 10px;"></i>
+                <div class="info-details">
+                  <span>{{ validateForm.get('primaryemail')?.value || "@gmail.com" }}</span>
+                  <span class="info-label">{{ validateForm.get('emailLabel')?.value || 'Email Label' }}</span>
+                </div>
+              </li>
+              <li class="info-item">
+                <i nz-icon nzType="custom:globals" style="font-size: 1.5rem; padding-right: 10px;"></i>
+                <div class="info-details">
+                  <span>{{ validateForm.get('primarywebsite')?.value || "https://www.abc.com" }}</span>
+                  <span class="info-label">{{ validateForm.get('labelwebsite')?.value || 'Website Label' }}</span>
+                </div>
+              </li>
+            </ul>
+          </nz-tab>
+  
+          <nz-tab nzTitle="Options">
+            <ul class="info-list">
+              <li><a>Notification</a></li>
+              <li><a>Block & Report Spam</a></li>
+              <li>
+                <a [href]="validateForm.get('privacypolicyurl')?.value" target="_blank">Privacy Policy</a>
+              </li>
+              <li>
+                <a [href]="validateForm.get('Url')?.value" target="_blank">Terms of Services</a>
+              </li>
+            </ul>
+          </nz-tab>
+        </nz-tabset>
+      </div>
+    </div>
+  </div>
+  

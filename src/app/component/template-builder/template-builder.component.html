@@ -1,0 +1,72 @@
+<form nz-form [formGroup]="validateForm">
+    <div nz-row nzGutter="16">
+        <div nz-col nzSpan="12">
+            <nz-form-item>
+                <nz-form-label [nzSpan]="26">Name</nz-form-label>
+                <nz-form-control [nzSpan]="26" nzErrorTip="Field is required">
+                    <input nz-input formControlName="name" placeholder="Template Name" />
+                </nz-form-control>
+            </nz-form-item>
+        </div>
+        <div nz-col nzSpan="12">
+            <nz-form-item>
+                <nz-form-label>Category</nz-form-label>
+                <nz-form-control>
+                    <nz-select nzShowSearch nzAllowClear nzPlaceHolder="Select Category" formControlName="category">
+                        <nz-option nzCustomContent [nzLabel]="item.label" [nzValue]="item.value"
+                            *ngFor="let item of categoryOptions">
+                            {{item.label}}
+                        </nz-option>
+                    </nz-select>
+                </nz-form-control>
+            </nz-form-item>
+        </div>
+    </div>
+
+    <div nz-row nzGutter="16">
+        <div nz-col nzSpan="12">
+            <nz-form-item>
+                <nz-form-label>Template Type</nz-form-label>
+                <nz-form-control>
+                    <nz-select nzShowSearch nzAllowClear nzPlaceHolder="Select Template" [(ngModel)]="builderType" formControlName="builderType">
+                        <nz-option nzCustomContent [nzLabel]="item.label" [nzValue]="item.value"
+                            *ngFor="let item of options">
+                            {{item.label}}
+                        </nz-option>
+                    </nz-select>
+                </nz-form-control>
+            </nz-form-item>
+        </div>
+    </div>
+
+    <ng-container *ngIf="builderType === AllBuilderType.MEDIA">
+        <h4 nztypography>Select message template building blocks.</h4>
+
+        <nz-tag *ngFor="let item of defaultSection" [nzMode]="item.isCheckable ? 'checkable' : 'default'"
+            [nzChecked]="item.isChecked" (nzCheckedChange)="checkChange($event,item); ">
+            <span nz-icon nzType="check-circle"></span>
+            <!-- <span nz-icon nzType="close-circle" *ngIf="!item.isChecked"></span> -->
+            <span>{{item.label}}</span>
+        </nz-tag>
+
+        <br /><br />
+    </ng-container>
+
+    <div class="template-builder-blocks builder-blocks">
+        <div class="header-block">
+            <app-template-header-editor *ngIf="checkIsChecked('Header')"
+                (templateHeader)="pushData('HEADER',$event)" [editorData]="editorTemplateHeader"></app-template-header-editor>
+        </div>
+        <div class="header-block">
+            <app-template-body-editor (templateBody)="pushData('BODY',$event)" [editorData]="editorTemplateBody"></app-template-body-editor>
+        </div>
+        <div class="header-block">
+            <app-template-footer-editor *ngIf="checkIsChecked('Footer')"
+                (templateFooter)="pushData('FOOTER',$event)" [editorData]="editorTemplateFooter"></app-template-footer-editor>
+        </div>
+        <div class="header-block">
+            <app-template-footer-btns *ngIf="checkIsChecked('Buttons')"
+                (templateButtons)="pushData('BUTTONS',$event)"></app-template-footer-btns>
+        </div>
+    </div>
+</form>

@@ -1,0 +1,46 @@
+<nz-page-header class="site-page-header" nzTitle="Sender Id Report"></nz-page-header>
+
+<nz-card style="width: 100%; margin-top: 1.5rem; ">  
+  <h5 nz-typography>Filters</h5>
+  <form action="" nz-row nzGutter="32" nzAlign="bottom" >
+
+    <nz-form-item nz-col [nzSpan]="6" class="ml">
+        
+        <nz-form-control>
+            <nz-form-label nzFor="Select Date" >Select Date Range </nz-form-label>
+            <nz-range-picker [(ngModel)]="date" ></nz-range-picker>
+        </nz-form-control>
+    </nz-form-item>
+    <nz-form-item   nz-col [nzSpan]="6">
+        
+        <button nz-button nz-col nzType="primary" class="btn-gap" (click)="onSubmit()">Submit</button>
+        <button nz-button nz-col nzType="default" type="button" class="btn-gap">Download</button>
+    
+    </nz-form-item>
+  </form>
+
+  <nz-table
+  nzShowSizeChanger
+  [nzTotal]="total"
+  [nzPageSize]="pageSize"
+  [nzPageIndex]="pageIndex"
+>
+  <thead>
+    <tr>
+      <th nzColumnKey="summaryDate" [nzSortFn]="true">Summary Date</th>
+      <th nzColumnKey="senderId">Sender Id</th>
+      <th nzColumnKey="userName" [nzSortFn]="true">User Name</th>
+      <th nzColumnKey="totalRequested" [nzSortFn]="true">Total Requested</th>
+      <th nzColumnKey="totalRejected" [nzSortFn]="true">Total Rejected</th>
+      <th nzColumnKey="totalSubmit" [nzSortFn]="true">Total Submit</th>
+      <th nzColumnKey="totalRequested" [nzSortFn]="true">Total Delivered</th>
+      <th nzColumnKey="totalFailed" [nzSortFn]="true">Total Failed</th>
+      <th nzColumnKey="totalAwaited" [nzSortFn]="true">Total Awaited</th>
+    </tr>
+  </thead>
+  <tbody>
+    
+  </tbody>
+</nz-table>
+  <!-- <router-outlet/> -->
+</nz-card>

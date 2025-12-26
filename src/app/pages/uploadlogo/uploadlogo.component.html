@@ -1,0 +1,27 @@
+<nz-page-header class="site-page-header" nzTitle="Logo Manager"></nz-page-header>
+
+<div class="upload-container">
+  <nz-card nzBordered="true" class="upload-card">
+    <div class="upload-content">
+      <p class="upload-text">Select an Image to upload.</p>
+      <p class="upload-note">NOTE: Only jpeg, jpg, png will be allowed</p>
+
+      <label for="fileInput" class="image-preview">
+        <img *ngIf="imageUrl" [src]="imageUrl" class="uploaded-image" />
+        <div *ngIf="!imageUrl" class="placeholder">+</div>
+      </label>
+
+      <input type="file" id="fileInput" accept="image/jpeg, image/png" (change)="onFileSelected($event)" hidden />
+
+      <button 
+        nz-button 
+        nzType="primary" 
+        [disabled]="!imageUrl"
+        class="upload-btn"
+        (click)="uploadImage()"
+      >
+        Upload Image
+      </button>
+    </div>
+  </nz-card>
+</div>

@@ -1,0 +1,5 @@
+<label for="brands" class="ant-form-item-label" style="font-weight: bold;">Brands</label>
+<nz-select nzPlaceHolder="All Brands" style="width: 100%;" [(ngModel)]="brandSelected" (ngModelChange)="onChange()">
+    <nz-option nzLabel="All Brands" nzValue="all"></nz-option>
+    <nz-option *ngFor="let data of brand" [nzLabel]="data.brandName" [nzValue]="data.brandName"></nz-option>
+</nz-select>

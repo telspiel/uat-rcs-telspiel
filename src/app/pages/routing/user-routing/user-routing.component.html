@@ -1,0 +1,17 @@
+<div class=""  style="display: flex; flex-direction:row; align-items: center;">
+    <nz-page-header class="site-page-header" nzTitle="Routing"></nz-page-header>
+ 
+ 
+  </div>
+  <nz-card style="width: 100%;">
+      <ul nz-menu nzMode="horizontal">
+        <li nz-menu-item  nzMatchRouter >
+          <a [routerLink]="[' ']"  routerLinkActive="active"><span nzType="plus" nzTheme="outline" nz-icon></span> Routing</a>
+        </li>
+        <li nz-menu-item nzMatchRouter >
+          <a [routerLink]="['viewrouting']" routerLinkActive="active"  ><span nz-icon nzType="eye" nzTheme="outline"></span> View </a>
+        </li>
+      </ul>
+      
+    <router-outlet/>
+  </nz-card>

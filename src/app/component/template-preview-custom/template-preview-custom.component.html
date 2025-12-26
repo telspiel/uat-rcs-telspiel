@@ -1,0 +1,68 @@
+<!-- <div nz-row nzGutter="16">
+    <div nz-col nzSpan="12">
+        <h3>Edit template</h3>
+        <div class="fill-variable" *ngIf="totalVarCount.length > 0 || messageHeader?.format !== 'TEXT'">
+            <form [formGroup]="variableInputForm">
+                <ng-container *ngIf="messageHeader">
+                    <nz-form-item *ngIf="messageHeader?.format !== 'TEXT'">
+                        <nz-form-label [nzSpan]="26">Header Url {{messageHeader?.format}}</nz-form-label>
+                        <nz-form-control [nzSpan]="26">
+                            <input nz-input formControlName="headerURL" />
+                        </nz-form-control>
+                    </nz-form-item>
+                </ng-container>
+
+                <div formArrayName="variables">
+                    <ng-container *ngFor="let item of variables.controls; let i=index">
+                        <div [formGroupName]="i">
+                            <nz-form-label>Parameter {{totalVarCount[i]}}</nz-form-label>
+                            <input nz-input nzMaxTagCount="20" formControlName="value" />
+                        </div>
+                    </ng-container>
+                </div>
+            </form>
+        </div>
+    </div>
+    <div nz-col nzSpan="12" style="margin-top: 10px;">
+        <h3>Preview</h3>
+        <nz-card class="whatsapp-preview-block">
+            <ng-container *ngIf="messageHeader">
+                <p style="font-weight: bold;" *ngIf="messageHeader?.format === 'TEXT' else multipartHeader"
+                    [innerHTML]="messageHeader?.text | editorToHtml"></p>
+
+                <ng-template #multipartHeader>
+                    <svg viewBox="0 0 267 113" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <g clip-path="url(#clip0)">
+                            <rect width="267" height="113" rx="6" fill="#EFF2F7" />
+                            <path d="M-1 89.2083L67.2613 42.6607L136.443 87.6054M100.5 115L210.75 29L321 115"
+                                stroke="#D3DCE6" stroke-width="3" />
+                            <circle cx="26.5" cy="20.5" r="8" stroke="#D3DCE6" stroke-width="3" />
+                        </g>
+                        <defs>
+                            <clipPath id="clip0">
+                                <rect width="267" height="113" rx="6" fill="white" />
+                            </clipPath>
+                        </defs>
+                    </svg>
+                </ng-template>
+
+            </ng-container>
+
+            <p [innerHTML]="messageBody | editorToHtml:'updateVarValue':formDynamicValues"></p>
+
+            <small *ngIf="footer" class="footer-preview">{{footer}}</small>
+
+            <div class="btn-grp" *ngIf="footerBtns">
+                <nz-space nzDirection="vertical" style="display: flex;">
+                    <ng-container *ngFor="let btn of footerBtns.buttons">
+                        <button nz-button nzType="default" *nzSpaceItem style="width: 100%;">
+                            <span nz-icon nzType="link" nzTheme="outline" *ngIf="btn.type === 'URL'"></span>
+                            <span nz-icon nzType="phone" nzTheme="outline" *ngIf="btn.type === 'PHONE_NUMBER'"></span>
+                            {{btn.text}}
+                        </button>
+                    </ng-container>
+                </nz-space>
+            </div>
+        </nz-card>
+    </div>
+</div> -->

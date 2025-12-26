@@ -1,0 +1,7 @@
+<div *ngIf="imageUrl" class="image-container" (mouseenter)="crop()" (mousemove)="crop()" (mouseleave)="crop()" (mousedown)="crop()" (mouseup)="crop()" (click)="crop()" (dblclick)="crop()" (contextmenu)="crop()" (wheel)="crop()" (keydown)="crop()" (keyup)="crop()" (keypress)="crop()">
+    <img #image [src]="imageUrl" />
+</div>
+
+
+  <!-- <button (click)="crop()">Crop</button> -->
+  

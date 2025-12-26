@@ -1,0 +1,37 @@
+<nz-card [nzBordered]="true" nzType="inner" [nzSize]="'small'" nzTitle="Body" [nzExtra]="extraTemplate">
+    <ng-container *ngIf="showEmojiPopup">
+        <emoji-mart title="Pick your emoji…" class="emoji-popup" [showPreview]="false"
+            [isNative]="false" (emojiClick)="addEmoji($event)"></emoji-mart>
+    </ng-container>
+    <nz-textarea-count [nzMaxCharacterCount]="1024" >
+        <textarea rows="4" nz-input #myTextArea (click)="cursorTracker(myTextArea);"
+            (keyup)="cursorTracker(myTextArea);" [(ngModel)]="messageBody" [ngModelOptions]="{standalone: true}"
+            (select)="onTextHighlight($event)"></textarea>
+    </nz-textarea-count>
+</nz-card>
+
+<ng-template #extraTemplate>
+    <nz-space [nzSize]="'small'">
+        <button *nzSpaceItem nz-button [nzSize]="'default'" (click)="showEmojiPopup=!showEmojiPopup">
+            <span nz-icon nzType="smile" nzTheme="twotone"></span>
+        </button>
+
+        <button *nzSpaceItem nz-button [nzSize]="'default'" (click)="insertBold()">
+            <span nz-icon nzType="bold" nzTheme="outline"></span>
+        </button>
+
+        <button *nzSpaceItem nz-button [nzSize]="'default'" (click)="insertItalic()">
+            <span nz-icon nzType="italic" nzTheme="outline"></span>
+        </button>
+
+        <button *nzSpaceItem nz-button [nzSize]="'default'" (click)="insertST()">
+            <span nz-icon nzType="strikethrough" nzTheme="outline"></span>
+        </button>
+
+        <button *nzSpaceItem nz-button [nzSize]="'default'" (click)="insertCode()">
+            <span nz-icon nzType="code" nzTheme="outline"></span>
+        </button>
+
+    </nz-space>
+
+</ng-template>

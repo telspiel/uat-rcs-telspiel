@@ -1,0 +1,1499 @@
+<!-- <nz-page-header class="site-page-header" nzTitle="Campaign" style="margin-bottom: 0;"></nz-page-header> -->
+
+<app-page-header
+  [title]="'Create Campaign'"
+  [backLink]="['/quick-campaign']"
+></app-page-header>
+<nz-card style="width: 100%; overflow: hidden; height: auto">
+  <div nz-row>
+    <div nz-col [nzSpan]="14" style="overflow-y: auto; padding: 20px">
+      <form nz-form [formGroup]="quickCampaign" class="form">
+        <div
+          class=""
+          nz-row
+          nzJustify="space-between"
+          nzAlign="top"
+          style="padding-right: 10px"
+        >
+          <nz-form-item nz-col [nzSpan]="11">
+            <nz-form-control
+              [nzErrorTip]="
+                error === false ? '*Campaign Name Is Already Used' : '*required'
+              "
+              [nzValidateStatus]="getStatus('campaignName')!"
+            >
+              <nz-form-label nzLabelAlign="left" nzFor="campaignName"
+                ><span style="color: red"> * </span>Campaign Name
+                </nz-form-label
+              >
+              <input
+                nz-input
+                formControlName="campaignName"
+                id="campaignName"
+                placeholder="Campaign Name"
+                (change)="checkCampainName()"
+              />
+            </nz-form-control>
+          </nz-form-item>
+          <nz-form-item nz-col [nzSpan]="11">
+            <nz-form-control
+              nzErrorTip="*required"
+              [nzValidateStatus]="getStatus('botIds')!"
+            >
+              <nz-form-label nzLabelAlign="left" nzFor="botIds"
+                ><span style="color: red"> * </span>Select Bot </nz-form-label
+              >
+              <nz-select
+                nzShowSearch
+                nzAllowClear
+                nzPlaceHolder="Select Bot"
+                nz
+                formControlName="botIds"
+                (ngModelChange)="onBotSelect($event)"
+              >
+                <nz-option
+                  *ngFor="let bot of botss"
+                  nzLabel="{{ bot.botName }}"
+                  [nzValue]="bot.botId"
+                >
+                </nz-option>
+              </nz-select>
+            </nz-form-control>
+          </nz-form-item>
+          <nz-form-item nz-col [nzSpan]="11">
+            <nz-form-control
+              nzErrorTip="*required"
+              [nzValidateStatus]="getStatus('selectedTemplate')!"
+            >
+              <nz-form-label
+                nz-col
+                [nzSpan]="10"
+                nzLabelAlign="left"
+                nzFor="Template Name"
+              >
+               <span style="color: red"> * </span> Select Template 
+              </nz-form-label>
+              <nz-select
+                nzShowSearch
+                nzAllowClear
+                nzPlaceHolder="Select Template Name"
+                (ngModelChange)="selecttemp($event)"
+                formControlName="selectedTemplate"
+              >
+                <nz-option
+                  *ngFor="let temp of messageTemplate"
+                  [nzLabel]="temp.templateTitle"
+                  [nzValue]="temp"
+                >
+                </nz-option>
+              </nz-select>
+            </nz-form-control>
+          </nz-form-item>
+
+          <nz-form-item nz-col [nzSpan]="11">
+            <nz-form-control>
+              <nz-form-label
+                nz-col
+                [nzSpan]="10"
+                nzLabelAlign="left"
+                nzFor="Tamplate Name"
+                >Select TimeZone
+              </nz-form-label>
+              <nz-select
+                nzShowSearch
+                nzAllowClear
+                nzPlaceHolder="Select TimeZone"
+                formControlName="TimeZone"
+              >
+                <nz-option
+                  aria-selected="true"
+                  nzLabel="(GMT+5:30) Asia/Kolkata"
+                  [nzValue]="'Asia/Kolkata'"
+                >
+                </nz-option>
+              </nz-select>
+            </nz-form-control>
+          </nz-form-item>
+
+          <!-- <nz-form-item nz-col [nzSpan]="11">
+                    <nz-form-control>
+                        <nz-form-label nzLabelAlign="left" nzFor="isConversationalCampaign">
+                            Is Conversational Campaign
+                        </nz-form-label>
+                        <nz-radio-group formControlName="isConversationalCampaign">
+                            <label nz-radio [nzValue]="'Y'">Yes</label>
+                            <label nz-radio [nzValue]="'N'">No</label>
+                        </nz-radio-group>
+                    </nz-form-control>
+                </nz-form-item> -->
+
+          <nz-form-item
+            nz-col
+            [nzSpan]="11"
+            *ngIf="quickCampaign.get('isConversationalCampaign')?.value === 'Y'"
+          >
+            <nz-form-control>
+              <nz-form-label nzLabelAlign="left" nzFor="chatbotName"
+                >Chat Bot Name</nz-form-label
+              >
+              <nz-select
+                nzShowSearch
+                nzAllowClear
+                nzPlaceHolder="Select Chat Bot Name"
+                formControlName="chatbotName"
+              >
+                <nz-option
+                  *ngFor="let name of chatBotNames"
+                  [nzLabel]="name"
+                  [nzValue]="name"
+                >
+                </nz-option>
+              </nz-select>
+            </nz-form-control>
+          </nz-form-item>
+        </div>
+
+        <!-- bulk campaign start here -->
+
+        <nz-form-label> Campaign Type </nz-form-label>
+        <nz-card style="margin-right: 10px">
+          <nz-tabset
+            [nzCentered]="true"
+            (nzSelectedIndexChange)="onTabChangeIndex($event)"
+          >
+            <nz-tab [nzTitle]="'Quick-Campaign'">
+              <nz-form-item>
+                <nz-form-control
+                  [nzValidateStatus]="quickCampaign.get('mobileNumbers')!"
+                  [nzHasFeedback]="true"
+                >
+                  <nz-form-label nzLabelAlign="left" nzFor="mobileNumbers"
+                    >Mobile Number(s)</nz-form-label
+                  >
+
+                  <textarea
+                    rows="4"
+                    formControlName="mobileNumbers"
+                    nz-input
+                    (input)="onMobileInputChange()"
+                  ></textarea>
+
+                  <div
+                    *ngIf="quickCampaign.get('mobileNumbers')?.errors?.['tooMany']"
+                    class="ant-form-explain"
+                  >
+                    Maximum 10,000 mobile numbers allowed.
+                  </div>
+
+                  <div
+                    *ngIf="quickCampaign.get('mobileNumbers')?.touched && quickCampaign.get('mobileNumbers')?.errors?.['invalidFormat']"
+                    class="error-message"
+                  >
+                    Please enter only valid numeric mobile numbers. Avoid
+                    alphabets or special characters.
+                  </div>
+
+                  <div
+                    style="
+                      margin-top: 5px;
+                      color: #888;
+                      display: flex;
+                      justify-content: flex-end;
+                    "
+                  >
+                    {{ mobileCount }}/10,000
+                  </div>
+                </nz-form-control>
+              </nz-form-item>
+
+              <nz-form-item>
+                <nz-form-control>
+                  <nz-form-label nzLabelAlign="left" nzFor="groupName"
+                    >Select Group</nz-form-label
+                  >
+                  <nz-select
+                    formControlName="groupName"
+                    (ngModelChange)="onGroupChange($event)"
+                  >
+                    <nz-option
+                      *ngFor="let group of groups"
+                      [nzValue]="group.groupId"
+                      [nzLabel]="group.groupName"
+                    ></nz-option>
+                  </nz-select>
+                </nz-form-control>
+              </nz-form-item>
+            </nz-tab>
+            <nz-tab [nzTitle]="'Bulk-Campaign'" style="width: 50%">
+              <nz-form-item>
+                <nz-form-control>
+                  <nz-form-label nzLabelAlign="left" nzFor="short Url Selected">
+                    Bulk Numbers and Variables \ Select the pre-upoladed file
+                    <span style="color: red"> * </span></nz-form-label
+                  >
+                  <p
+                    style="
+                      font-size: 0.7rem;
+                      color: #adadad;
+                      text-align: justify;
+                      padding-right: 10px;
+                    "
+                  >
+                    Upload a file with the list of mobile numbers and The
+                    numbers should be prefixed with country code. (Eg.
+                    "919876543210" for India - Country Code 91). The recipient
+                    numbers should be under the column named "PhoneNo" This
+                    should be the first column. The other fields should be in
+                    the other columns for eg.. 'NAME AMOUNT. DATE. 'BRANCH' etc.
+                    in no specific order. During campaign execution (at
+                    run-time). the custom parameters that you have added (if
+                    any) in the Rich Card Title and Rich Card Description for
+                    eg.. NAME. AMOUNT etc. will be replaced with the values in
+                    the columns of this file having the same headings (column
+                    names) for eg.. NAME AMOUNT in this case. Please note that
+                    you can run a campaign for a maximum of 1 million phone
+                    numbers at a time.
+                  </p>
+
+                  <div
+                    style="
+                      display: flex;
+                      align-items: self-end;
+                      justify-content: space-between;
+                      padding-right: 10px;
+                    "
+                  >
+                    <nz-upload
+                      nz-col
+                      [nzSpan]="11"
+                      [nzAction]="apiUrl"
+                      (nzChange)="handleChange($event)"
+                      [nzHeaders]="{ authorization: token }"
+                      [nzData]="{
+                        userName: userName,
+                        campaignName:
+                          this.quickCampaign.get('campaignName')?.value,
+                        msgType: 'Dynamic',
+                        fileType: 'Dynamic'
+                      }"
+                      [nzMultiple]="false"
+                      [nzLimit]="1"
+                      nzAccept=".xlsx,.xls,.csv"
+                      [nzBeforeUpload]="beforeUpload"
+                      [nzRemove]="onFileRemove"
+                      [nzDisabled]="!!quickCampaign.get('fileName')?.value"
+                    >
+                      <button
+                        nz-button
+                        nzType="primary"
+                        [disabled]="
+                          !quickCampaign.get('campaignName')?.value ||
+                          !!quickCampaign.get('fileName')?.value
+                        "
+                        style="width: 100%"
+                      >
+                        <i nz-icon nzType="upload"></i>
+                        Upload File (.xlsx/.xls/.csv)
+                      </button>
+                    </nz-upload>
+
+                    <nz-form-item nz-col [nzSpan]="11" style="margin-bottom: 0">
+                      <nz-form-control>
+                        <nz-form-label
+                          nzLabelAlign="left"
+                          nzFor="Select Pre-Uploaded File"
+                          >Select Pre-Uploaded File</nz-form-label
+                        >
+                        <nz-select
+                          nzShowSearch
+                          nzAllowClear
+                          nzPlaceHolder="Select File"
+                          formControlName="fileName"
+                          [nzDisabled]="fileList.length > 0"
+                          (ngModelChange)="getFile()"
+                          [nzDisabled]="disabled"
+                        >
+                          <nz-option
+                            *ngFor="let file of filenamelist"
+                            [nzValue]="file.originalFileName"
+                            [nzLabel]="file.originalFileName"
+                          >
+                          </nz-option>
+                        </nz-select>
+                      </nz-form-control>
+                    </nz-form-item>
+                  </div>
+
+                  <div class="samplefile" nz-row>
+                    <nz-form-item nz-col [nzSpan]="11" style="margin-bottom: 0">
+                      <button nz-button nzType="default" (click)="showModal()">
+                        Sample-File
+                      </button>
+                    </nz-form-item>
+                  </div>
+
+                  <nz-modal
+                    [(nzVisible)]="isModalVisible"
+                    nzTitle="Phone Numbers"
+                    (nzOnCancel)="handleCancel()"
+                    [nzFooter]="modalFooter"
+                  >
+                    <!-- ✅ Modal body (table content) -->
+                    <ng-container *nzModalContent>
+                      <div *ngIf="phoneList && phoneList.length > 0">
+                        <table border="1" style="width: 100%; text-align: left">
+                          <thead>
+                            <tr>
+                              <th>PhoneNo</th>
+                            </tr>
+                          </thead>
+                          <tbody>
+                            <tr *ngFor="let phone of phoneList">
+                              <td>{{ phone }}</td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                    </ng-container>
+
+                    <!-- Optional: message if list is empty -->
+                    <div *ngIf="!phoneList?.length">
+                      No phone numbers found.
+                    </div>
+                  </nz-modal>
+
+                  <!-- ✅ Modal footer template -->
+                  <ng-template #modalFooter>
+                    <button
+                      nz-button
+                      nzType="primary"
+                      (click)="downloadExcel()"
+                    >
+                      Download XLSX
+                    </button>
+                    <button nz-button (click)="handleCancel()">Close</button>
+                  </ng-template>
+                </nz-form-control>
+              </nz-form-item>
+
+              <div
+                style="
+                  display: flex;
+                  align-items: self-end;
+                  justify-content: space-between;
+                  padding-right: 10px;
+                "
+                *ngIf="zipfilelist?.length > 0 || key"
+              >
+                <div nz-col [nzSpan]="11" *ngIf="zipfilelist?.length > 0">
+                  <nz-form-item>
+                    <nz-form-control>
+                        <nz-form-label nzLabelAlign="left" nzFor="short Url Selected">
+                            Bulk Numbers and Variables \ Select the pre-upoladed file <span style="color: red;"> * </span></nz-form-label>
+                        <p style="font-size: 0.7rem; color: #adadad; text-align: justify; padding-right: 10px;">Upload a
+                            file with the list of mobile numbers and
+                            The numbers should be prefixed with country code. (Eg. "919876543210" for India - Country
+                            Code 91). The recipient numbers should be under the column named "PhoneNo" This should be the
+                            first column. The other fields should be in the other columns for eg.. 'NAME AMOUNT. DATE.
+                            'BRANCH' etc. in no specific order. During campaign execution (at run-time). the custom
+                            parameters that you have added (if any) in the Rich Card Title and Rich Card Description for
+                            eg.. NAME. AMOUNT etc. will be replaced with the values in the columns of this file having
+                            the same headings (column names) for eg.. NAME AMOUNT in this case. Please note that you can
+                            run a campaign for a maximum of 1 million phone numbers at a time. </p>
+
+                        <div  style="display: flex; align-items: self-end;justify-content:space-between; padding-right:10px;">
+                            
+                            <nz-upload nz-col [nzSpan]="11" [nzAction]="apiUrl" 
+                                (nzChange)="handleChange($event)"
+                                [nzHeaders]="{ authorization: token }" 
+                                [nzData]="{'userName':userName,'campaignName':this.quickCampaign.get('campaignName')?.value, 'msgType':'Dynamic', 'fileType': 'Dynamic' }"
+                                [nzMultiple]="false"
+                                [nzLimit]="1"
+                                nzAccept=".xlsx,.xls, .csv"
+                                [nzBeforeUpload]="beforeUpload"
+                                [nzRemove]="onFileRemove"
+                                [nzDisabled]="isUploadFile || isPreUploadedFileSelected">
+                                <button nz-button nzType="primary" [disabled]="!quickCampaign.get('campaignName')?.value || isUploadFile || isPreUploadedFileSelected" style="width: 100%;">
+                                    <i nz-icon nzType="upload"></i>
+                                    Upload File (.xlsx/.xls/.csv)
+                                </button>
+                            </nz-upload>
+
+
+                            
+                            <nz-form-item nz-col [nzSpan]="11" style="margin-bottom: 0;">
+                                <nz-form-control>
+                                    <nz-form-label nzLabelAlign="left" nzFor="Select Pre-Uploaded File">Select Pre-Uploaded File</nz-form-label>
+                                    <nz-select nzShowSearch nzAllowClear nzPlaceHolder="Select File" formControlName="fileName" [nzDisabled]="isUploadFile"
+                                        (ngModelChange)="getFile()" [nzDisabled]="disabled">
+                                        <nz-option *ngFor="let file of filenamelist" [nzValue]="file.originalFileName" [nzLabel]="file.originalFileName">  
+                                        </nz-option>
+                                    </nz-select>
+                                </nz-form-control>
+                            </nz-form-item>
+                            
+                        </div>
+
+                             <div class="samplefile" nz-row>
+  <nz-form-item nz-col [nzSpan]="11" style="margin-bottom: 0;">
+  <button nz-button nzType="default" (click)="showModal()">Sample-File</button>
+                             </nz-form-item>
+                             </div>
+                           
+                           
+
+<nz-modal
+  [(nzVisible)]="isModalVisible"
+  nzTitle="Phone Numbers"
+  (nzOnCancel)="handleCancel()"
+  [nzFooter]="modalFooter">
+
+  <!-- ✅ Modal body (table content) -->
+   <ng-container *nzModalContent>
+  <div *ngIf="phoneList && phoneList.length > 0">
+   <table border="1" style="width: 100%; text-align: left;">
+  <thead>
+    <tr>
+      <th>PhoneNo</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let phone of phoneList">
+      <td>{{ phone }}</td>
+    </tr>
+  </tbody>
+</table>
+
+  </div>
+   </ng-container>
+
+
+  <!-- Optional: message if list is empty -->
+  <div *ngIf="!phoneList?.length">
+    No phone numbers found.
+  </div>
+
+</nz-modal>
+
+<!-- ✅ Modal footer template -->
+<ng-template #modalFooter>
+  <button nz-button nzType="primary" (click)="downloadExcel()">Download XLSX</button>
+  <button nz-button (click)="handleCancel()">Close</button>
+</ng-template>
+
+
+
+
+
+
+                    </nz-form-control>
+                  </nz-form-item>
+                </div>
+                <div nz-col [nzSpan]="11" *ngIf="key">
+                  <nz-form-item>
+                    <nz-form-control>
+                      <nz-form-label nzLabelAlign="left" nzFor="FileHeader"
+                        >Select Phone Number Column
+                        <span style="color: red"> * </span>
+                      </nz-form-label>
+                      <nz-select
+                        nzShowSearch
+                        nzAllowClear
+                        nzPlaceHolder="Select Phone Number Column"
+                        formControlName="columnPhoneNo"
+                        (ngModelChange)="onColumnSelect()"
+                      >
+                        <nz-option
+                          *ngFor="let k of key"
+                          [nzValue]="k"
+                          [nzLabel]="k"
+                        >
+                        </nz-option>
+                      </nz-select>
+                    </nz-form-control>
+                  </nz-form-item>
+                </div>
+              </div>
+            </nz-tab>
+          </nz-tabset>
+        </nz-card>
+
+        <!-- bulk  campaign end here=---------- -->
+
+        <div nz-col [nzSpan]="11">
+          <nz-form-item>
+            <nz-form-label [nzRequired]="true" nzFor="selectvariablecolumn">
+              Select Variable Column
+            </nz-form-label>
+            <nz-form-control>
+              <nz-radio-group
+                id="selectvariablecolumn"
+                formControlName="selectvariablecolumn"
+              >
+                <label nz-radio [nzValue]="'Y'">Yes</label>
+                <label nz-radio [nzValue]="'N'">No</label>
+              </nz-radio-group>
+            </nz-form-control>
+            <div
+              style="
+                margin-top: 5px;
+                margin-left: 7px;
+                margin-bottom: 8px;
+                color: rgba(0, 0, 0, 0.45);
+                font-size: 13px;
+              "
+            >
+              {{ getNzExtraText() }}
+            </div>
+          </nz-form-item>
+        </div>
+
+        <div
+          nz-row
+          *ngIf="quickCampaign.get('selectvariablecolumn')?.value === 'Y'"
+          formArrayName="bodyFields"
+        >
+          <!-- Warning message when no template is selected -->
+          <div
+            nz-col
+            [nzSpan]="24"
+            *ngIf="!isTemplateSelected()"
+            style="margin-bottom: 16px"
+          >
+            <nz-alert
+              nzType="warning"
+              nzMessage="Please select a template first to load custom variables"
+              nzShowIcon
+              style="margin-bottom: 16px"
+            >
+            </nz-alert>
+          </div>
+
+          <!-- Form fields when template is selected -->
+          <div
+            nz-col
+            [nzSpan]="24"
+            *ngFor="let group of bodyFields.controls; let i = index"
+            [formGroupName]="i"
+            style="margin-bottom: 16px"
+          >
+            <nz-row [nzGutter]="16" nzAlign="middle">
+              <nz-col [nzSpan]="6">
+                <input nz-input formControlName="variable" [readonly]="true" />
+              </nz-col>
+
+              <!-- Arrow icon -->
+              <nz-col [nzSpan]="1" style="text-align: center">
+                <i nz-icon nzType="arrow-right"></i>
+              </nz-col>
+
+              <!-- Value Type -->
+              <nz-col [nzSpan]="6">
+                <nz-select formControlName="valueType" style="width: 100%">
+                  <nz-option
+                    *ngIf="selectedTabtype === 'Bulk-Campaign'"
+                    nzValue="Map Column Value"
+                    nzLabel="Map Column Value"
+                  ></nz-option>
+                  <nz-option
+                    *ngIf="
+                      selectedTabtype === 'Quick-Campaign' ||
+                      selectedTabtype === 'Bulk-Campaign'
+                    "
+                    nzValue="Static"
+                    nzLabel="Static"
+                  ></nz-option>
+                </nz-select>
+              </nz-col>
+
+              <!-- Arrow icon -->
+              <nz-col [nzSpan]="1" style="text-align: center">
+                <i nz-icon nzType="arrow-right"></i>
+              </nz-col>
+
+              <!-- Value -->
+              <nz-col [nzSpan]="6">
+                <!-- Show input if valueType is Static -->
+                <input
+                  *ngIf="group.get('valueType')?.value === 'Static'"
+                  nz-input
+                  formControlName="value"
+                  placeholder="Enter Static Value"
+                  style="width: 100%"
+                />
+
+                <!-- Show dropdown if valueType is Map Column Value -->
+                <nz-select
+                  *ngIf="group.get('valueType')?.value === 'Map Column Value'"
+                  formControlName="value"
+                  (ngModelChange)="onColumnSelect()"
+                  style="width: 100%"
+                >
+                  <nz-option *ngFor="let k of key" [nzValue]="k" [nzLabel]="k">
+                  </nz-option>
+                </nz-select>
+              </nz-col>
+            </nz-row>
+          </div>
+        </div>
+
+        <!-- <nz-form-item *ngIf="key">
+                    <nz-form-label nzFor="shortUrl" >
+                    Convert Short URL <span style="color: red;"> * </span>
+                         </nz-form-label>
+                         <nz-form-control>
+                                 <nz-radio-group id="shortUrl" formControlName="shortUrl">
+                                    <label nz-radio [nzValue]="'Y'">Yes</label>
+                                    <label nz-radio [nzValue]="'N'">No</label>
+                        </nz-radio-group>
+                    </nz-form-control>
+                </nz-form-item> -->
+
+        <!-- <div *ngIf="quickCampaign.get('shortUrl')?.value === 'Y'" nz-row  nzJustify="space-between">
+            
+                   
+                <nz-form-item nz-col [nzSpan]="11" *ngIf="key">
+                    <nz-form-label  nzLabelAlign="left" nzFor="number">Select Long Url Column <span style="color: red;"> * </span></nz-form-label>
+                    <nz-form-control  nzErrorTip="*Required" >
+                        <nz-select nzShowSearch nzAllowClear nzPlaceHolder="Select Long Url Column" formControlName="columnLongUrl" (ngModelChange)="onColumnSelect()">
+                            <nz-option *ngFor="let k of key" [nzValue]="k" [nzLabel]="k">  
+                            </nz-option>
+                        </nz-select>
+                    </nz-form-control>
+                  </nz-form-item> 
+            
+                  <nz-form-item nz-col [nzSpan]="11" *ngIf="key">
+                    <nz-form-label  nzLabelAlign="left" nzFor="number">Select Domain <span style="color: red;"> * </span></nz-form-label>
+                    <nz-form-control  nzErrorTip="*Required" >
+                        <nz-select id=""
+                        nzPlaceHolder="Select Domain" formControlName="domain">
+                        <nz-option *ngFor="let dt of reportList" [nzLabel]="dt.domainName" [nzValue]="dt.domainName"></nz-option>
+                        </nz-select>
+                    </nz-form-control>
+                  </nz-form-item> 
+            
+                  <nz-form-item nz-col [nzSpan]="11" *ngIf="key">
+                    <nz-form-label nzLabelAlign="left" nzFor="number">Callback Url</nz-form-label>
+                    <nz-form-control nzErrorTip="*Required" >
+                        <input nz-input placeholder="Callback Url" formControlName="callbackUrl"/>
+                        
+                    </nz-form-control>
+            
+                  </nz-form-item> 
+                  </div> -->
+
+        <nz-form-label> Campaign </nz-form-label>
+        <nz-card style="margin-right: 10px">
+          <nz-tabset
+            [nzCentered]="true"
+            (nzSelectedIndexChange)="
+              onTabChange($event === 0 ? 'Run Now' : 'Run Later')
+            "
+          >
+            <nz-tab nzTitle="Run Now">
+              <p style="font-size: 0.7rem; color: #adadad">
+                Start The Campaign Immediately After Submit
+              </p>
+
+              <nz-form-control nzSpan="1-24">
+                <nz-form-item>
+                  <label
+                    nz-checkbox
+                    [(ngModel)]="checked"
+                    [ngModelOptions]="{ standalone: true }"
+                  >
+                    Set Message Expiry
+                  </label>
+                </nz-form-item>
+              </nz-form-control>
+              <div *ngIf="checked == true">
+                <nz-form-item>
+                  <nz-form-control nzSpan="1-24">
+                    <nz-radio-group
+                      nzName="radiogroup"
+                      [(ngModel)]="radio"
+                      [ngModelOptions]="{ standalone: true }"
+                    >
+                      <label nz-radio nzValue="A">Expiry Date & Time</label>
+                      <label nz-radio nzValue="B"
+                        >Expiry Time(in seconds)</label
+                      >
+                    </nz-radio-group>
+                  </nz-form-control>
+                </nz-form-item>
+                <div class="" *ngIf="radio == 'A'">
+                  <nz-form-label nzFor="" nzSpan="1-24"
+                    >Expiry Date</nz-form-label
+                  >
+                  <nz-form-item>
+                    <nz-form-control>
+                      <nz-date-picker
+                        formControlName="campaignExpiryDateTime"
+                        nzPlaceHolder="DD-MM-YYYY"
+                        style="width: 20rem"
+                        [nzDisabledDate]="disabledCampaignDate"
+                      ></nz-date-picker>
+                    </nz-form-control>
+                  </nz-form-item>
+                  <nz-form-label nzFor="" nzSpan="1-24"
+                    >Expiry Time</nz-form-label
+                  >
+                  <nz-form-item>
+                    <nz-form-control nz-row [nzGutter]="18">
+                      <nz-select
+                        nzPlaceHolder="Hours"
+                        formControlName="expiryHour"
+                        nzAllowClear
+                        nz-col
+                        [nzSpan]="6"
+                        style="width: 100%"
+                      >
+                        <nz-option
+                          *ngFor="let hour of getAvailableTimeUnits('hour', quickCampaign.get('campaignExpiryDateTime')?.value, true)"
+                          [nzLabel]="hour < 10 ? '0' + hour : hour"
+                          [nzValue]="hour < 10 ? '0' + hour : hour"
+                        ></nz-option>
+                      </nz-select>
+                      <nz-select
+                        nzPlaceHolder="Minute"
+                        formControlName="expiryMinute"
+                        nz-col
+                        [nzSpan]="6"
+                        style="width: 100%"
+                      >
+                        <nz-option
+                          *ngFor="let min of getAvailableTimeUnits('minute', quickCampaign.get('campaignExpiryDateTime')?.value, true)"
+                          [nzLabel]="min < 10 ? '0' + min : min"
+                          [nzValue]="min < 10 ? '0' + min : min"
+                        ></nz-option>
+                      </nz-select>
+                      <nz-select
+                        nzPlaceHolder="Seconds"
+                        formControlName="expirySecond"
+                        nzAllowClear
+                        nz-col
+                        [nzSpan]="6"
+                        style="width: 100%"
+                      >
+                        <nz-option
+                          *ngFor="let sec of getAvailableTimeUnits('second', quickCampaign.get('campaignExpiryDateTime')?.value, true)"
+                          [nzLabel]="sec < 10 ? '0' + sec : sec"
+                          [nzValue]="sec < 10 ? '0' + sec : sec"
+                        ></nz-option>
+                      </nz-select>
+                      <!-- <nz-select
+                        nzPlaceHolder="AM/PM"
+                        formControlName="expiryMeridian"
+                        nzAllowClear
+                        nz-col
+                        [nzSpan]="6"
+                        style="width: 100%"
+                      >
+                        <nz-option nzLabel="AM" nzValue="AM" [nzDisabled]="isAmDisabled(quickCampaign.get('campaignExpiryDateTime')?.value)"> </nz-option>
+                        <nz-option nzLabel="PM" nzValue="PM" [nzDisabled]="isPmDisabled(quickCampaign.get('campaignExpiryDateTime')?.value)"> </nz-option>
+                      </nz-select> -->
+                    </nz-form-control>
+                  </nz-form-item>
+                </div>
+                <div class="" *ngIf="radio == 'B'">
+                  <nz-form-label nzFor="" nzSpan="1-24"
+                    >Expiry Time (in seconds)</nz-form-label
+                  >
+                  <nz-form-item>
+                    <nz-form-control nz-row [nzGutter]="18">
+                      <nz-select
+                        nzPlaceHolder="Seconds"
+                        nzAllowClear
+                        nz-col
+                        [nzSpan]="6"
+                        style="width: 100%"
+                      >
+                        <nz-option
+                          *ngFor="let sec of minutesList"
+                          [nzLabel]="sec"
+                          [nzValue]="sec"
+                        >
+                        </nz-option>
+                      </nz-select>
+                    </nz-form-control>
+                  </nz-form-item>
+                </div>
+              </div>
+              <!-- <nz-form-item style="width: 100%;">
+                               
+                                <form [formGroup]="splitPartForm" >
+        
+                                    <div formArrayName="splitPart">
+                                        <div *ngFor="let slot of splitPartArray.controls; let i = index" [formGroupName]="i">
+        
+                                            <nz-form-item nz-row [nzGutter]="12">
+        
+        
+                                                <nz-col [nzSpan]="6">
+                                                    <input nz-input formControlName="from" placeholder="From" />
+                                                </nz-col>
+        
+        
+                                                <nz-col [nzSpan]="6">
+                                                    <input nz-input formControlName="to" placeholder="To" />
+                                                </nz-col>
+        
+        
+                                                <nz-col [nzSpan]="6">
+                                                    <nz-select formControlName="hh" nzPlaceHolder="Hour" style="width:100% ;">
+                                                        <nz-option nzValue="01" nzLabel="01"></nz-option>
+                                                        <nz-option nzValue="02" nzLabel="02"></nz-option>
+                                                        <nz-option nzValue="03" nzLabel="03"></nz-option>
+                                                        <nz-option nzValue="04" nzLabel="04"></nz-option>
+                                                        <nz-option nzValue="05" nzLabel="05"></nz-option>
+                                                        <nz-option nzValue="06" nzLabel="06"></nz-option>
+                                                        <nz-option nzValue="07" nzLabel="07"></nz-option>
+                                                        <nz-option nzValue="08" nzLabel="08"></nz-option>
+                                                        <nz-option nzValue="09" nzLabel="09"></nz-option>
+                                                        <nz-option nzValue="10" nzLabel="10"></nz-option>
+                                                        <nz-option nzValue="11" nzLabel="11"></nz-option>
+                                                        <nz-option nzValue="12" nzLabel="12"></nz-option>
+                                                    </nz-select>
+                                                </nz-col>
+        
+                                                <nz-col [nzSpan]="6">
+                                                    <nz-select formControlName="mm" nzPlaceHolder="Minute" style="width:100% ;">
+                                                        <nz-option *ngFor="let minute of minutesList" [nzValue]="minute"
+                                                            [nzLabel]="minute"></nz-option>
+                                                    </nz-select>
+                                                    <button nz-button nzType="link" nzDanger (click)="removeSplitPart(i)"
+                                                        [disabled]="splitPartArray.length === 1" style="margin-left: 20px;">
+                                                        <i nz-icon nzType="delete"></i> Remove
+                                                    </button>
+                                                </nz-col>
+        
+                                            </nz-form-item>
+        
+                                        </div>
+                                    </div>
+                                    <nz-form-item>
+                                        <nz-form-control [nzSpan]="24">
+                                            <button nz-button nzType="dashed" (click)="addSplitPart()">
+                                                <i nz-icon nzType="plus"></i> Add Time Slot
+                                            </button>
+                                        </nz-form-control>
+                                    </nz-form-item>
+        
+                                </form>
+                            </nz-form-item> -->
+            </nz-tab>
+
+            <nz-tab nzTitle="Run Later" style="width: 50%">
+              <p style="font-size: 0.7rem; color: #adadad">
+                Start The Campaign On The Given Time
+              </p>
+              <nz-form-label nzFor="">Campaign Date</nz-form-label>
+              <nz-form-item>
+                <nz-form-control>
+                  <nz-date-picker
+                    formControlName="campaignScheduledDateTime"
+                    nzPlaceHolder="DD-MM-YYYY"
+                    style="width: 20rem"
+                    [nzDisabledDate]="disabledCampaignDate"
+                  ></nz-date-picker>
+                </nz-form-control>
+              </nz-form-item>
+              <nz-form-label nzFor="">Campaign Time</nz-form-label>
+              <nz-form-item>
+                <nz-form-control nz-row [nzGutter]="18">
+                  <nz-select
+                    nzPlaceHolder="Hours"
+                    formControlName="campaignHour"
+                    nzAllowClear
+                    nz-col
+                    [nzSpan]="6"
+                    style="width: 100%"
+                  >
+                    <nz-option
+                      *ngFor="let hour of getAvailableTimeUnits('hour', quickCampaign.get('campaignScheduledDateTime')?.value)"
+                      [nzLabel]="hour < 10 ? '0' + hour : hour"
+                      [nzValue]="hour < 10 ? '0' + hour : hour"
+                    ></nz-option>
+                  </nz-select>
+                  <nz-select
+                    nzPlaceHolder="Minute"
+                    formControlName="campaignMinute"
+                    nzAllowClear
+                    nz-col
+                    [nzSpan]="6"
+                    style="width: 100%"
+                  >
+                    <nz-option
+                      *ngFor="let min of getAvailableTimeUnits('minute', quickCampaign.get('campaignScheduledDateTime')?.value)"
+                      [nzLabel]="min < 10 ? '0' + min : min"
+                      [nzValue]="min < 10 ? '0' + min : min"
+                    ></nz-option>
+                  </nz-select>
+                  <nz-select
+                    nzPlaceHolder="Seconds"
+                    formControlName="campaignSecond"
+                    nzAllowClear
+                    nz-col
+                    [nzSpan]="6"
+                    style="width: 100%"
+                  >
+                    <nz-option
+                      *ngFor="let sec of getAvailableTimeUnits('second', quickCampaign.get('campaignScheduledDateTime')?.value)"
+                      [nzLabel]="sec < 10 ? '0' + sec : sec"
+                      [nzValue]="sec < 10 ? '0' + sec : sec"
+                    ></nz-option>
+                  </nz-select>
+                  <!-- <nz-select
+                    nzPlaceHolder="AM/PM"
+                    formControlName="campaignMeridian"
+                    nzAllowClear
+                    nz-col
+                    [nzSpan]="6"
+                    style="width: 100%"
+                  >
+                    <nz-option nzLabel="AM" nzValue="AM" [nzDisabled]="isAmDisabled(quickCampaign.get('campaignScheduledDateTime')?.value)"> </nz-option>
+                    <nz-option nzLabel="PM" nzValue="PM" [nzDisabled]="isPmDisabled(quickCampaign.get('campaignScheduledDateTime')?.value)"> </nz-option>
+                  </nz-select> -->
+                </nz-form-control>
+              </nz-form-item>
+
+              <nz-form-control nzSpan="1-24">
+                <nz-form-item>
+                  <label
+                    nz-checkbox
+                    [(ngModel)]="checked"
+                    [ngModelOptions]="{ standalone: true }"
+                    >Set Message Expiry</label
+                  >
+                </nz-form-item>
+              </nz-form-control>
+              <div *ngIf="checked == true">
+                <nz-form-item>
+                  <nz-form-control nzSpan="1-24">
+                    <nz-radio-group
+                      nzName="radiogroup"
+                      [(ngModel)]="radio"
+                      [ngModelOptions]="{ standalone: true }"
+                    >
+                      <label nz-radio nzValue="A">Expiry Date & Time</label>
+                      <label nz-radio nzValue="B"
+                        >Expiry Time(in seconds)</label
+                      >
+                    </nz-radio-group>
+                  </nz-form-control>
+                </nz-form-item>
+                <div class="" *ngIf="radio == 'A'">
+                  <nz-form-label nzFor="" nzSpan="1-24"
+                    >Expiry Date</nz-form-label
+                  >
+                  <nz-form-item>
+                    <nz-form-control>
+                      <nz-date-picker
+                        formControlName="campaignExpiryDateTime"
+                        nzPlaceHolder="DD-MM-YYYY"
+                        style="width: 20rem"
+                        [nzDisabledDate]="disabledCampaignDate"
+                      ></nz-date-picker>
+                    </nz-form-control>
+                  </nz-form-item>
+                  <nz-form-label nzFor="" nzSpan="1-24"
+                    >Expiry Time</nz-form-label
+                  >
+                  <nz-form-item>
+                    <nz-form-control nz-row [nzGutter]="18">
+                      <nz-select
+                        nzPlaceHolder="Hours"
+                        formControlName="expiryHour"
+                        nzAllowClear
+                        nz-col
+                        [nzSpan]="6"
+                        style="width: 100%"
+                      >
+                        <nz-option
+                          *ngFor="let hour of getAvailableTimeUnits('hour', quickCampaign.get('campaignExpiryDateTime')?.value)"
+                          [nzLabel]="hour < 10 ? '0' + hour : hour"
+                          [nzValue]="hour < 10 ? '0' + hour : hour"
+                        ></nz-option>
+                      </nz-select>
+                      <nz-select
+                        nzPlaceHolder="Minute"
+                        formControlName="expiryMinute"
+                        nz-col
+                        [nzSpan]="6"
+                        style="width: 100%"
+                      >
+                        <nz-option
+                          *ngFor="let min of getAvailableTimeUnits('minute', quickCampaign.get('campaignExpiryDateTime')?.value)"
+                          [nzLabel]="min < 10 ? '0' + min : min"
+                          [nzValue]="min < 10 ? '0' + min : min"
+                        ></nz-option>
+                      </nz-select>
+                      <nz-select
+                        nzPlaceHolder="Seconds"
+                        formControlName="expirySecond"
+                        nzAllowClear
+                        nz-col
+                        [nzSpan]="6"
+                        style="width: 100%"
+                      >
+                        <nz-option
+                          *ngFor="let sec of getAvailableTimeUnits('second', quickCampaign.get('campaignExpiryDateTime')?.value)"
+                          [nzLabel]="sec < 10 ? '0' + sec : sec"
+                          [nzValue]="sec < 10 ? '0' + sec : sec"
+                        ></nz-option>
+                      </nz-select>
+                      <!-- <nz-select
+                        nzPlaceHolder="AM/PM"
+                        formControlName="expiryMeridian"
+                        nzAllowClear
+                        nz-col
+                        [nzSpan]="6"
+                        style="width: 100%"
+                      >
+                        <nz-option nzLabel="AM" nzValue="AM" [nzDisabled]="isAmDisabled(quickCampaign.get('campaignExpiryDateTime')?.value)"> </nz-option>
+                        <nz-option nzLabel="PM" nzValue="PM" [nzDisabled]="isPmDisabled(quickCampaign.get('campaignExpiryDateTime')?.value)"> </nz-option>
+                      </nz-select> -->
+                    </nz-form-control>
+                  </nz-form-item>
+                </div>
+                <div class="" *ngIf="radio == 'B'">
+                  <nz-form-label nzFor="" nzSpan="1-24"
+                    >Expiry Time (in seconds)</nz-form-label
+                  >
+                  <nz-form-item>
+                    <nz-form-control nz-row [nzGutter]="18">
+                      <nz-select
+                        nzPlaceHolder="Seconds"
+                        nzAllowClear
+                        nz-col
+                        [nzSpan]="6"
+                        style="width: 100%"
+                      >
+                        <nz-option
+                          *ngFor="let sec of minutesList"
+                          [nzLabel]="sec"
+                          [nzValue]="sec"
+                        >
+                        </nz-option>
+                      </nz-select>
+                    </nz-form-control>
+                  </nz-form-item>
+                </div>
+              </div>
+
+              <!-- <nz-form-item style="width: 100%;">
+                               
+                                <form [formGroup]="splitPartForm" >
+        
+                                    <div formArrayName="splitPart">
+                                        <div *ngFor="let slot of splitPartArray.controls; let i = index" [formGroupName]="i">
+        
+                                            <nz-form-item nz-row [nzGutter]="12">
+        
+        
+                                                <nz-col [nzSpan]="6">
+                                                    <input nz-input formControlName="from" placeholder="From" />
+                                                </nz-col>
+        
+        
+                                                <nz-col [nzSpan]="6">
+                                                    <input nz-input formControlName="to" placeholder="To" />
+                                                </nz-col>
+        
+        
+                                                <nz-col [nzSpan]="6">
+                                                    <nz-select formControlName="hh" nzPlaceHolder="Hour" style="width:100% ;">
+                                                        <nz-option nzValue="01" nzLabel="01"></nz-option>
+                                                        <nz-option nzValue="02" nzLabel="02"></nz-option>
+                                                        <nz-option nzValue="03" nzLabel="03"></nz-option>
+                                                        <nz-option nzValue="04" nzLabel="04"></nz-option>
+                                                        <nz-option nzValue="05" nzLabel="05"></nz-option>
+                                                        <nz-option nzValue="06" nzLabel="06"></nz-option>
+                                                        <nz-option nzValue="07" nzLabel="07"></nz-option>
+                                                        <nz-option nzValue="08" nzLabel="08"></nz-option>
+                                                        <nz-option nzValue="09" nzLabel="09"></nz-option>
+                                                        <nz-option nzValue="10" nzLabel="10"></nz-option>
+                                                        <nz-option nzValue="11" nzLabel="11"></nz-option>
+                                                        <nz-option nzValue="12" nzLabel="12"></nz-option>
+                                                    </nz-select>
+                                                </nz-col>
+        
+                                                <nz-col [nzSpan]="6">
+                                                    <nz-select formControlName="mm" nzPlaceHolder="Minute" style="width:100% ;">
+                                                        <nz-option *ngFor="let minute of minutesList" [nzValue]="minute"
+                                                            [nzLabel]="minute"></nz-option>
+                                                    </nz-select>
+                                                    <button nz-button nzType="link" nzDanger (click)="removeSplitPart(i)"
+                                                        [disabled]="splitPartArray.length === 1" style="margin-left: 20px;">
+                                                        <i nz-icon nzType="delete"></i> Remove
+                                                    </button>
+                                                </nz-col>
+        
+                                            </nz-form-item>
+        
+                                        </div>
+                                    </div>
+                                    <nz-form-item>
+                                        <nz-form-control [nzSpan]="24">
+                                            <button nz-button nzType="dashed" (click)="addSplitPart()">
+                                                <i nz-icon nzType="plus"></i> Add Time Slot
+                                            </button>
+                                        </nz-form-control>
+                                    </nz-form-item>
+        
+                                </form>
+                            </nz-form-item> -->
+            </nz-tab>
+          </nz-tabset>
+        </nz-card>
+
+        <!-- <nz-form-item nz-row>
+                    <nz-form-label nz-col [nzSpan]="10" nzLabelAlign="left" nzLabelAlign="left"
+                        nzFor="campaignName">Message Type <span style="color: red;"> * </span></nz-form-label>
+                    <nz-form-control nz-col [nzSpan]="12">
+                        <nz-radio-group nzButtonStyle="solid" formControlName="messageType" [(ngModel)]="messagetype">
+                            <label nz-radio-button nzValue="transactional">Transactional</label>
+                            <label nz-radio-button nzValue="promotional">Promotional</label>
+                            <label nz-radio-button nzValue="service">Service</label>
+                        </nz-radio-group>
+                    </nz-form-control>
+                </nz-form-item> -->
+
+        <!-- <nz-form-item nz-row *ngIf="messagetype==='service'">
+                    <nz-form-label nz-col [nzSpan]="10" nzLabelAlign="left" nzLabelAlign="left"
+                        nzFor="campaignName">Service Type <span style="color: red;"> * </span></nz-form-label>
+                    <nz-form-control nz-col [nzSpan]="9">
+                        <nz-radio-group nzButtonStyle="solid" formControlName="serviceType">
+                            <label nz-radio-button nzValue="serviceImplicit">Service Implicit</label>
+                            <label nz-radio-button nzValue="serviceExplicit">Service Explicit</label>
+                        </nz-radio-group>
+                    </nz-form-control>
+                </nz-form-item> -->
+
+        <!-- <nz-form-item nz-row>
+                    <nz-form-label nz-col [nzSpan]="10" nzLabelAlign="left" nzFor="Tamplate Name">Select Template 
+                        <span style="color: red;"> * </span></nz-form-label>
+                    <nz-form-control nz-col [nzSpan]="12">
+                        <nz-select nzShowSearch nzAllowClear nzPlaceHolder="Select Template Name"
+                            formControlName="selectedTemplate">
+                            <nz-option *ngFor="let temp of messageTemplate" nzLabel="{{ temp.templateTitle}}"
+                                [nzValue]="temp">
+
+                            </nz-option>
+                            <nz-option nzLabel="TemplatePromo1" nzValue="TemplatePromo1">
+
+                            </nz-option>
+
+                        </nz-select>
+                    </nz-form-control>
+                </nz-form-item> -->
+
+        <!-- <nz-form-item nz-row>
+                    <nz-form-label nz-col [nzSpan]="10" nzLabelAlign="left" nzFor="messageEncoding">Message Encoding
+                        <span style="color: red;"> * </span></nz-form-label>
+                    <nz-form-control nz-col [nzSpan]="12">
+                        <nz-radio-group nzButtonStyle="solid" formControlName="messageEncoding">
+                            <label nz-radio-button nzValue="plainText">Plain Text</label>
+                            <label nz-radio-button nzValue="unicode">Unicode</label>
+                            <label nz-radio-button nzValue="flash">Flash</label>
+                            <label nz-radio-button nzValue="flashUnicode">Flash Unicode</label>
+                        </nz-radio-group>
+                    </nz-form-control>
+                </nz-form-item> -->
+
+        <!-- <nz-form-item nz-row>
+                    <nz-form-label nz-col [nzSpan]="10" nzLabelAlign="left" nzFor="Message Part">Message Part <span
+                            style="color: red;"> * </span></nz-form-label>
+                    <nz-form-control nz-col [nzSpan]="12">
+                        <nz-radio-group nzButtonStyle="solid" formControlName="messagePart">
+                            <label nz-radio-button nzValue="singlePart">Single Part</label>
+                            <label nz-radio-button nzValue="multiPart">MultiPart</label>
+                        </nz-radio-group>
+                    </nz-form-control>
+                </nz-form-item> -->
+
+        <!-- <nz-form-item nz-row>
+                    <nz-form-label nz-col [nzSpan]="10" nzLabelAlign="left" nzFor="campaignName">Message
+                        Text <span style="color: red;"> * </span></nz-form-label>
+                    <nz-form-control nz-col [nzSpan]="12" nzErrorTip="*required"
+                        [nzValidateStatus]="getStatus('messageText')!">
+                        <nz-textarea-count [nzMaxCharacterCount]="1000">
+                            <textarea rows="4" formControlName="messageText" nz-input nz-input
+                                (input)="messageData($event)"></textarea>
+                        </nz-textarea-count>
+                    </nz-form-control>
+                </nz-form-item> -->
+
+        <!-- <nz-form-item nz-row>
+                    <nz-form-label nz-col [nzSpan]="10" nzLabelAlign="left" nzFor="short Url Selected">Is ShortUrl
+                        Selected <span style="color: red;"> * </span></nz-form-label>
+                    <nz-form-control nz-col [nzSpan]="12">
+                        <nz-radio-group nzName="radiogroup" [(ngModel)]="shortUrlSelected"
+                            formControlName="shortUrlSelected">
+                            <label nz-radio nzValue="Y">Yes</label>
+                            <label nz-radio nzValue="N">No</label>
+                        </nz-radio-group>
+                    </nz-form-control>
+                </nz-form-item> -->
+
+        <!-- <nz-form-item nz-row *ngIf="shortUrlSelected=='Y'">
+                    <nz-form-label nz-col [nzSpan]="10" nzLabelAlign="left" nzFor="shortURLName">Short URL Name <span
+                            style="color: red;"> * </span></nz-form-label>
+                    <nz-form-control nz-col [nzSpan]="12">
+                        <input nz-input formControlName="shortURLName" id="shortURLName" placeholder="Short URL Name" />
+                    </nz-form-control>
+                </nz-form-item> -->
+
+        <!-- 
+                <nz-form-item nz-row>
+                    <nz-form-label nz-col [nzSpan]="10" nzLabelAlign="left" nzFor="entityID">Entity ID <span
+                            style="color: red;"> * </span></nz-form-label>
+                    <nz-form-control nz-col [nzSpan]="12" nzErrorTip="*required"
+                        [nzValidateStatus]="getStatus('entityID')!">
+                        <input nz-input formControlName="entityID" id="entityID" placeholder="Entity ID" />
+                    </nz-form-control>
+                </nz-form-item> -->
+
+        <!-- <nz-form-item nz-row>
+                    <nz-form-label nz-col [nzSpan]="10" nzLabelAlign="left" nzFor="entityID">Operator Template Id <span
+                            style="color: red;"> * </span></nz-form-label>
+                    <nz-form-control nz-col [nzSpan]="12" nzErrorTip="*required"
+                        [nzValidateStatus]="getStatus('entityID')!">
+                        <input nz-input formControlName="" id="operatorId" placeholder="Operator Id"/>
+                    </nz-form-control>
+                </nz-form-item> -->
+
+        <!-- <nz-form-item nz-row>
+                    <nz-form-label nz-col [nzSpan]="10" nzLabelAlign="left" nzFor="short Url Selected">Schedule Message
+                        <span style="color: red;"> * </span></nz-form-label>
+                    <nz-form-control nz-col [nzSpan]="12">
+                        <nz-radio-group nzName="radiogroup" [(ngModel)]="scheduleMessage"
+                            formControlName="scheduleMessage">
+                            <label nz-radio nzValue="yes">Yes</label>
+                            <label nz-radio nzValue="no">No</label>
+                        </nz-radio-group>
+                    </nz-form-control>
+                </nz-form-item> -->
+
+        <!-- <div *ngIf="scheduleMessage=='yes'">
+                    <nz-form-item nz-row nzLabelAlign="left">
+                        <nz-form-label nz-col [nzSpan]="10" nzLabelAlign="left" nzFor="operatorTemplateId">Schedule Date
+                            <span style="color: red;"> * </span></nz-form-label>
+                        <nz-form-control nz-col [nzSpan]="12">
+                            <nz-date-picker formControlName="datepicker"></nz-date-picker>
+
+                        </nz-form-control>
+                    </nz-form-item>
+                    <nz-form-item nz-row>
+                        <nz-form-label nz-col [nzSpan]="10" nzLabelAlign="left" nzFor="short Url Selected">Split File
+                            <span style="color: red;"> * </span></nz-form-label>
+                        <nz-form-control nz-col [nzSpan]="12">
+                            <nz-radio-group nzName="radiogroup" [(ngModel)]="splitFile" formControlName="splitFile">
+                                <label nz-radio nzValue="yes">Yes</label>
+                                <label nz-radio nzValue="no">No</label>
+                            </nz-radio-group>
+                        </nz-form-control>
+                    </nz-form-item>
+
+                    
+
+
+
+
+
+
+
+
+                </div>
+
+
+ -->
+
+        <!-- <nz-form-item>
+          <nz-form-label [nzRequired]="true" nzFor="fallbackSms">
+            Do you want automatic fallback to SMS?
+          </nz-form-label>
+          <nz-form-control>
+            <nz-radio-group id="fallbackSms" formControlName="fallback">
+              <label nz-radio [nzValue]="'Y'">Yes</label>
+              <label nz-radio [nzValue]="'N'">No</label>
+            </nz-radio-group>
+          </nz-form-control>
+        </nz-form-item> -->
+
+        <nz-form-item nz-col [nzSpan]="24" *ngIf="isFallbackEnabled">
+          <nz-form-label nzFor="smsContent"><span style="color: red"> * </span>Fallback SMS </nz-form-label>
+          <nz-form-control 
+          >
+            <textarea
+              nz-input
+              id="smsContent"
+              formControlName="fallbackText"
+              placeholder="Enter fallback SMS content"
+            ></textarea>
+          </nz-form-control>
+        </nz-form-item>
+
+        <nz-form-item nz-col [nzSpan]="24" *ngIf="isFallbackEnabled">
+          <nz-form-label nzFor="smsContent"><span style="color: red"> * </span>Sms Api Endpoint </nz-form-label>
+          <nz-form-control
+           [nzErrorTip]="smsApiEndpoint?.errors?.required ? 'This field is required' : 'Please enter a valid URL'"
+          >
+            <input
+              nz-input
+              id="smsContent"
+              formControlName="smsApiEndpoint"
+              placeholder="Enter Sms Api Endpoint"
+            />
+          </nz-form-control>
+          <p
+            style="
+              font-size: 0.7rem;
+              color: #adadad;
+              text-align: justify;
+              padding-right: 10px;
+              word-wrap: break-word;
+            "
+          >
+            Use %PHONENO% for the recipient's phone number and %MESSAGETEXT% for
+            your message in the API. Refer to the example URL below: <br />
+
+            https://sms.gmstool.com/pushapi/sendbulkmsg?username=testapi21&dest=%PHONENO%&apikey=a1b2c3d4e5f6g7h8i9j0&signature=POIUYT&msgtype=PM&msgtxt=%MESSAGETEXT%&entityid=1234567&templateid=12345678
+          </p>
+        </nz-form-item>
+
+
+                 <!-- <nz-form-item>
+                    <nz-form-label [nzRequired]="true" nzFor="whatsapp">
+                        Do you want automatic fallback to Whatsapp?
+                    </nz-form-label>
+                    <nz-form-control>
+                        <nz-radio-group id="whatsapp" formControlName="whatsapp">
+                            <label nz-radio [nzValue]="'Y'">Yes</label>
+                            <label nz-radio [nzValue]="'N'">No</label>
+                        </nz-radio-group>
+                    </nz-form-control>
+                </nz-form-item> -->
+                
+                <nz-form-item nz-col [nzSpan]="24" *ngIf="isFallbackEnabledwhatsapp">
+                    <nz-form-label nzFor="whatsapp"><span style="color: red"> * </span>Fallback Whatsapp </nz-form-label>
+                    <nz-form-control>
+                        <textarea rows="4" nz-input id="whatsapp" formControlName="fallbackTextwhatsapp"
+                            placeholder="Enter fallback Whatsapp" ></textarea>
+                        <!-- <small>{{ quickCampaign.get('fallbackTextwhatsapp')?.value?.length || 0 }}/200 characters used</small> -->
+                    </nz-form-control>
+                </nz-form-item>
+                <nz-form-item nz-col [nzSpan]="24" *ngIf="isFallbackEnabledwhatsapp">
+                    <nz-form-label nzFor="whatsapp"><span style="color: red"> * </span>Whatsapp Api Endpoint </nz-form-label>
+<nz-form-control [nzErrorTip]="whatsappApiEndpoint?.errors?.required ? 'This field is required' : 'Please enter a valid URL'">
+    <input nz-input id="whatsapp" formControlName="whatsappApiEndpoint" placeholder="Enter Whatsapp Api Endpoint">
+</nz-form-control>
+                    <p style="font-size: 0.7rem; color: #adadad; text-align: justify; padding-right: 10px; word-wrap: break-word;">Use %PHONENO% for the recipient's phone number and %MESSAGETEXT% for your message in the API. Refer to the example URL below: <br>
+
+                        https://sms.gmstool.com/pushapi/sendbulkmsg?username=testapi21&dest=%PHONENO%&apikey=a1b2c3d4e5f6g7h8i9j0&signature=POIUYT&msgtype=PM&msgtxt=%MESSAGETEXT%&entityid=1234567&templateid=12345678 </p>
+
+
+                
+                </nz-form-item>
+
+            </form>
+            
+
+
+
+        </div>
+
+
+
+      <div >
+  <!-- <nz-tabset>
+            <nz-tab nzTitle="Preview"> -->
+      <div style="margin-left: 60%; width: 80%">
+        <app-template-preview
+          [selectedBot]="selectedBot"
+          [selectedBotId12]="selectedBotId12"
+          [imageUrl]="imageUrl"
+          [validateForm]="validateForm"
+          [templateForm]="templateForm"
+          [selectedTemplate]="selectedTemplate"
+          [type]="templateForm.get('type')?.value || ''"
+          [carouselList]="carouselList"
+          [alignment]="alignment"
+          [orientation]="orientation"
+          [uploadedFileName]="templateForm.get('documentFileName')?.value || ''"
+          [messageOrder]="templateForm.get('messageOrder')?.value || ''"
+        >
+        </app-template-preview>
+      </div>
+
+      <!-- </nz-tab>
+        </nz-tabset> -->
+    </div>
+  </div>
+
+  <div
+    nz-row
+    nzJustify="center"
+    nzAlign="middle"
+    style="margin-top: 20px; margin-bottom: 20px"
+  >
+    <!-- <button nz-button nzType="primary" (click)="open()" *ngIf="quickCampaign.get('selectedTemplate')?.valid" ><span> <span nz-icon nzType="eye"></span> Continue To Preview</span> </button> -->
+    <button nz-button nzType="primary" (click)="open()" *ngIf="quickCampaign.get('selectedTemplate')?.valid && !isPreUploadedFileSelected">
+  <span><span nz-icon nzType="eye"></span> Continue To Preview</span>
+</button>
+<div>
+<button nz-button nzType="primary"
+          *ngIf="isPreUploadedFileSelected"
+          [disabled]="isDisabled"
+          (click)="onSubmit()">Submit</button>
+</div>
+    
+  
+
+</div>
+</nz-card>
+
+<nz-drawer
+  [nzClosable]="false"
+  [nzVisible]="isvisible"
+  nzPlacement="right"
+  (nzOnClose)="close()"
+  [nzWidth]="700"
+  [nzFooter]="footerTemplate"
+>
+  <ng-container *nzDrawerContent>
+    <div style="display: flex; flex-direction: row; gap: 20px">
+      <div class="" *ngFor="let dt of previewData">
+        <span>This is the preview for </span> {{ dt.phoneNo }}
+        <app-template-preview
+          [selectedBot]="selectedBot"
+          [selectedBotId12]="selectedBotId12"
+          [imageUrl]="imageUrl"
+          [previewData]="dt"
+          [selectedTemplate]="selectedTemplate"
+          [messageContent]="dt.messageContent || ''"
+          [carouselList]="carouselList"
+          [alignment]="alignment"
+          [orientation]="orientation"
+          [validateForm]="validateForm"
+          [templateForm]="templateForm"
+          [uploadedFileName]="templateForm.get('documentFileName')?.value || ''"
+          [messageOrder]="templateForm.get('messageOrder')?.value || ''"
+        >
+        </app-template-preview>
+      </div>
+    </div>
+  </ng-container>
+  <ng-template #footerTemplate>
+    <div nz-row nzJustify="center" nzAlign="middle">
+      <button
+        nz-button
+        nzType="primary"
+        [disabled]="isDisabled"
+        (click)="onSubmit()"
+      >
+        Submit
+      </button>
+    </div>
+  </ng-template>
+</nz-drawer>

@@ -1,0 +1,38 @@
+
+
+<div class="billingCycle" style="padding: 20px; margin-top: 20px;">
+<div class="header-section">
+    <h2>Hey,{{userName}}</h2>
+   
+    <button  nz-button nzType="primary" [routerLink]="['/addbilling']" nzShape="round">Add Billing Plan
+    </button>
+  </div>
+
+
+  
+  <div class="bots-section">
+    <nz-card nzTitle="User Billing Plan" style="margin-top: 20px;">
+       
+    
+      <nz-table #basicTable [nzBordered]="true" [nzData]="tableData">
+        <thead>
+          <tr>
+            <th *ngFor="let key of columnKeys" nzAlign="center">
+              {{ formatKey(key) }}
+            </th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let row of tableData">
+            <td *ngFor="let key of columnKeys" nzAlign="center">
+              {{ row[key] || '-' }}
+            </td>
+          </tr>
+        </tbody>
+      </nz-table>
+        </nz-card>
+        </div>
+
+
+
+  </div>

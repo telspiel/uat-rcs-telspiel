@@ -1,0 +1,91 @@
+
+<nz-card style="width: 100%; margin-top: 1.5rem; " nzTittle="Download Report" >
+    
+<form nz-form  class="" style="margin-top: 2rem; margin-bottom: 2rem;">
+    <div nz-row [nzGutter]="12" nzAlign="bottom" >
+      <div nz-col [nzSpan]="6" *ngIf="['superadmin'].includes(role)">
+        <app-user-selector
+          label="Admin"
+          roleType="admin"
+          [options]="Adminlist"
+          [(selectedValue)]="Admin"
+          (selectedValueChange)="getUserData($event.value, $event.role)"
+        ></app-user-selector>
+      </div>
+    
+      <div nz-col [nzSpan]="6">
+        <app-user-selector
+          label="Reseller"
+          roleType="reseller"
+          [options]="ResllerList"
+          [(selectedValue)]="Reseller"
+          (selectedValueChange)="getUserData($event.value, $event.role)"
+        ></app-user-selector>
+      </div>
+    
+      <div nz-col [nzSpan]="6">
+        <app-user-selector
+          label="Seller"
+          roleType="seller"
+          [options]="SellerList"
+          [(selectedValue)]="Seller"
+          (selectedValueChange)="getUserData($event.value, $event.role)"
+        ></app-user-selector>
+      </div>
+    
+      <div nz-col [nzSpan]="6">
+        <app-user-selector
+          label="Client"
+          roleType="client"
+          [options]="Clientlist"
+          [(selectedValue)]="client"
+          (selectedValueChange)="getUserData($event.value, $event.role)"
+        ></app-user-selector>
+      </div>
+
+        <div nz-col [nzSpan]="6" class="ml">
+            
+            <nz-form-control>
+                <label for="Expiry">Expiry Date*</label>
+                <nz-range-picker ></nz-range-picker>
+            </nz-form-control>
+        </div>
+
+        <div nz-col [nzSpan]="6" >
+
+            <button nz-button nzType="primary" type="button" class="btn-gap">Generate Download Link </button>
+        </div>
+    
+     
+    </div>
+
+    
+
+    </form>
+
+    <nz-table
+    nzShowSizeChanger
+    [nzTotal]="total"
+    [nzPageSize]="pageSize"
+    [nzPageIndex]="pageIndex"
+  >
+    <thead>
+      <tr>
+        <th nzColumnKey="summaryDate" [nzSortFn]="true">Frome Date</th>
+        <th nzColumnKey="totalRequested" [nzSortFn]="true">To Date</th>
+        <th nzColumnKey="totalRejected" [nzSortFn]="true">Status</th>
+        <th nzColumnKey="totalRejected" [nzSortFn]="true">Download Link Report</th>
+      </tr>
+      
+    </thead>
+    <tbody>
+      
+    </tbody>
+    
+  </nz-table>
+
+
+
+
+
+</nz-card>

@@ -1,0 +1,182 @@
+      
+ <div nz-col [nzSpan]="6"   style="margin-bottom: 2rem; margin-top: 2rem; margin-left: 2rem; ">
+        
+        <nz-form-control >
+            <label for="Admin"> Select Account Manager*</label>
+           <nz-select 
+           id="Reseller" 
+          nzPlaceHolder="Select Account Manager"
+          [(ngModel)]="selectedAccountManager"
+          (ngModelChange)="onAccountManagerChange($event)">
+  <nz-option 
+    *ngFor="let account of reportList" 
+    [nzLabel]="account.userName" 
+    [nzValue]="account.userName">
+  </nz-option>
+</nz-select>
+        </nz-form-control>
+    </div>      
+      
+      <div  style="margin-bottom: 2rem; margin-top: 2rem;" *ngIf=" isView=='true'" >
+        <nz-card nzTitle="">
+          <form [formGroup]="viewForm">
+
+            <nz-row [nzGutter]="16">
+              <nz-col [nzSpan]="8">
+                <nz-form-item>
+                  <nz-form-label
+                    nzFor="userType"
+                    [nzSpan]="24"
+                    class="left-align-label"
+                    >User Type</nz-form-label
+                  >
+                  <nz-form-control>
+                    <nz-form-control>
+                    <input
+                      nz-input
+                      formControlName="userType"
+                      placeholder="Usertype"
+                    />
+                  </nz-form-control>
+                  </nz-form-control>
+                </nz-form-item>
+              </nz-col>
+
+             
+              <nz-col [nzSpan]="8">
+                <nz-form-item>
+                  <nz-form-label
+                    nzFor="Username"
+                    [nzSpan]="24"
+                    class="left-align-label"
+                    >Username</nz-form-label
+                  >
+                  <nz-form-control>
+                    <input
+                      nz-input
+                      formControlName="userName"
+                      placeholder="Username"
+                    />
+                  </nz-form-control>
+                </nz-form-item>
+              </nz-col>
+
+
+
+              <nz-col [nzSpan]="8">
+                <nz-form-item>
+                  <nz-form-label
+                    nzFor="password"
+                    [nzSpan]="24"
+                    class="left-align-label"
+                    >Password</nz-form-label
+                  >
+                  <nz-form-control>
+                    <input
+                      nz-input
+                      formControlName="userPassword"
+                      placeholder="Password"
+                    />
+                  </nz-form-control>
+                </nz-form-item>
+              </nz-col>
+
+
+
+
+              <nz-col [nzSpan]="8">
+                <nz-form-item>
+                  <nz-form-label
+                    nzFor="email"
+                    [nzSpan]="24"
+                    class="left-align-label"
+                    >Email</nz-form-label
+                  >
+                  <nz-form-control>
+                    <input
+                      nz-input
+                      formControlName="email"
+                      placeholder="Email"
+                    />
+                  </nz-form-control>
+                </nz-form-item>
+              </nz-col>
+
+
+
+
+
+
+
+              <nz-col [nzSpan]="8">
+                <nz-form-item>
+                  <nz-form-label
+                    nzFor="email"
+                    [nzSpan]="24"
+                    class="left-align-label"
+                    >Mobile</nz-form-label
+                  >
+                  <nz-form-control>
+                    <input
+                      nz-input
+                      formControlName="mobile"
+                      placeholder="Mobile"
+                    />
+                  </nz-form-control>
+                </nz-form-item>
+              </nz-col>
+
+
+                    <nz-col [nzSpan]="8">
+                <nz-form-item>
+                  <nz-form-label
+                    nzFor="email"
+                    [nzSpan]="24"
+                    class="left-align-label"
+                    >Expire Date</nz-form-label
+                  >
+                  <nz-form-control>
+                      <nz-date-picker
+                      formControlName="Expiry"
+                      style="width: 100%"
+                      [nzDisabledDate]="disabledDate"
+                      [nzShowToday]="false"
+                        style="width: 100%"
+            ></nz-date-picker>
+                  </nz-form-control>
+                </nz-form-item>
+              </nz-col>
+
+
+
+                   <nz-col [nzSpan]="8">
+                <nz-form-item>
+                  <nz-form-label
+                    nzFor="userType"
+                    [nzSpan]="24"
+                    class="left-align-label"
+                    >Status</nz-form-label
+                  >
+                  <nz-form-control>
+                      <input
+                      nz-input
+                      formControlName="vtStatus"
+                      placeholder="Status"
+                    />
+                
+                  </nz-form-control>
+                </nz-form-item>
+              </nz-col>
+
+            
+            
+            </nz-row>
+
+
+
+
+
+           
+          </form>
+        </nz-card>
+      </div>

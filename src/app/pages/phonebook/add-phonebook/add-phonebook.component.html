@@ -1,0 +1,96 @@
+<app-page-header [title]="'Create Group Management'" [backLink]="['/phonebook']"></app-page-header>
+<div class="contact-management">
+  <!-- Upload Contact Section -->
+  <div class="upload-contact">
+    <h3>Upload Contact</h3>
+    <div class="instruction-box">
+      <p>* you can upload any .csv file which carry the information in the following text format:</p>
+      <p>Mobile Number, Name</p>
+      <p>Example:</p>
+      <p>919998......, Abhay</p>
+      <p>8435......, Sanjay</p>
+      <!-- <p>Mobile number can be uploaded with or without 91</p> -->
+    </div>
+    <form nz-form nzLayout="vertical" >
+      <nz-form-item>
+        <nz-form-label><span style="color: red;">*</span> Select Group</nz-form-label>
+        <nz-form-control>
+          <nz-select nzPlaceHolder="Select Group" [(ngModel)]="selectedGroupForUpload" name="selectedGroupForUpload" nzAllowClear>
+            <nz-option *ngFor="let group of groups" [nzValue]="group.groupId" [nzLabel]="group.groupName"></nz-option>
+          </nz-select>`
+        </nz-form-control>
+      </nz-form-item>
+      <nz-form-item>
+        <nz-form-label><span style="color: red;">*</span> File</nz-form-label>
+        <nz-form-control>
+          <!-- <nz-upload nzFileType="txt" [(nzFileList)]="fileList" (nzChange)="handleUpload()">
+            <button nz-button><span nz-icon nzType="down"></span>Select File</button>
+          </nz-upload>   -->
+
+         <nz-upload 
+  [(nzFileList)]="fileList"  
+  nzAccept=".csv"  
+  [nzMultiple]="false"
+  [nzLimit]="1"
+  (nzChange)="onFileChange($event)">
+  <button nz-button>
+    <span nz-icon nzType="upload"></span>
+    Select .csv
+  </button>
+</nz-upload>
+
+          <p>Note: Only .csv allowed</p>
+        </nz-form-control>
+      </nz-form-item>
+      <nz-form-item>
+        <div class="button-group">
+          <button nz-button nzType="primary" (click)="handleUpload(selectedGroupForUpload)">Upload Number List</button>
+          <button nz-button (click)="clearUploadForm()">Clear</button>
+        </div>
+      </nz-form-item>
+    </form>
+  </div>
+
+  <!-- Add New Contact Section -->
+  <div class="add-contact">
+    <h3>Add New Contact</h3>
+    <form nz-form nzLayout="vertical">
+      <nz-form-item>
+        <nz-form-label><span style="color: red;">*</span> Select Group</nz-form-label>
+        <nz-form-control>
+          <nz-select nzPlaceHolder="Select Group" [(ngModel)]="selectedGroupForAddContact" name="selectedGroupForAddContact" nzAllowClear>
+            <nz-option *ngFor="let group of groups" [nzValue]="group.groupName" [nzLabel]="group.groupName"></nz-option>
+          </nz-select>
+        </nz-form-control>
+      </nz-form-item>
+      <nz-form-item>
+        <nz-form-label><span style="color: red;">*</span> Name</nz-form-label>
+        <nz-form-control>
+          <input nz-input placeholder="Enter Name" [(ngModel)]="contactName" name="contactName" />
+        </nz-form-control>
+      </nz-form-item>
+<nz-form-item>
+  <nz-form-label><span style="color: red;">*</span> Mobile Number</nz-form-label>
+  <nz-form-control>
+    <input
+      nz-input
+      type="text"
+      placeholder="Enter Mobile Number"
+      [(ngModel)]="contactNumber"
+      name="contactNumber"
+      pattern="^[0-9]*$"
+      (keypress)="validateNumberInput($event)"
+    />
+    <!-- <p>Note: without 91</p> -->
+  </nz-form-control>
+</nz-form-item>
+
+     <nz-form-item>
+        <div class="button-group">
+        <button nz-button nzType="primary" (click)="addNumberToGroup()">Submit</button>
+        <button nz-button (click)="resetContactForm()">Reset</button>
+      </div>
+      </nz-form-item>
+    </form>
+  </div>
+</div>

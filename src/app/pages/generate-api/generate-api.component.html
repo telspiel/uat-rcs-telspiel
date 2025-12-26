@@ -1,0 +1,54 @@
+
+
+<app-page-header [title]="'Generate-Api'" ></app-page-header>
+
+<nz-card>
+    <form [formGroup]="updateWallet">
+        
+        <nz-row [nzGutter]="16">
+
+           <nz-col [nzSpan]="role==='admin' || role==='accountManager'?20: role==='reseller'?15:10" *ngIf="role!=='client'">
+                <app-filter-dropdown [role]="role" [span]="6" (selectionChange)="handleSelection($event)" [requierd]="false"></app-filter-dropdown>
+              </nz-col>
+
+            <nz-col [nzSpan]="2" class="btn-resize">
+              <button nz-button nzType="primary" class="mt-1" (click)="viewApiKey()" style="margin-top: 30px;">View API Key</button>
+            </nz-col>
+        </nz-row>
+
+        <!-- API Key Box -->
+        <nz-row class="mt-5" nzJustify="center">
+          <nz-col [nzSpan]="12"
+                  [ngClass]="fileErr ? 'border-red' : ''"
+                  class="generate-api-box text-center">
+            <nz-input-group [nzSuffix]="suffixIcon">
+              <textarea
+                nz-input
+                rows="3"
+                [value]="toCopy == undefined ? '' : toCopy"
+                readonly
+                #userinput
+              ></textarea>
+            </nz-input-group>
+            <ng-template #suffixIcon>
+              <i nz-icon nzType="copy" (click)="copyInputMessage(userinput)"></i>
+            </ng-template>
+          </nz-col>
+        </nz-row>
+<br>
+
+        <!-- Generate Button -->
+        <nz-row class="mt-4">
+          <nz-col [nzSpan]="24" style="text-align: center; ">
+            <button
+              nz-button
+              nzType="primary" 
+              [disabled]="genbtn"
+              (click)="generateApiKey()"
+            >
+              Generate New API Key
+            </button>
+          </nz-col>
+        </nz-row>
+    </form>
+</nz-card>

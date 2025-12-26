@@ -1,0 +1,94 @@
+<h5 nz-typography style="margin-top: 25px;">Add Content Template</h5>
+
+   
+        <form nz-form [formGroup]="validForm"  >
+        <nz-form-item nz-row >
+          <nz-form-label nz-col [nzSpan]="4" nzLabelAlign="left" nzRequired nzFor="messageEncoding">Content Template Type</nz-form-label>
+          <nz-form-control nz-col [nzSpan]="9"  [nzValidateStatus]="getStatus('messageEncoading')!">
+              <nz-radio-group nzButtonStyle="solid" formControlName="messageEncoding"  [(ngModel)]="messageEncoding">
+                  <label nz-radio-button nzValue="transactional" >Transcational</label>
+                  <label nz-radio-button nzValue="promotional">Promotional</label>
+                  <label nz-radio-button nzValue="service">Service</label>
+            
+                </nz-radio-group>
+          </nz-form-control>
+        </nz-form-item>
+        <nz-form-item nz-row *ngIf="messageEncoding==='service'">
+            <nz-form-label nz-col [nzSpan]="4" nzLabelAlign="left" nzLabelAlign="left" nzRequired >Service Type</nz-form-label>
+            <nz-form-control nz-col [nzSpan]="9">
+                <nz-radio-group nzButtonStyle="solid" formControlName="serviceType">
+                    <label nz-radio-button nzValue="serviceImplicit">Service Implicit</label>
+                    <label nz-radio-button nzValue="serviceExplicit">Service Explicit</label>
+                  </nz-radio-group>
+                 
+            </nz-form-control>
+            </nz-form-item>
+
+        
+            <nz-form-item nz-row >
+              <nz-form-label nz-col [nzSpan]="4" nzLabelAlign="left" nzRequired nzFor="campaignName">Select Sender Id</nz-form-label>
+              <nz-form-control nz-col [nzSpan]="9"  [nzValidateStatus]="getStatus('senderId')!" >
+                <input nz-input  id="campaignName" formControlName="senderId" placeholder="Select Sender Id"/>
+              </nz-form-control>
+            </nz-form-item>
+
+            <nz-form-item nz-row >
+                <nz-form-label nz-col [nzSpan]="4" nzLabelAlign="left" nzRequired nzFor="EntityID">Entity ID</nz-form-label>
+                <nz-form-control nz-col [nzSpan]="9"  [nzValidateStatus]="getStatus('entityID')!" >
+                  <input nz-input  id="campaignName" formControlName="entityID" placeholder="Entity ID"/>
+                </nz-form-control>
+              </nz-form-item>
+
+              <nz-form-item nz-row >
+                <nz-form-label nz-col [nzSpan]="4" nzLabelAlign="left" nzRequired nzFor="EntityID">Content Template Name</nz-form-label>
+                <nz-form-control nz-col [nzSpan]="9"  [nzValidateStatus]="getStatus('templateName')!">
+                  <input nz-input  id="campaignName" formControlName="templateName" placeholder="Content Template Name"/>
+                </nz-form-control>
+              </nz-form-item>
+
+              <nz-form-item nz-row >
+                <nz-form-label nz-col [nzSpan]="4" nzLabelAlign="left" nzRequired nzFor="EntityID">Content Template Description</nz-form-label>
+                <nz-form-control nz-col [nzSpan]="9"  [nzValidateStatus]="getStatus('templateDescription')!">
+                  <input nz-input  id="campaignName" formControlName="templateDescription" placeholder="Content Template Description"/>
+                </nz-form-control>
+              </nz-form-item>
+
+              
+              <nz-form-item nz-row >
+                <nz-form-label nz-col [nzSpan]="4" nzLabelAlign="left" nzRequired nzFor="EntityID">Operator Template ID</nz-form-label>
+                <nz-form-control nz-col [nzSpan]="9"  [nzValidateStatus]="getStatus('templateID')!">
+                  <input nz-input  id="campaignName" formControlName="templateID" placeholder="Operator Template ID"/>
+                </nz-form-control>
+              </nz-form-item>
+
+              
+          <nz-form-item nz-row>
+            <nz-form-label nz-col [nzSpan]="4" nzLabelAlign="left"nzRequired nzFor="text">Message Text</nz-form-label>
+            <nz-form-control [nzSpan]="9" nzHasFeedback nzErrorTip="Message Text"  [nzValidateStatus]="getStatus('messageText')!">
+              <nz-textarea-count [nzMaxCharacterCount]="3000" fromControlName="messageText" >
+                <textarea rows="4"  nz-input></textarea>
+              </nz-textarea-count>
+            </nz-form-control>
+          </nz-form-item>
+            
+          <nz-form-item nz-row >
+            <nz-form-label nz-col [nzSpan]="4" nzLabelAlign="left" nzRequired nzFor="templateType">Template Type</nz-form-label>
+            <nz-form-control nz-col [nzSpan]="9">
+                <nz-radio-group nzButtonStyle="solid" [(ngModel)]="templateType" formControlName="templateType" >
+                    <label nz-radio-button nzValue="plainText" >Plain Text</label>
+                    <label nz-radio-button nzValue="unicode">Unicode</label>
+                 
+              
+                  </nz-radio-group>
+            </nz-form-control>
+          </nz-form-item>
+          <div nz-row [nzJustify]="'center'" [nzGutter]="8" class="margin-top mt" >
+        
+            <button nz-button nzType="primary" class="btn-gap" (click)="sumbit()">Submit</button>
+            <button nz-button nzType="default" type="button" class="btn-gap">Back</button>
+        
+        </div>
+      
+      
+
+        </form>

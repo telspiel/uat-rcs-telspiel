@@ -1,0 +1,81 @@
+<div class="filter-grid">
+  <!-- Admin -->
+  <div *ngIf="['superadmin'].includes(role)" [ngClass]="getRoleClass(role)">
+    <nz-form-item>
+      <nz-form-label nzFor="admin" [nzRequired]="requierd">Select Admin</nz-form-label>
+      <nz-form-control nzSpan="24">
+        <nz-select
+          nzPlaceHolder="Select an admin"
+          nzAllowClear
+          nzShowSearch
+          [(ngModel)]="selectedAdmin"
+          [ngModelOptions]="{ standalone: true }"
+          (nzOnClear)="onClear()"
+          (ngModelChange)="onAdminChange($event)"
+        >
+          <nz-option *ngFor="let user of adminList" [nzValue]="user" [nzLabel]="user.label"></nz-option>
+        </nz-select>
+      </nz-form-control>
+    </nz-form-item>
+  </div>
+
+  <!-- Reseller -->
+  <div *ngIf="['admin','superadmin','accountManager'].includes(role)" [ngClass]="getRoleClass(role)">
+    <nz-form-item>
+      <nz-form-label nzFor="reseller" [nzRequired]="requierd">Select Reseller</nz-form-label>
+      <nz-form-control nzSpan="24">
+        <nz-select
+          nzAllowClear
+          nzShowSearch
+          nzPlaceHolder="Select a reseller"
+          [(ngModel)]="selectedReseller"
+          [ngModelOptions]="{ standalone: true }"
+          (nzOnClear)="onClear()"
+          (ngModelChange)="onResellerChange($event)"
+        >
+          <nz-option *ngFor="let reseller of resellerList" [nzValue]="reseller" [nzLabel]="reseller.label"></nz-option>
+        </nz-select>
+      </nz-form-control>
+    </nz-form-item>
+  </div>
+
+  <!-- Seller -->
+  <div *ngIf="['reseller', 'admin','superadmin','accountManager'].includes(role)" [ngClass]="getRoleClass(role)">
+    <nz-form-item>
+      <nz-form-label nzFor="seller" [nzRequired]="requierd">Select Seller</nz-form-label>
+      <nz-form-control nzSpan="24">
+        <nz-select
+          nzAllowClear
+          nzShowSearch
+          nzPlaceHolder="Select a seller"
+          [(ngModel)]="selectedSeller"
+          [ngModelOptions]="{ standalone: true }"
+          (nzOnClear)="onClear()"
+          (ngModelChange)="onSellerChange($event)"
+        >
+          <nz-option *ngFor="let seller of sellerList" [nzValue]="seller" [nzLabel]="seller.label"></nz-option>
+        </nz-select>
+      </nz-form-control>
+    </nz-form-item>
+  </div>
+
+  <!-- Client -->
+  <div *ngIf="['superadmin','seller', 'reseller', 'admin','accountManager'].includes(role)" [ngClass]="getRoleClass(role)">
+    <nz-form-item>
+      <nz-form-label nzFor="client" [nzRequired]="requierd">Select Client</nz-form-label>
+      <nz-form-control nzSpan="24">
+        <nz-select
+          nzAllowClear
+          nzShowSearch
+          nzPlaceHolder="Select a client"
+          [(ngModel)]="selectedClient"
+          [ngModelOptions]="{ standalone: true }"
+          (nzOnClear)="onClear()"
+          (ngModelChange)="onClientChange($event)"
+        >
+          <nz-option *ngFor="let client of clientList" [nzValue]="client" [nzLabel]="client.label"></nz-option>
+        </nz-select>
+      </nz-form-control>
+    </nz-form-item>
+  </div>
+</div>

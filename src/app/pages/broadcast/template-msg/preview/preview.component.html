@@ -1,0 +1,86 @@
+<nz-drawer [nzBodyStyle]="{ overflow: 'auto' }" [nzMaskClosable]="false" [nzWidth]="720" [nzVisible]="visibility"
+    nzTitle="Preview" [nzFooter]="footerTpl" (nzOnClose)="close()">
+    <!-- <form nz-form *nzDrawerContent>
+        <div nz-row [nzGutter]="8">
+            <div nz-col nzSpan="12">
+                <nz-form-item>
+                    <nz-form-label>Name</nz-form-label>
+                    <nz-form-control>
+                        <input nz-input placeholder="please enter user name" />
+                    </nz-form-control>
+                </nz-form-item>
+            </div>x`x`
+        </div>
+    </form> -->
+
+    <ng-container *nzDrawerContent>
+        <img src="assets/images/mobile-frame1.png" style="width: 60%;" />
+
+        <!-- <p [innerHTML]="messageBody | editorToHtml:'updateVarValue':formDynamicValues"></p> -->
+
+        <!-- <nz-card>
+
+            <p style="font-weight: bold;" *ngIf="messageHeader?.type === 'TEXT'" [innerHTML]="messageHeader?.text | editorToHtml"></p>
+
+            <p [innerHTML]="messageBody"></p>
+
+            <small *ngIf="templateType === allTemplateTypes.MEDIA && footer"
+            class="footer-preview">{{footer}}</small>
+
+        </nz-card> -->
+
+        <nz-card class="whatsapp-preview-block">
+            <ng-container *ngIf="messageHeader">
+                <!-- <p style="font-weight: bold;" *ngIf="messageHeader?.format === 'TEXT' else multipartHeader"
+                    [innerHTML]="messageHeader?.text | editorToHtml"></p> -->
+
+                <ng-template #multipartHeader>
+                    <svg viewBox="0 0 267 113" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <g clip-path="url(#clip0)">
+                            <rect width="267" height="113" rx="6" fill="#EFF2F7" />
+                            <path d="M-1 89.2083L67.2613 42.6607L136.443 87.6054M100.5 115L210.75 29L321 115"
+                                stroke="#D3DCE6" stroke-width="3" />
+                            <circle cx="26.5" cy="20.5" r="8" stroke="#D3DCE6" stroke-width="3" />
+                        </g>
+                        <defs>
+                            <clipPath id="clip0">
+                                <rect width="267" height="113" rx="6" fill="white" />
+                            </clipPath>
+                        </defs>
+                    </svg>
+                </ng-template>
+
+            </ng-container>
+            <!-- yaha pe data dikhana hai  -->
+            <!-- <p><strong>Header:</strong> {{ messageHeader?.text }}</p> -->
+            <!-- <p><strong>Body:</strong> {{ messageBody }}</p>
+            <p><strong>Footer:</strong> {{ footer }}</p> -->
+            <!-- <p><strong>Button:</strong> {{ BUTTONS }}</p> -->
+
+            <p [innerHTML]="messageBody | editorToHtml"></p>
+
+            <small *ngIf="footer" class="footer-preview">{{footer}}</small>
+
+            <div class="btn-grp" *ngIf="footerBtns">
+                <nz-space nzDirection="vertical" style="display: flex;">
+                    <ng-container *ngFor="let btn of footerBtns.buttons">
+                        <button nz-button nzType="default" *nzSpaceItem style="width: 100%;">
+                            <span nz-icon nzType="link" nzTheme="outline" *ngIf="btn.type === 'URL'"></span>
+                            <span nz-icon nzType="phone" nzTheme="outline" *ngIf="btn.type === 'PHONE_NUMBER'"></span>
+                            {{btn.text}}
+                        </button>
+                    </ng-container>
+                </nz-space>
+            </div>
+        </nz-card>
+
+
+    </ng-container>
+
+    <ng-template #footerTpl>
+        <div style="float: right">
+            <button nz-button style="margin-right: 8px;" (click)="close()">Cancel</button>
+            <button nz-button nzType="primary" (click)="submitPreview()">Submit</button>
+        </div>
+    </ng-template>
+</nz-drawer>

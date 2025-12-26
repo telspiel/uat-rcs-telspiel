@@ -1,0 +1,277 @@
+
+<div  class="" *ngIf="!isLoading; else loder">
+  <div class="" style="display: flex; justify-content: space-between; padding-top: 25px; padding-bottom: 25px; background-color: white; padding: 2%; margin: 20px; margin-bottom: 0; padding-bottom: 0;">
+    <!-- Back Button -->
+     <div style="display: flex; gap:10px;">
+    <button style="border-radius: 30px;" routerLink="/quick-campaign"  nz-button class="px-4 py-2">Back</button>
+    <button style="border-radius: 30px;"   nz-button class="px-4 py-2" (click)="reloadPage()" [nzLoading]="loading">Refresh</button>
+    </div>
+    <!-- [routerLink]="['/quick-campaign',] -->
+    <!-- Download Summary Button -->
+    <button style="border-radius: 30px;" nz-button nzType="default" class="px-4 py-2" (click)="downloadPDF()">
+      Download Summary (PDF)
+      <i nz-icon nzType="download"></i>
+    </button>
+  </div>
+
+<div #content class="">
+<nz-card nzBordered="false" class="p-4" style="margin-top: 0;">  
+    <h2 class="mt-4">Campaign Engagement Dashboard</h2>
+  
+    <nz-divider></nz-divider>
+  
+    <!-- Campaign Details -->
+    <nz-row [nzGutter]="16">
+      <nz-col nzSpan="8">
+        <div class="bg-yellow-300 text-black px-4 py-2 rounded-md inline-block">
+          <strong>Campaign Name:</strong> 
+          
+        {{ campaignName }}
+       
+        </div>
+      </nz-col>
+      
+      <nz-col nzSpan="8">
+        <p class="ml-4"><strong>Bot Name: </strong> <span class="font-bold">{{ campaignData?.botName || "" }}</span></p>
+      </nz-col>
+      <nz-col nzSpan="8">
+        <p><strong>Campaign Start Date & Time: </strong> <span class="font-bold">{{ campaignData?.campaignReport?.campaignStartDate| date : 'dd-MM-YYYY HH:mm:ss'  }}</span></p>
+      </nz-col>
+      <nz-col nzSpan="8">
+        <p><strong>Template Name: </strong> <span class="font-bold">{{ campaignData?.templateName }}</span></p>
+      </nz-col>
+      <nz-col nzSpan="8">
+        <p><strong>Campaign Schedule: </strong> <span class="font-bold">{{ campaignData?.campaignScheduled }}</span></p>
+      </nz-col>
+     
+      <nz-col nzSpan="8">
+        <p><strong>Campaign End Date & Time: </strong> <span class="font-bold">{{ campaignData?.campaignReport?.campaignEndDate | date : 'dd-MM-YYYY HH:mm:ss' }}</span></p>
+      </nz-col>
+
+      
+    </nz-row>
+  
+    <nz-divider></nz-divider>
+  
+    <!-- Numbers Summary -->
+    <nz-row [nzGutter]="16">
+      <nz-col nzSpan="8">
+        <p ><strong>Uploaded Numbers: </strong> {{ campaignData?.campaignReport.uploadedNumbers }}  <a class="text-blue-500" [href]="campaignData?.campaignReport.uploadedNumberFile"><i nz-icon nzType="download"></i></a> {{" "}}</p>
+      </nz-col>
+      <nz-col nzSpan="8">
+        <p><strong>Invalid Numbers: </strong> {{ campaignData?.campaignReport.invalidNumbers }}</p>
+      </nz-col>
+      
+      <nz-col nzSpan="8">
+        <p><strong>RCS Disabled Numbers: </strong>{{ campaignData?.campaignReport.rcsDisabledNumbers }}  <a class="text-blue-500" [href]="campaignData?.campaignReport.rcsDisabledNumberFile"><i nz-icon nzType="download"></i></a> </p>
+      </nz-col>
+      <nz-col nzSpan="8">
+        <p><strong>Valid Numbers: </strong> {{ campaignData?.campaignReport.validNumbers }}</p>
+      </nz-col>
+      <nz-col nzSpan="8">
+        <p><strong>Duplicate Numbers: </strong>{{" "}}{{ campaignData?.campaignReport.duplicateNumbers }} {{" "}}</p>
+      </nz-col>
+      
+      
+    </nz-row>
+  
+    <nz-divider></nz-divider>
+  
+    <!-- Campaign Status -->
+    <nz-row [nzGutter]="16" class="items-center">
+      <nz-col nzSpan="8">
+        <p><strong>Campaign Status: </strong> <span class="text-green-500">{{campaignData?.campaignReport.campaignStatus}}</span></p>
+      </nz-col>
+      <nz-col nzSpan="8" class="text-right">
+        <p><strong>Campaign created on: </strong> <span class="font-bold">{{campaignData?.createdDate | date : 'dd-MM-YYYY HH:mm:ss'}}</span></p>
+      </nz-col>
+
+      <nz-col nzSpan="8" class="text-right">
+        <button
+          style=" color: black; border: none; outline: none; caret-color: white;"
+            [ngStyle]="{ 'background-color': complitionPercentage === 100 ? 'green' : '#f7dc72', 'color': complitionPercentage === 100 ? 'white' : 'black' }"
+          nz-button 
+          nzType="default"
+          class="custom-button"
+        >
+          Campaign reached {{complitionPercentage}}% completion
+        </button>
+      </nz-col>
+    </nz-row>
+  </nz-card>
+  <nz-row [nzGutter]="24">
+    <nz-col nzSpan="24" class="mb-4">
+        <nz-card nzBorderless>
+          <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; margin-bottom: 16px;">
+            <div>
+              <h3 style="font-size: 1.125rem; font-weight: 600;">RCS Messages Submitted: {{campaignData?.campaignReport?.totalSubmitted || 0}}</h3>
+            </div>
+            <div>
+              <h3 style="font-size: 1.125rem; font-weight: 600;">RCS Messages Queued: {{campaignData?.campaignReport?.totalQueued || 0}}</h3>
+            </div>
+            <div>
+              <h3 style="font-size: 1.125rem; font-weight: 600;">DLR Awaited: {{DLRawaited || 0}}</h3>
+            </div>
+            </div>
+          <div class="flex justify-between gap-4">
+            <nz-row [nzGutter]="24">
+              <nz-col nzSpan="8">
+                <div class="w-1/2">
+                  <div class="text-gray-500 mb-2">Delivered: {{campaignData?.campaignReport?.totalDelivered}}</div>
+                  <nz-progress 
+                    [nzPercent]="deliveryPercentage" 
+                    [nzStrokeColor]="'#4096ff'" 
+                    [nzShowInfo]="true" 
+                    [nzStrokeWidth]="36">
+                  </nz-progress>
+                </div>
+              </nz-col>
+              <nz-col nzSpan="8">
+                <div class="w-1/2">
+                  <div class="text-gray-500 mb-2">Read: {{campaignData?.campaignReport?.rcsMessageRead}}</div>
+                  <nz-progress 
+                    [nzPercent]="readPercentage" 
+                    [nzStrokeColor]="'#91caff'" 
+                    [nzShowInfo]="true" 
+                    [nzStrokeWidth]="36">
+                  </nz-progress>
+                </div>
+              </nz-col>
+              <nz-col nzSpan="8">
+                <div class="w-1/2">
+                  <div class="text-gray-500 mb-2">Failed: {{campaignData?.campaignReport?.totalFailed}}</div>
+                  <nz-progress 
+                    [nzPercent]="failedPercentage" 
+                    [nzStrokeColor]="'#91caff'" 
+                    [nzShowInfo]="true" 
+                    [nzStrokeWidth]="36">
+                  </nz-progress>
+                </div>
+              </nz-col>
+            </nz-row>
+          </div>
+        </nz-card>
+      </nz-col>
+    <nz-col nzSpan="12" class="mb-4">
+      <nz-card class="equal-height">
+        <h4 class="text-lg font-semibold">Total User Responses Received:</h4>
+        <div class="response-box">
+          <span class="text-2xl font-bold">{{campaignData?.campaignReport.totalUserResponseReceived}}</span>
+        </div>
+        <h5 class="text-md font-semibold mt-4">User Interactions</h5>
+        <ul class="interaction-list">
+          <li><a href="#">URL</a> <span class="count">{{campaignData?.campaignReport.vtUserInteractionResponseSummary.totalUrlClicked}}</span></li>
+          <li><a href="#">Dialer</a> <span class="count">{{campaignData?.campaignReport.vtUserInteractionResponseSummary.totalDialerOpened}}</span></li>
+          <li><a href="#">Reply</a> <span class="count">{{campaignData?.campaignReport.vtUserInteractionResponseSummary.totalUniqueReply}}</span></li>
+          <li><a href="#">Share Location</a> <span class="count">{{campaignData?.campaignReport.vtUserInteractionResponseSummary.totalShareLocationClicked}}</span></li>
+          <li><a href="#">View Location</a> <span class="count">{{campaignData?.campaignReport.vtUserInteractionResponseSummary.totalUniqueViewLocationClicked}}</span></li>
+        </ul>
+      </nz-card>
+    </nz-col>
+    <nz-col nzSpan="12" class="mb-4">
+      <nz-card class="equal-height">
+        <nz-row [nzGutter]="16" class="circle-container">
+          <nz-col nzSpan="12">
+            <div class="circle light-blue">
+              <span class="number">{{campaignData?.campaignReport.vtUserInteractionResponseSummary.totalUniqueUrlClicked}}</span>
+            </div>
+            <br>
+            <p class="text-center font-semibold mb-0">Number of Unique Users</p>
+            <p class="text-center text-gray-500 mt-0">(who interacted with the Campaign)</p>              
+          </nz-col>
+          <nz-col nzSpan="12">
+            <div class="circle dark-blue">
+              <span class="number">0</span>
+            </div>
+            <br>
+            <p class="text-center font-semibold mb-0">Number of Conversations</p>
+            <p class="text-center text-gray-500 mt-0">(only relevant for Bot journeys)</p>
+          </nz-col>
+        </nz-row>
+      </nz-card>
+    </nz-col>
+  </nz-row>
+ 
+  <nz-card nzBordered class="tree" [nzBodyStyle]="{ padding: '24px' }">
+    <h2 class="text-xl font-bold">Campaign Summary</h2>
+    <h3 class="text-lg font-semibold mt-4 border-b pb-2">Message Metrics</h3>
+    <nz-tree
+      [nzData]="treeData"
+      [nzShowLine]="true"
+      [nzExpandAll]="true">
+    </nz-tree>
+  </nz-card>
+ <nz-divider></nz-divider>
+  <nz-card nzBordered  [nzBodyStyle]="{ padding: '24px' }" *ngIf="campaignData?.isFallbackSms==='Y' || campaignData?.isFallbackWhatsapp==='Y'">
+    <h2 class="text-xl font-bold">Fallback Campaign</h2>
+    <nz-divider></nz-divider>
+    <nz-row [nzGutter]="16" *ngIf="campaignData?.isFallbackSms==='Y'">
+      <nz-col nzSpan="8">
+        <p><strong>Fallback Campaign Type: </strong> SMS Fallback </p>
+      </nz-col>
+      <nz-col nzSpan="8">  
+        <p><strong>Fallback SMS: </strong> {{ campaignData?.fallbackSms}}</p>
+      </nz-col>
+      <nz-col nzSpan="8">
+        <p style="word-break: break-all; overflow-wrap: anywhere;">
+          <strong>Fallback SMS Send Point: </strong>
+          <span>{{ campaignData?.smsApiEndpoint }}</span>
+        </p>
+      </nz-col>
+    </nz-row>
+    <nz-row [nzGutter]="16" *ngIf="campaignData?.isFallbackWhatsapp==='Y'">
+      <nz-col nzSpan="8">
+        <p><strong>Fallback Campaign Type: </strong> WathsApp Fallback </p>
+      </nz-col>
+      <nz-col nzSpan="8">  
+        <p><strong>Fallback SMS: </strong> {{ campaignData?.fallbackWhatsapp}}</p>
+      </nz-col>
+      <nz-col nzSpan="8">
+        <p style="word-break: break-all; overflow-wrap: anywhere;">
+          <strong>Fallback SMS Send Point: </strong>
+          <span>{{ campaignData?.whatsappApiEndpoint }}</span>
+        </p>
+      </nz-col>
+    </nz-row>
+
+  </nz-card>
+
+</div>
+
+</div>
+<ng-template #loder style="height: 100%; width: 100%; display: flex; justify-content: center; align-items: center; text-align: center; background: rgba(0, 0, 0, 0.05);">
+  <div  class="skeleton-container">
+    <div class="skeleton-header">
+      <div class="skeleton-button"></div>
+      <div class="skeleton-button"></div>
+    </div>
+    <div class="skeleton-card">
+      <div class="skeleton-title"></div>
+      <div class="skeleton-line"></div>
+      <div class="skeleton-grid">
+        <div class="skeleton-box" *ngFor="let item of [1,2,3,4,5,6]"></div>
+      </div>
+    </div>
+    <div class="skeleton-card">
+      <div class="skeleton-title"></div>
+      <div class="skeleton-progress" *ngFor="let bar of [1,2,3]"></div>
+    </div>
+    <div class="skeleton-row">
+      <div class="skeleton-small-card"></div>
+      <div class="skeleton-small-card"></div>
+    </div>
+    <div class="skeleton-card">
+      <div class="skeleton-title"></div>
+      <div class="skeleton-tree"></div>
+    </div>
+  </div>
+</ng-template>
+
+
+
+ 
+
+ 
+  
+  
+  

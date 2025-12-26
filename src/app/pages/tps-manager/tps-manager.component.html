@@ -1,0 +1,284 @@
+<nz-card nzTitle="Operator Management">
+  <nz-tabset nzType="card" (nzSelectedIndexChange)="onTabChange($event)">
+    <nz-header class="site-page-header" nzTitle="Summary"></nz-header>
+    <nz-tab [nzTitle]="ADD">
+      <ng-template #ADD>
+        <span>Add</span>
+      </ng-template>
+
+      <div>
+        <nz-card style="margin-top: 20px; margin-bottom: 20px">
+          <form [formGroup]="operatorForm">
+            <nz-form-item>
+              <nz-form-label [nzSm]="7" [nzXs]="24" nzRequired nzFor="operators"
+                >Select Operator</nz-form-label
+              >
+              <nz-form-control
+                [nzSm]="12"
+                [nzXs]="18"
+                nzErrorTip="Please select an operator"
+              >
+                <nz-select
+                  formControlName="selectedOperators"
+                  nzMode="multiple"
+                  style="width: 100%"
+                  (ngModelChange)="onOperatorChange($event)"
+                  nzPlaceHolder="select operator"
+                >
+                  <nz-option
+                    *ngFor="let op of operators"
+                    [nzValue]="op.name"
+                    [nzLabel]="op.label"
+                  ></nz-option>
+                </nz-select>
+              </nz-form-control>
+            </nz-form-item>
+
+            <div
+              formArrayName="operatorData"
+              style="display: flex; gap: 8px; flex-wrap: wrap"
+            >
+              <div
+                *ngFor="let operator of operatorData.controls; let i = index"
+                [formGroupName]="i"
+              >
+                <nz-card
+                  [nzTitle]="operator.get('operatorName')?.value"
+                  nzSize="small"
+                >
+                  <div
+                    nz-row
+                    [nzGutter]="6"
+                    style="
+                      display: flex;
+                      flex-wrap: wrap;
+                      align-items: center;
+                      gap: 10px;
+                    "
+                  >
+                    <nz-form-item>
+                      <nz-form-control
+                        nzErrorTip="*required"
+                        nzValidateStatus="FormControl"
+                      >
+                        <nz-form-label>TPS</nz-form-label>
+                        <nz-input-group>
+                          <input
+                            nz-input
+                            formControlName="tps"
+                            type="number"
+                            placeholder="TPS"
+                          />
+                        </nz-input-group>
+                      </nz-form-control>
+                    </nz-form-item>
+
+                  <ng-container *ngIf="operator.get('operatorName')?.value === 'VODAFONE' || operator.get('operatorName')?.value === 'Vi'">
+                      <nz-form-item>
+                        <nz-form-control nzErrorTip="*required" nzValidateStatus="FormControl">
+                          <nz-form-label>Client ID</nz-form-label>
+                          <nz-input-group>
+                            <input
+                              nz-input
+                              formControlName="operatorTemplateClientId"
+                              type="text"
+                              placeholder="Client ID"
+                            />
+                          </nz-input-group>
+                        </nz-form-control>
+                      </nz-form-item>
+                      <nz-form-item>
+                        <nz-form-control nzErrorTip="*required" nzValidateStatus="FormControl">
+                          <nz-form-label>Client Secret</nz-form-label>
+                          <nz-input-group>
+                            <input
+                              nz-input
+                              formControlName="operatorTemplateSecret"
+                              type="text"
+                              placeholder="Client Secret"
+                            />
+                          </nz-input-group>
+                        </nz-form-control>
+                      </nz-form-item>
+                    </ng-container>
+
+
+                  </div>
+                </nz-card>
+              </div>
+            </div>
+
+            <div style="text-align: center; margin-top: 10px">
+              <button nz-button nzType="primary" (click)="submitForm()">
+                Submit
+              </button>
+            </div>
+          </form>
+        </nz-card>
+      </div>
+    </nz-tab>
+    <nz-tab [nzTitle]="VIEW">
+      <ng-template #VIEW>
+        <span>View</span>
+      </ng-template>
+      <div>
+        <nz-card style="margin-top: 20px; margin-bottom: 20px">
+          <form [formGroup]="operatorviewForm">
+            <nz-table
+              [nzData]="operatorsview"
+              [nzBordered]="true"
+              [nzSize]="'middle'"
+              [nzShowPagination]="false"
+            >
+              <thead>
+                <tr>
+                  <th>Operator Name</th>
+                  <th>TPS</th>
+                  <th>Template Secret</th>
+                  <th>ClientId</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let item of operatorsview">
+                  <td>{{ item.operatorName }}</td>
+                  <td>
+                    <b>{{ item.tps }}</b>
+                  </td>
+
+                  <td>{{ item.operatorTemplateSecret }}</td>
+
+                  <td>{{item.operatorTemplateClientId}}</td>
+                </tr>
+              </tbody>
+            </nz-table>
+          </form>
+        </nz-card>
+      </div>
+    </nz-tab>
+    <nz-tab [nzTitle]="EDIT">
+      <ng-template #EDIT>
+        <span>Edit</span>
+      </ng-template>
+      <nz-card>
+        <form [formGroup]="operatoreditForm">
+          <!-- Select Operator -->
+          <nz-form-item>
+            <nz-form-label [nzSm]="7" [nzXs]="24" nzRequired nzFor="operators"
+              >Select Operator</nz-form-label
+            >
+            <nz-form-control
+              [nzSm]="12"
+              [nzXs]="18"
+              nzErrorTip="Please select an operator"
+            >
+              <nz-select
+                formControlName="selectededitOperators"
+                nzMode="multiple"
+                style="width: 100%"
+                (ngModelChange)="onOperatoreditChange($event)"
+                nzPlaceHolder="select operator"
+              >
+                <nz-option
+                  *ngFor="let op of operators"
+                  [nzValue]="op.name"
+                  [nzLabel]="op.label"
+                ></nz-option>
+              </nz-select>
+            </nz-form-control>
+          </nz-form-item>
+
+          <!-- Dynamic Form Array for Operators -->
+          <div
+            formArrayName="operatoreditData"
+            style="display: flex; gap: 8px; flex-wrap: wrap"
+          >
+            <div
+              *ngFor="let operator of operatoreditData.controls; let i = index"
+              [formGroupName]="i"
+            >
+             <nz-card
+  [nzTitle]="operator.get('operatorName')?.value"
+  nzSize="small"
+>
+  <div
+    nz-row
+    [nzGutter]="6"
+    style="
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 10px;
+    "
+  >
+    <nz-form-item>
+      <nz-form-control
+        nzErrorTip="*required"
+        nzValidateStatus="FormControl"
+      >
+        <nz-form-label>TPS</nz-form-label>
+        <nz-input-group>
+          <input
+            nz-input
+            formControlName="traficVolume"
+            type="number"
+            placeholder="TPS"
+          />
+        </nz-input-group>
+      </nz-form-control>
+    </nz-form-item>
+
+    <ng-container *ngIf="operator.get('operatorName')?.value === 'VODAFONE' || operator.get('operatorName')?.value === 'Vi'">
+      <div
+        style="
+          display: flex;
+          flex-wrap: wrap;
+          align-items: center;
+          gap: 10px;
+        "
+      >
+        <nz-form-item>
+          <nz-form-control nzErrorTip="*required" nzValidateStatus="FormControl">
+            <nz-form-label>Client ID</nz-form-label>
+            <nz-input-group>
+              <input
+                nz-input
+                formControlName="operatorTemplateClientId"
+                type="text"
+                placeholder="Client ID"
+              />
+            </nz-input-group>
+          </nz-form-control>
+        </nz-form-item>
+
+        <nz-form-item>
+          <nz-form-control nzErrorTip="*required" nzValidateStatus="FormControl">
+            <nz-form-label>Client Secret</nz-form-label>
+            <nz-input-group>
+              <input
+                nz-input
+                formControlName="operatorTemplateSecret"
+                type="text"
+                placeholder="Client Secret"
+              />
+            </nz-input-group>
+          </nz-form-control>
+        </nz-form-item>
+      </div>
+    </ng-container>
+  </div>
+</nz-card>
+
+               
+
+            </div>
+          </div>
+          <div style="text-align: center; margin-top: 10px">
+            <button nz-button nzType="primary" (click)="editForm()">
+              Submit
+            </button>
+          </div>
+        </form>
+      </nz-card>
+    </nz-tab>
+  </nz-tabset>
+</nz-card>

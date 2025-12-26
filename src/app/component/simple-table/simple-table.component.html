@@ -1,0 +1,69 @@
+<nz-table #sortTable [nzData]="listOfData" nzTableLayout="fixed" nzSize="small" >
+    <!-- nzSize="middle" -->
+    <thead>
+        <tr>
+            <!-- <th nzWidth="60px"></th> -->
+            <th [nzWidth]="'25%'"> Name</th>
+            <th [nzWidth]="'10%'">Category</th>
+            <th [nzWidth]="'25%'"> Preview</th>
+            <th [nzWidth]="'15%'">Status</th>
+            <th [nzWidth]="'10%'">Languages</th>
+            <th [nzWidth]="'15%'">Action</th>
+        </tr>
+
+    </thead>
+    <tbody>
+        <tr *ngFor="let data of sortTable.data">
+            <td>{{ data.name }}</td>
+            <td>{{ data.category }}</td>
+            <td nzEllipsis><small>{{ data.components | extractTemplateBody }}</small></td>
+            <td>
+                <nz-tag nzColor="success" *ngIf="data.status === 'created'">
+                    <span nz-icon nzType="check-circle"></span>
+                    <span>Created</span>
+                  </nz-tag>
+
+                  <nz-tag nzColor="warning" *ngIf="data.status === 'pending'">
+                    <span nz-icon nzType="sync" nzSpin></span>
+                    <span>Processing</span>
+                  </nz-tag>
+
+                  <nz-tag nzColor="processing" *ngIf="data.status === 'approved'">
+                    <span nz-icon nzType="check-circle"></span>
+                    <span>Approved</span>
+                  </nz-tag>
+
+                  <nz-tag nzColor="volcano" *ngIf="data.status === 'submitted'">
+                    <span nz-icon nzType="send"></span>
+                    <span>Submitted</span>
+                  </nz-tag>
+                  
+                  <nz-tag nzColor="volcano" *ngIf="data.status === 'rejected'">
+                    <span nz-icon nzType="close-circle" nzTheme="outline"></span>
+                    <span>Rejected</span>
+                  </nz-tag>
+            </td>
+
+            <td>
+                <nz-tag [nzColor]="'#2db7f5'">{{data.language}}</nz-tag>
+                <!-- <nz-tag>BT_PR</nz-tag>
+                <nz-tag>ES</nz-tag> -->
+            </td>
+            <td>
+                <nz-space [nzSplit]="spaceSplit">
+                    <ng-template #spaceSplit>
+                        <nz-divider nzType="vertical"></nz-divider>
+                    </ng-template>
+                    <span *nzSpaceItem nz-icon nzType="edit" nzTheme="outline" nz-tooltip
+                        nzTooltipTitle="Edit Template" (click)="editRow(data)"></span>
+                    <span *nzSpaceItem nz-icon nzType="global" nzTheme="outline" nz-tooltip
+                        nzTooltipTitle="Add different language to your template"></span>
+                    <span *nzSpaceItem nz-icon nzType="copy" nz-popconfirm nzPopconfirmTitle="Sure you want copy ?"
+                        (nzOnConfirm)="copydata(data)" nzTheme="outline"></span>
+                    <span *nzSpaceItem nz-icon nz-popconfirm nzPopconfirmTitle="Sure to delete?" nzType="delete"
+                        (nzOnConfirm)="deleteRow(data)" nzTheme="outline"></span>
+                </nz-space>
+            </td>
+        </tr>
+    </tbody>
+</nz-table>

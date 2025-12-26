@@ -1,0 +1,198 @@
+<nz-card nzBordered="false" class="p-4" >
+  <div class="" style="display: flex; ">
+    <!-- Back Button -->
+    <button style="border-radius: 30px;" routerLink="/quick-campaign"  nz-button class="px-4 py-2">Back</button>
+    <!-- Download Summary Button -->
+    <button style="border-radius: 30px;" nz-button nzType="default" class="px-4 py-2">
+      Download Summary <span class="text-red-500">(pdf)</span>
+      <i nz-icon nzType="download"></i>
+    </button>
+  </div>
+  
+    <h2 class="mt-4">Campaign Engagement Dashboard</h2>
+  
+    <nz-divider></nz-divider>
+  
+    <!-- Campaign Details -->
+    <nz-row [nzGutter]="16">
+      <nz-col nzSpan="8">
+        <div class="bg-yellow-300 text-black px-4 py-2 rounded-md inline-block">
+          <strong>Campaign Name:</strong> 
+          
+        {{ campaignData.campaignName }}
+       
+        </div>
+      </nz-col>
+      
+      <nz-col nzSpan="8">
+        <p class="ml-4"><strong>Bot Name:</strong> <span class="font-bold">{{ campaignData.botName }}</span></p>
+      </nz-col>
+      <nz-col nzSpan="8">
+        <p><strong>Campaign Start Date & Time:</strong> <span class="font-bold">{{ campaignData.createdDate }}</span></p>
+      </nz-col>
+      <nz-col nzSpan="8">
+        <p><strong>Template Name:</strong> <span class="font-bold">{{ campaignData.templateName }}</span></p>
+      </nz-col>
+      <nz-col nzSpan="8">
+        <p><strong>Campaign Schedule:</strong> <span class="font-bold">{{ campaignData.campaignScheduled }}</span></p>
+      </nz-col>
+     
+      <nz-col nzSpan="8">
+        <p><strong>Campaign End Date & Time:</strong> <span class="font-bold">{{ campaignData.expiryDateTime }}</span></p>
+      </nz-col>
+    </nz-row>
+  
+    <nz-divider></nz-divider>
+  
+    <!-- Numbers Summary -->
+    <nz-row [nzGutter]="16">
+      <nz-col nzSpan="8">
+        <p><strong>Uploaded Numbers:</strong> <a class="text-blue-500">{{ campaignData.campaignReport.uploadedNumbers }}</a> <i nz-icon nzType="download"></i></p>
+      </nz-col>
+      <nz-col nzSpan="8">
+        <p><strong>Invalid Numbers:</strong> {{ campaignData.campaignReport.invalidNumbers }}</p>
+      </nz-col>
+      
+      <nz-col nzSpan="8">
+        <p><strong>RCS Disabled Numbers:</strong>{{ campaignData.campaignReport.rcsDisabledNumbers }}<i nz-icon nzType="download"></i></p>
+      </nz-col>
+      <nz-col nzSpan="8">
+        <p><strong>Valid Numbers:</strong> {{ campaignData.campaignReport.validNumbers }}</p>
+      </nz-col>
+      <nz-col nzSpan="8">
+        <p><strong>Duplicate Numbers:</strong>{{ campaignData.campaignReport.duplicateNumbers }}</p>
+      </nz-col>
+      
+      
+    </nz-row>
+  
+    <nz-divider></nz-divider>
+  
+    <!-- Campaign Status -->
+    <nz-row [nzGutter]="16" class="items-center">
+      <nz-col nzSpan="8">
+        <p><strong>Campaign Status:</strong> <span class="text-green-500">{{campaignData.campaignReport.campaignStatus}}</span></p>
+      </nz-col>
+      <nz-col nzSpan="8" class="text-right">
+        <p><strong>Campaign created on:</strong> <span class="font-bold">{{campaignData.campaignDate}}</span></p>
+      </nz-col>
+
+      <nz-col nzSpan="8" class="text-right">
+        <button
+          style="background-color:#f7dc72; color: black; border: none; outline: none; caret-color: white;"
+          nz-button 
+          nzType="default"
+          class="custom-button"
+        >
+          Campaign reached {{campaignData.campaignReport.campaignReachedPercentage}}% completion
+        </button>
+      </nz-col>
+      
+    </nz-row>
+  </nz-card>
+  <nz-row [nzGutter]="24">
+    <!-- RCS Messages Sent -->
+    <nz-col nzSpan="24" class="mb-4">
+        <nz-card nzBorderless>
+          <h3 class="text-lg font-semibold text-blue-500 mb-4">RCS Messages Sent: </h3>
+          <div class="flex justify-between gap-4">
+
+            <nz-row [nzGutter]="16">
+
+              <nz-col nzSpan="12">
+                <div class="w-1/2">
+                  <div class="text-gray-500 mb-2">Delivered</div>
+                  <nz-progress 
+                    [nzPercent]="deliveryPercentage" 
+                    [nzStrokeColor]="'#4096ff'" 
+                    [nzShowInfo]="true" 
+                    [nzStrokeWidth]="36">
+                  </nz-progress>
+                </div>
+              </nz-col>
+              
+
+              <nz-col nzSpan="12">
+                <div class="w-1/2">
+                  <div class="text-gray-500 mb-2">Read</div>
+                  <nz-progress 
+                    [nzPercent]="readPercentage" 
+                    [nzStrokeColor]="'#91caff'" 
+                    [nzShowInfo]="true" 
+                    [nzStrokeWidth]="36">
+                  </nz-progress>
+                </div>
+              </nz-col>
+              
+            </nz-row>
+          </div>
+        </nz-card>
+      </nz-col>
+  
+    <!-- User Responses and Interactions -->
+    <nz-col nzSpan="12" class="mb-4">
+      <nz-card class="equal-height">
+        <h4 class="text-lg font-semibold">Total User Responses Received:</h4>
+        <div class="response-box">
+          <span class="text-2xl font-bold">{{campaignData.campaignReport.totalUserResponseReceived}}</span>
+        </div>
+        <h5 class="text-md font-semibold mt-4">User Interactions</h5>
+        <ul class="interaction-list">
+          <li><a href="#">URL</a> <span class="count">{{campaignData.campaignReport.vtUserInteractionResponseSummary.totalUrlClicked}}</span></li>
+          <li><a href="#">Dialer</a> <span class="count">{{campaignData.campaignReport.vtUserInteractionResponseSummary.totalUniqueDialerOpened}}</span></li>
+          <li><a href="#">Reply</a> <span class="count">{{campaignData.campaignReport.vtUserInteractionResponseSummary.totalUniqueReply}}</span></li>
+          <li><a href="#">Share Location</a> <span class="count">{{campaignData.campaignReport.vtUserInteractionResponseSummary.totalShareLocationClicked}}</span></li>
+          <li><a href="#">View Location</a> <span class="count">{{campaignData.campaignReport.vtUserInteractionResponseSummary.totalUniqueViewLocationClicked}}</span></li>
+        </ul>
+      </nz-card>
+    </nz-col>
+  
+    <!-- Unique Users and Conversations -->
+    <nz-col nzSpan="12" class="mb-4">
+      <nz-card class="equal-height">
+        <nz-row [nzGutter]="16" class="circle-container">
+          <nz-col nzSpan="12">
+            <div class="circle light-blue">
+              <span class="number">{{campaignData.campaignReport.vtUserInteractionResponseSummary.totalUniqueUrlClicked}}</span>
+            </div>
+            <br>
+            <p class="text-center font-semibold mb-0">Number of Unique Users</p>
+            <p class="text-center text-gray-500 mt-0">(who interacted with the Campaign)</p>              
+          </nz-col>
+          <nz-col nzSpan="12">
+            <div class="circle dark-blue">
+              <span class="number">0</span>
+            </div>
+            <br>
+            <p class="text-center font-semibold mb-0">Number of Conversations</p>
+            <p class="text-center text-gray-500 mt-0">(only relevant for Bot journeys)</p>
+          </nz-col>
+        </nz-row>
+      </nz-card>
+    </nz-col>
+  </nz-row>
+  
+  <!-- Campaign Summary Card -->
+  <nz-card nzBordered class="tree" [nzBodyStyle]="{ padding: '24px' }">
+    <h2 class="text-xl font-bold">Campaign Summary</h2>
+  
+    <h3 class="text-lg font-semibold mt-4 border-b pb-2">Message Metrics</h3>
+  
+    <nz-tree
+      [nzData]="treeData"
+      [nzShowLine]="true"
+      [nzExpandAll]="true">
+    </nz-tree>
+  </nz-card>
+  
+  
+  
+
+
+
+ 
+
+ 
+  
+  
+  

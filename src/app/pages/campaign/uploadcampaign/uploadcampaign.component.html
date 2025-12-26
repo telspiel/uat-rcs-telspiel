@@ -1,0 +1,176 @@
+<!-- <nz-page-header class="site-page-header" nzTitle="Bulk Capability Test" style="margin-bottom: 0;"></nz-page-header> -->
+<nz-card style="height: 100%; margin-top: 20px">
+  <!-- 
+    <nz-form-item nz-col [nzSpan]="5">
+      <nz-form-control nzErrorTip="*required" >
+          <nz-form-label nzLabelAlign="left" nzFor="botIds">Select Bot
+              <span style="color: red;"> * </span></nz-form-label>
+          <nz-select nzShowSearch nzAllowClear nzPlaceHolder="Select Bot Id" [(ngModel)]="botId">
+              <nz-option *ngFor="let bot of botss" nzLabel="{{ bot.botName }}" [nzValue]="bot.botId">
+              </nz-option>
+          </nz-select>
+      </nz-form-control>
+  </nz-form-item> -->
+
+  <nz-form-label nzFor="" nzSpan="1-24" nzRequired>
+    Uplaod a File
+  </nz-form-label>
+
+  <p
+    style="
+      font-size: 0.7rem;
+      color: #adadad;
+      text-align: justify;
+      padding-right: 10px;
+    "
+  >
+    Upload a file with the list of mobile numbers and The numbers should be
+    prefixed with country code. (Eg. 91 98 76 543210 for India - Country Code ).
+    The recipient numbers should be under the column named Phone No This should
+    be the first column.
+  </p>
+
+  <div class="div" nz-row [nzGutter]="12">
+
+    <nz-upload [(nzFileList)]="fileList" [nzBeforeUpload]="beforeUpload" nz-col nzSpan="6" [nzAccept]="'.csv,.xlsx,.zip'" [nzMultiple]="false"
+    [nzLimit]="1" >
+        <button nz-button>
+          <span nz-icon nzType="upload" ></span>
+          Select .xlsx .zip .csv File
+        </button>
+      </nz-upload>
+      
+      <button
+      nz-col nzSpan="3"
+        nz-button
+        nzType="primary"
+        [nzLoading]="uploading"
+        (click)="handleUpload()"
+        [disabled]="fileList.length === 0"
+      >
+        {{ uploading ? 'Uploading' : 'Start Upload' }}
+      </button>
+     </div> 
+
+  <!-- <nz-upload
+    nz-col
+    [nzSpan]="11"
+    [nzAction]="apiUrl"
+    (nzChange)="handleChange($event)"
+    [nzHeaders]="{ authorization: token }"
+    [nzData]="{
+      userName: userName,
+      
+    }"
+    
+    [nzLimit]="1"
+    
+    [nzMultiple]="false"
+    nzAccept=".xlsx,.csv,.xls.zip"
+    [nzBeforeUpload]="beforeUpload"
+   
+  >
+    <button
+      nz-button
+      nzType="primary"
+     
+      style="width: 100%"
+    >
+      <i nz-icon nzType="upload"></i>
+      Upload File (.xlsx/.csv/.xls)
+    </button>
+  </nz-upload> -->
+  <!-- <nz-upload 
+          (nzChange)="handleChange($event)"
+          [nzAccept]="'.csv'"
+          nzMultiple="false"
+          nzShowButton="true"
+          >
+          <button nz-button nzType="primary">
+              <span nz-icon nzType="upload"></span>
+              Upload File (.csv)
+          </button>
+      </nz-upload> -->
+
+  <!-- <div class="" style="margin-top: 20px; " >
+      <nz-form-label nzFor="" nzSpan="1-24" nzRequired>Select Date</nz-form-label>
+      <div class="" style="display: flex; gap: 10px;" >
+      <nz-range-picker  [(ngModel)]="date" [ngModelOptions]="{standalone: true}" ></nz-range-picker>
+      <button nz-button nzType="primary"  (click)="handleSubmit()">Submit</button>
+      </div>
+    </div> -->
+  <div class="search-section" style="margin: 20px 0; width: 30%">
+    <nz-input-group nzSize="large" nzPrefixIcon="search">
+      <input
+        type="text"
+        nz-input
+        placeholder="Keyword search"
+        [formControl]="searchControl"
+      />
+    </nz-input-group>
+  </div>
+  <nz-table
+    style="margin-top: 5%"
+    #sortTable
+    [nzData]="filteredData"
+    nzSize="middle"
+  >
+    <thead>
+      <tr>
+        <!-- <th [nzSortFn]="true" [nzWidth]="'16%'" >User Name</th> -->
+        <th [nzSortFn]="true">Upload File Name</th>
+        <th [nzSortFn]="true">Date</th>
+        <!-- <th  [nzWidth]="'16%'" >Uploaded File</th> -->
+        <th>Action</th>
+        <!-- <th [nzSortFn]="true" [nzWidth]="'16%'">Operator Template Id</th> -->
+      </tr>
+    </thead>
+    <tbody>
+      <ng-container *ngFor="let dt of sortTable.data">
+        <tr>
+          <td>{{ dt.fileName }}</td>
+          <td>{{ dt.createdDate | date : "yyyy-MM-dd HH:mm:ss" }}</td>
+         
+
+          <td>
+            
+            
+            <a
+                [href]="dt.accessUrls"
+                download
+                nz-button
+                nzType="link"
+                ><span
+                  nz-icon
+                  nzType="download"
+                  nzTheme="outline"
+                  style="color: #1890ff"
+                  ></span>
+            </a>
+            <a>
+              <button
+                nz-button
+                nzType="link"
+                nzShape="circle"
+                nz-tooltip
+                nz-popconfirm
+                nzPopconfirmTitle="Sure to delete?"
+                (nzOnConfirm)="deleteFile(dt.id)"
+                nzTooltipTitle="Delete"
+              >
+                <i
+                  nz-icon
+                  nzType="delete"
+                  nzTheme="outline"
+                  style="color: red"
+                ></i>
+
+              </button>
+            </a>
+
+          </td>
+        </tr>
+      </ng-container>
+    </tbody>
+  </nz-table>
+</nz-card>

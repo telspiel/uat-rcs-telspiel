@@ -1,0 +1,24 @@
+<div  class="card-container"
+     style="position: absolute; top: 40%; left: 0%; width: 100%; z-index: 2;">
+
+  <div class="card"
+       style="padding: 5px; width: 100%; box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1); border-radius: 8px; background: white; word-wrap: break-word; white-space: pre-wrap;">
+    {{ getMessageContent() }}
+  </div>
+
+  <div style="display: flex; justify-content: flex-start; align-items: center; height: 100%; text-align: center;">
+    <div>
+      <div *ngFor="let suggestion of suggestionsFormArray.controls">
+        <div *ngIf="suggestion.get('text')?.value" style="margin-top: 10px;">
+          <a nz-button nzType="primary"
+             [href]="suggestion.get('text')?.value"
+             target="_blank"
+             style="border-radius: 20px;">
+            <span nz-icon [nzType]="getSuggestionIcon(suggestion.get('type')?.value)" nzTheme="outline"></span>
+            {{ suggestion.get('text')?.value }}
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

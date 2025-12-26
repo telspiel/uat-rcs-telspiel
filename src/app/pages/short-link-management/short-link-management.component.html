@@ -1,0 +1,54 @@
+
+
+<div class="rcs-page-container" style="padding: 20px; margin-top: 20px;">
+    <div class="header-section">
+      <h2>Hey,</h2>
+      <p>
+        <!-- Hey <b>{{ loggedInUserName }}</b>, Submit your brand for RCS (Rich Communication Services) messaging and deliver rich, interactive, and engaging experiences directly to your audience’s mobile devices. -->
+      </p>
+      <button nz-button nzType="primary" [routerLink]="['/addlink']" nzShape="round">Add New Short Link </button>
+    </div>
+   
+    <div>
+      <nz-page-header class="site-page-header" nzTitle="View Short URL"></nz-page-header>
+
+      <nz-table
+      #templateTable
+      [nzBordered]="true"
+      [nzSize]="'middle'"
+      [nzScroll]="{ x: '100%' }"
+    >
+      <thead>
+        <tr>
+          <th nzWidth="25%">serial-No.</th>
+          <th nzWidth="25%">Name</th>
+          <th nzWidth="25%">Short Code </th>
+          <th nzWidth="25%">Callback Url</th>
+          <th nzWidth="25%">Long Url</th>
+          <th nzWidth="25%">Is Active</th>
+          <th nzWidth="25%">Is Dynamic</th>
+        
+        </tr>
+      </thead>
+      <tbody>
+        <tr >
+          <td></td>
+        
+          <td></td>
+         
+          <td ></td>
+
+          <td></td>
+        
+          <td></td>
+         
+          <td ></td>
+
+          <td></td>
+        </tr>
+      </tbody>
+    </nz-table>
+    
+    
+
+    </div>
