@@ -479,7 +479,7 @@
 
 
           <!-- Card Description -->
-          <!-- <nz-form-item
+          <nz-form-item
             *ngIf="templateForm.get('type')?.value !== 'TextMessage' && templateForm.get('type')?.value !== 'TextMessagewithpdf'">
             <nz-form-label nzFor="cardDescription">Card Description</nz-form-label>
             <nz-form-control>
@@ -492,64 +492,7 @@
                 <button nz-button nzType="link" (click)="addVariable('currentDescription')">+ Add variable</button>
               </div>
             </nz-form-control>
-          </nz-form-item> -->
-
-          <nz-form-item
-              *ngIf="templateForm.get('type')?.value !== 'TextMessage'
-                  && templateForm.get('type')?.value !== 'TextMessagewithpdf'">
-
-              <nz-form-label nzFor="cardDescription">Card Description</nz-form-label>
-
-              <nz-form-control>
-
-                <div
-                  nz-input
-                  contenteditable="true"
-                  #descEditor
-                  placeholder="Enter Card Description"
-                  style="
-                    min-height:120px;
-                    padding:8px;
-                    border:1px solid #d9d9d9;
-                    border-radius:4px;
-                    outline:none;
-                    white-space:pre-wrap;
-                  "
-                  (input)="syncEditor(descEditor)">
-                </div>
-
-                <div nz-row nzJustify="space-between">
-
-                  <small class="char-limit">
-                    {{ getPlainTextLength() }}/2000 characters used
-                  </small>
-
-                  <div>
-                    <!-- IMPORTANT: use mousedown -->
-                    <button
-                      nz-button
-                      nzType="link"
-                      (mousedown)="$event.preventDefault(); applyFormat('bold')">
-                      <b>B</b>
-                    </button>
-
-                    <button
-                      nz-button
-                      nzType="link"
-                      (mousedown)="$event.preventDefault(); applyFormat('underline')">
-                      <u>U</u>
-                    </button>
-
-                    <button nz-button nzType="link"
-                      (mousedown)="$event.preventDefault(); addVariable('currentDescription')">
-                      + Add variable
-                    </button>
-                  </div>
-
-                </div>
-
-              </nz-form-control>
-            </nz-form-item>
+          </nz-form-item>
 
 
           <!-- Message Content -->

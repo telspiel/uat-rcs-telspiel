@@ -1064,65 +1064,6 @@ export class AddComponent {
     }, 0);
   }
 
-  //============================================================================
-
-  applyFormat(type: 'bold' | 'underline') {
-    const selection = window.getSelection();
-    if (!selection || selection.rangeCount === 0) return;
-    if (selection.isCollapsed) return;
-  
-    // Toggle formatting correctly
-    if (type === 'bold') {
-      document.execCommand('bold');
-    } else if (type === 'underline') {
-      document.execCommand('underline');
-    }
-  
-    // Sync cleaned HTML to form
-    const editor = selection.anchorNode?.parentElement?.closest(
-      '[contenteditable]'
-    ) as HTMLElement;
-  
-    if (editor) {
-      this.syncEditor(editor);
-    }
-  }  
-  
-  
-  syncEditor(editor: HTMLElement) {
-    if (editor.innerText.length > 2000) {
-      document.execCommand('undo');
-      return;
-    }
-  
-    this.templateForm
-      .get('cardDescription')
-      ?.setValue(this.cleanHtml(editor.innerHTML));
-  }
-  
-  cleanHtml(html: string): string {
-    const temp = document.createElement('div');
-    temp.innerHTML = html;
-  
-    temp.querySelectorAll('span').forEach(span => {
-      const parent = span.parentNode;
-      while (span.firstChild) {
-        parent?.insertBefore(span.firstChild, span);
-      }
-      parent?.removeChild(span);
-    });
-  
-    temp.querySelectorAll('*').forEach(el => el.removeAttribute('style'));
-  
-    return temp.innerHTML;
-  }
-  
-  getPlainTextLength(): number {
-    const div = document.createElement('div');
-    div.innerHTML = this.templateForm.get('cardDescription')?.value || '';
-    return div.innerText.length;
-  }
-
   // addVariableToSuggestion(type: string, i: number): void {
   //   const arr = this.templateForm.get('suggestions') as FormArray;
   //   if (!arr || !arr.at(i)) return;
